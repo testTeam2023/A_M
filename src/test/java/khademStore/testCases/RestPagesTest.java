@@ -151,7 +151,7 @@ public class RestPagesTest extends TestBase {
          Assert.assertTrue(actualForItemsReceivedRecordPage);
     }
          @Test
-         public void recordValidTest ()throws InterruptedException{
+         public void reportValidTest ()throws InterruptedException{
               restPages=new RestPages(driver);
               restPages.mainPageLoad()
                 .clickOnReporsButton()

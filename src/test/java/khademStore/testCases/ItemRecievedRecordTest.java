@@ -30,9 +30,9 @@ public class ItemRecievedRecordTest extends TestBase {
                 .enterAttachment("125kj").setReceiverName("63")
                 .selectAnItemFromItemList().enterQuantity().enterPrice().clickOnAddItemButton().scrollDown()
                 .clickOnSaveButton().clickOnmessageSuccessbutton();
-               int actualResults = itemReceivedRecord.totalPriceWithTaxes();
-               int expectedResults = itemReceivedRecord.totalPrice();
-               Assert.assertEquals(actualResults,expectedResults);
+                 int actualResults = itemReceivedRecord.totalPriceWithTaxes();
+                 int expectedResults = itemReceivedRecord.totalPrice();
+                 Assert.assertEquals(actualResults,expectedResults);
 
     }
     /*

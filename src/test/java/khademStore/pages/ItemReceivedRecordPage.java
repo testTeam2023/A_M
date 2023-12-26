@@ -56,6 +56,8 @@ public class ItemReceivedRecordPage {
         try {
            driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
             Thread.sleep(5000);
+            Actions action = new Actions(driver);
+            action.doubleClick(driver.findElement(invoiceNumber));
         }
      catch (Exception e) {
         // Handle the case where the element is not found within the specified timeout
@@ -66,9 +68,7 @@ public class ItemReceivedRecordPage {
    }
    public ItemReceivedRecordPage enterInvoiceNumber(String invoice_Number) throws InterruptedException {
        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-       Actions action = new Actions(driver);
-       action.doubleClick(driver.findElement(invoiceNumber));
-       wait.until(ExpectedConditions.visibilityOfElementLocated(invoiceNumber)).sendKeys(invoice_Number);
+       wait.until(ExpectedConditions.presenceOfElementLocated(invoiceNumber)).sendKeys(invoice_Number);
        Thread.sleep(1000);
        return this;
    }

@@ -3,6 +3,7 @@ package khademStore.pages;
 import io.qameta.allure.Step;
 import khademStore.utils.ConfigUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -311,7 +312,9 @@ public class RestPages {
     //            Thread.sleep(2500);
                 Actions action = new Actions(driver);
                 action.moveToElement(driver.findElement(receivedRecordReportIsDisplay)).perform();
-                boolean result =wait.until(ExpectedConditions.visibilityOfElementLocated(receivedRecordReportIsDisplay)).isDisplayed();
+                JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+                jsExecutor.executeScript("window.scrollBy(0,150)");
+                boolean result =wait.until(ExpectedConditions.presenceOfElementLocated(receivedRecordReportIsDisplay)).isDisplayed();
                 System.out.println(result);
                 driver.close();
                 driver.switchTo().window(main);
@@ -323,11 +326,11 @@ public class RestPages {
 
     public boolean isReceivedRecordReportDisplay(){
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(receivedRecordReportIsDisplay)).isDisplayed();
+        return wait.until(ExpectedConditions.presenceOfElementLocated(receivedRecordReportIsDisplay)).isDisplayed();
     }
     public boolean isStatisticalReceivedReportDisplay(){
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(statisticalReceivedReportDisplay)).isDisplayed();
+        return wait.until(ExpectedConditions.presenceOfElementLocated(statisticalReceivedReportDisplay)).isDisplayed();
     }
     public RestPages clickOnStatisticalReceivedReport()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -373,7 +376,9 @@ public class RestPages {
                // Thread.sleep(2500);
                 Actions action = new Actions(driver);
                 action.moveToElement(driver.findElement(statisticalReceivedReportDisplay)).perform();
-                boolean result =wait.until(ExpectedConditions.visibilityOfElementLocated(statisticalReceivedReportDisplay)).isDisplayed();
+                JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+                jsExecutor.executeScript("window.scrollBy(0,150)");
+                boolean result =wait.until(ExpectedConditions.presenceOfElementLocated(statisticalReceivedReportDisplay)).isDisplayed();
                 System.out.println(result);
                 driver.switchTo().window(main);
             }
