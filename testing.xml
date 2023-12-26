@@ -1,0 +1,16 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestSuite">
+    <listeners>
+        <listener class-name="khademStore.utils.CustomerReport"/>
+    </listeners>
+    <test name="Test Automation">
+        <classes>
+            <class name="khademStore.testCases.RestPagesTest"/>
+            <class name="khademStore.testCases.ItemsPageTest"/>
+            <class name="khademStore.testCases.ItemRecievedRecordTest"/>
+
+
+        </classes>
+    </test>
+</suite>

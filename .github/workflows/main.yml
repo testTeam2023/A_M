@@ -1,0 +1,65 @@
+name: Run Selenium Test
+
+on:
+  push:
+    branches: ["master"]
+  schedule:
+    - cron: "0 0 * * 0-4"
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21"
+          cache: maven
+          distribution: "adopt"
+
+      - name: Set up Chrome browser
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Run Selenium Tests and Generate Allure Report
+        run: |
+          mvn clean test -Denvironment=ip ||true
+
+      - name: Archive artifacts
+        id: generate-report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: target/surefire-reports
+
+
+  send-email:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: test-reports
+          path: target/surefire-reports
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Khadem Store Test Results"
+          to: "ahmedali@azka.com, aabdelaziz@azka.com, mrashwan@azka.com"
+          from: "azkatestingteam@gmail.com"
+          content_type: "text/html"
+          body: |
+            <p>
+            Dear Eng. Ahmed,
+            The Selenium test results are attached. Please find the attached HTML report.
+            </p>
+
+          attachments: target/surefire-reports/emailable-report.html
