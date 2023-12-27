@@ -264,8 +264,8 @@ public class RestPages {
     /////////////////////////////////////////////////////////////////////////////////////////
     private By receivedRecordReport = By.xpath("//*[@href=\"/KhademStores/Reports/ReportParamters?ReportID=13\"]");
     private By displayReportButton = By.xpath("//*[@id=\"btnSave\"]");
-    private By receivedRecordReportIsDisplay = By.xpath("//*[contains(text(),\"عمل لمحاضر الاستلام\")]");
-    private By statisticalReceivedReportDisplay = By.xpath("//*[contains(text(),\"عمل لمحاضر الاستلام\")]");
+    private By receivedRecordReportIsDisplay = By.xpath("//td//div[contains(text(),'تقرير بأوامر العمل لمحاضر الاستلام')]");
+    private By statisticalReceivedReportDisplay = By.xpath("//td//div[contains(text(),'تقرير بأوامر العمل لمحاضر الاستلام')]");
     private By statisticalReceivedReport = By.xpath("//*[@href=\"/KhademStores/Reports/ReportParamters?ReportID=77\"]");
     private By supplier = By.xpath("//*[@id=\"select2-SuppID-container\"]");
     private By parentSupplier = By.xpath("//*[@id=\"select2-SuppID-results\"]");
