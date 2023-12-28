@@ -4,7 +4,7 @@ on:
   push:
     branches: ["master"]
   schedule:
-    - cron: "30 11 * * 0-4"
+    - cron: "30 6 * * 0-4"
 jobs:
   test:
     runs-on: windows-latest
