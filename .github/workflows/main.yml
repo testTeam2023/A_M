@@ -19,13 +19,12 @@ jobs:
           cache: maven
           distribution: "adopt"
 
-      - name: Set up Chrome browser
-        uses: browser-actions/setup-chrome@latest
+      - name: Set up Edge browser
+        uses: browser-actions/setup-edge@latest
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip ||true
-
+          mvn clean test -Denvironment=ip -Dbrowser=edge ||true
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
