@@ -264,6 +264,9 @@ public class RestPages {
     /////////////////////////////////////////////////////////////////////////////////////////
     private By receivedRecordReport = By.xpath("//*[@href=\"/KhademStores/Reports/ReportParamters?ReportID=13\"]");
     private By displayReportButton = By.xpath("//*[@id=\"btnSave\"]");
+    private By parentReportContent = By.xpath("/html/body/form/div[3]/table/tbody/tr/td/div/div/table/tbody/tr[5]/td[3]/div/div[1]/div/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[4]/td[3]/table/tbody");
+    private By childReportContent = By.tagName("tr");
+    private By parentStatisticalReportContent = By.xpath("/html/body/form/div[3]/table/tbody/tr/td/div/div/table/tbody/tr[5]/td[3]/div/div[1]/div/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[3]/table/tbody");
     private By receivedRecordReportIsDisplay = By.xpath("//td//div[contains(text(),'تقرير بأوامر العمل لمحاضر الاستلام')]");
     private By statisticalReceivedReportDisplay = By.xpath("//td//div[contains(text(),'تقرير بأوامر العمل لمحاضر الاستلام')]");
     private By statisticalReceivedReport = By.xpath("//*[@href=\"/KhademStores/Reports/ReportParamters?ReportID=77\"]");
@@ -301,20 +304,14 @@ public class RestPages {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
         wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(13000);
+        Thread.sleep(8000);
         Set<String> windows = driver.getWindowHandles();
         for (String s :windows){
             if (!s.equals(main)){
                 driver.switchTo().window(s);
-                //wait.until(ExpectedConditions.elementToBeClickable(clickOnsaveIcon)).click();
-              //  Thread.sleep(1300);
-              ///  wait.until(ExpectedConditions.elementToBeClickable(clickOnPdf)).click();
-    //            Thread.sleep(2500);
-                Actions action = new Actions(driver);
-                action.moveToElement(driver.findElement(receivedRecordReportIsDisplay)).perform();
-                JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-                jsExecutor.executeScript("window.scrollBy(0,150)");
-                boolean result =wait.until(ExpectedConditions.presenceOfElementLocated(receivedRecordReportIsDisplay)).isDisplayed();
+                WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentReportContent));
+                List<WebElement>child = parent.findElements(childReportContent);
+                boolean result= child.get(2).isDisplayed();
                 System.out.println(result);
                 driver.close();
                 driver.switchTo().window(main);
@@ -365,20 +362,14 @@ public class RestPages {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
         wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(13000);
+        Thread.sleep(8000);
         Set<String> windows = driver.getWindowHandles();
         for (String s :windows){
             if (!s.equals(main)){
                 driver.switchTo().window(s);
-                //wait.until(ExpectedConditions.elementToBeClickable(clickOnsaveIcon)).click();
-                //Thread.sleep(1300);
-               // wait.until(ExpectedConditions.elementToBeClickable(clickOnPdf)).click();
-               // Thread.sleep(2500);
-                Actions action = new Actions(driver);
-                action.moveToElement(driver.findElement(statisticalReceivedReportDisplay)).perform();
-                JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-                jsExecutor.executeScript("window.scrollBy(0,150)");
-                boolean result =wait.until(ExpectedConditions.presenceOfElementLocated(statisticalReceivedReportDisplay)).isDisplayed();
+                WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentStatisticalReportContent));
+                List<WebElement>child = parent.findElements(childReportContent);
+                boolean result= child.get(2).isDisplayed();
                 System.out.println(result);
                 driver.switchTo().window(main);
             }

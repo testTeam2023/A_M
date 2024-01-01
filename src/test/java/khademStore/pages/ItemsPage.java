@@ -62,6 +62,7 @@ public class ItemsPage {
 
     private By itemHasSerialSearchBox = By.xpath("//*[@id=\"SearchControl_Criteria_List_6__SelectedComparator\"]");
     private By selectItemType = By.xpath("//*[@id=\"select2-SearchControl_Criteria_List_4__Value-result-3ov0-1\"]");
+
     private By  itemClassification_searchBox = By.xpath("//*[@id=\"select2-SearchControl_Criteria_List_5__Value-container\"]");
     private By Search_button = By.xpath("//div//input[@value=\"بـحـث\"]");
     private By parentSearchResultTable= By.xpath("//*[@id=\"tblDataTableClient\"]/tbody");

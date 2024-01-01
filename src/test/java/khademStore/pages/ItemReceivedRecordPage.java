@@ -54,15 +54,15 @@ public class ItemReceivedRecordPage {
 
     public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException{
         try {
+            wait = new WebDriverWait(driver, Duration.ofSeconds(20));
            driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
             Thread.sleep(5000);
             Actions action = new Actions(driver);
-            action.doubleClick(driver.findElement(invoiceNumber));
+            action.doubleClick(wait.until(ExpectedConditions.visibilityOf(driver.findElement(invoiceNumber))));
         }
      catch (Exception e) {
         // Handle the case where the element is not found within the specified timeout
-        System.out.println("No internet connection or the page took too long to load.");
-         throw new RuntimeException("Page load timed out.");
+         throw new RuntimeException("No internet connection or the page took too long to load.");
     }
        return this;
    }

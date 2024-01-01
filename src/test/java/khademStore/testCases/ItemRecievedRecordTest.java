@@ -20,7 +20,21 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
     */
-    @Test(description = " item_Received_Record_Valid_Test" , priority = 5)
+    @Test(priority = 0)
+    public void loading() throws InterruptedException {
+        itemReceivedRecord = new ItemReceivedRecordPage(driver);
+            itemReceivedRecord.navigateToTheItemReceivedRecordPage();
+    }
+   @Test(description = "Search Valid Test", priority = 1)
+   public void search_Valid_Test() throws InterruptedException {
+       itemReceivedRecord=new ItemReceivedRecordPage(driver);
+       itemReceivedRecord.navigateToTheItemReceivedRecordPage()
+               .clickOnSearchTab().clickOnSearchTab()
+               .clickOnSearchButton();
+       boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
+       Assert.assertTrue(searchResult);
+   }
+    @Test(description = " item_Received_Record_Valid_Test" , priority = 2)
     public void item_Received_Record_Valid_Test_ForOneItem() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord
@@ -35,6 +49,39 @@ public class ItemRecievedRecordTest extends TestBase {
                  Assert.assertEquals(actualResults,expectedResults);
 
     }
+    @Test(description = "Edit record valid test ",priority = 3)
+    public void Edit_Record_valid_Test() throws InterruptedException {
+        itemReceivedRecord=new ItemReceivedRecordPage(driver);
+        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
+                .clickOnSearchTab().clickOnSearchTab()
+                .clickOnSearchButton()
+                .clickOnEditButton()
+                .setReceiverName("62")
+                .clickOnSaveEditButton()
+                .clickOnmessageSuccessbutton();
+    }
+    @Test(description = "Copy the record valid test ",priority =4 )
+    public void copy_The_Record_valid_Test() throws InterruptedException {
+        itemReceivedRecord=new ItemReceivedRecordPage(driver);
+        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
+                .clickOnSearchTab()
+                .clickOnSearchButton().clickOnSearchTab()
+                .clickOnRecordCopyButton()
+                .editTheRecord()
+                .enterAttachment("10")
+                .clickOnSaveButton()
+                .clickOnmessageSuccessbutton();
+    }
+    @Test(description = "Delete record valid test ",priority = 5)
+    public void Delete_Record_valid_Test() throws InterruptedException {
+        itemReceivedRecord=new ItemReceivedRecordPage(driver);
+        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
+                .clickOnSearchTab()
+                .clickOnSearchButton().clickOnSearchTab()
+                .clickOnDeleteButton()
+                .clickOnmessageSuccessbutton();
+    }
+
     /*
     @Test(description = " item Received Record validation test" , priority = 3)
     public void item_Received_Record_Valid_Test_For_Validations() throws InterruptedException{
@@ -68,15 +115,7 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
      */
-    @Test(description = "Search Valid Test", priority = 2)
-    public void search_Valid_Test() throws InterruptedException {
-        itemReceivedRecord=new ItemReceivedRecordPage(driver);
-        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
-                .clickOnSearchTab().clickOnSearchTab()
-                .clickOnSearchButton();
-        boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
-        Assert.assertTrue(searchResult);
-    }
+
   /*  @Test(description = "Pagination test",priority = 6)
     public void pagination_Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
@@ -186,29 +225,7 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
      */
-    @Test(description = "Edit record valid test ",priority = 17)
-    public void Edit_Record_valid_Test() throws InterruptedException {
-        itemReceivedRecord=new ItemReceivedRecordPage(driver);
-        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
-                .clickOnSearchTab().clickOnSearchTab()
-                .clickOnSearchButton()
-                .clickOnEditButton()
-                .setReceiverName("62")
-                .clickOnSaveEditButton()
-                .clickOnmessageSuccessbutton();
-    }
-    @Test(description = "Copy the record valid test ",priority =18 )
-    public void copy_The_Record_valid_Test() throws InterruptedException {
-        itemReceivedRecord=new ItemReceivedRecordPage(driver);
-        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
-                .clickOnSearchTab()
-                .clickOnSearchButton().clickOnSearchTab()
-                .clickOnRecordCopyButton()
-                .editTheRecord()
-                .enterAttachment("10")
-                .clickOnSaveButton()
-                .clickOnmessageSuccessbutton();
-    }
+
     /*
     @Test(description = "Copy the record Invalid test ",priority = 19)
     public void copy_The_Record_Invalid_Test() throws InterruptedException {
@@ -224,15 +241,7 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
      */
-    @Test(description = "Delete record valid test ",priority = 20)
-    public void Delete_Record_valid_Test() throws InterruptedException {
-        itemReceivedRecord=new ItemReceivedRecordPage(driver);
-        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
-                .clickOnSearchTab()
-                .clickOnSearchButton().clickOnSearchTab()
-                .clickOnDeleteButton()
-                .clickOnmessageSuccessbutton();
-    }
+
 
 
 

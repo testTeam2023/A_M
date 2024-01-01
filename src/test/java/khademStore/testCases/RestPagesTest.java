@@ -103,7 +103,7 @@ public class RestPagesTest extends TestBase {
     }
 
      */
-    @Test
+    @Test(priority = 1)
    public void pagesValidTest ()throws InterruptedException {
          restPages = new RestPages(driver);
          restPages.mainPageLoad().clickOnSystemSettingsButton()
@@ -150,7 +150,7 @@ public class RestPagesTest extends TestBase {
          boolean actualForItemsReceivedRecordPage = restPages.itemsReceivedRecordPageIsDisplayed();
          Assert.assertTrue(actualForItemsReceivedRecordPage);
     }
-         @Test
+         @Test(priority = 2)
          public void reportValidTest ()throws InterruptedException{
               restPages=new RestPages(driver);
               restPages.mainPageLoad()

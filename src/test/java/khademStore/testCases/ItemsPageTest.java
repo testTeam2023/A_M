@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class ItemsPageTest extends TestBase {
 khademStore.pages.ItemsPage itemsPage;
-    @Test(priority = 0 , description = "Make a New Valid Item " , invocationCount = 1)
+    @Test(priority = 1 , description = "Make a New Valid Item ")
     public void items_Added_Valid_Test()throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage
@@ -20,10 +20,10 @@ khademStore.pages.ItemsPage itemsPage;
              .setItemType()
              .elec_Qty("100","1000")
              .someChoices()
-                .setUnits()
+             .setUnits()
              .addStockAndStores("2","1","3").clickMessageButton();
     }
-    @Test(priority = 1, description = "Valid search without Filters")
+    @Test(priority = 2, description = "Valid search without Filters")
     public void search_Valid_Test() throws InterruptedException {
         itemsPage = new khademStore.pages.ItemsPage(driver);
          itemsPage.navigateToItemsPage().clickOnSearchTab().clickOnSearchTab().clickOnsearch_button();
@@ -76,7 +76,7 @@ khademStore.pages.ItemsPage itemsPage;
     }
 
      */
-    @Test(priority = 2 , description = "Click on edit button ")
+    @Test(priority = 3 , description = "Click on edit button ")
     public void Edit_Button_Valid_Test()throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage.navigateToItemsPage()
@@ -87,7 +87,7 @@ khademStore.pages.ItemsPage itemsPage;
         boolean editMessageIsDisplayed=itemsPage.editMessageSuccess();
         Assert.assertTrue(editMessageIsDisplayed);
     }
-    @Test(priority = 3 , description = "Delete item added")
+    @Test(priority = 4 , description = "Delete item added")
     public void delete_Item_Valid_Test() throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage
