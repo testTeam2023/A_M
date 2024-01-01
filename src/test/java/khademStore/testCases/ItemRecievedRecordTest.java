@@ -18,13 +18,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .selectMultipleItems().scrollDown()
                 .clickOnSaveButton().clickOnmessageSuccessbutton();
     }
-
     */
-    @Test(priority = 0)
-    public void loading() throws InterruptedException {
-        itemReceivedRecord = new ItemReceivedRecordPage(driver);
-            itemReceivedRecord.navigateToTheItemReceivedRecordPage();
-    }
    @Test(description = "Search Valid Test", priority = 1)
    public void search_Valid_Test() throws InterruptedException {
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
@@ -35,19 +29,22 @@ public class ItemRecievedRecordTest extends TestBase {
        Assert.assertTrue(searchResult);
    }
     @Test(description = " item_Received_Record_Valid_Test" , priority = 2)
-    public void item_Received_Record_Valid_Test_ForOneItem() throws InterruptedException{
+    public void itemsReceivedRecordValidTest() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
-        itemReceivedRecord
-                .navigateToTheItemReceivedRecordPage()
-                .enterInvoiceNumber("125")
+        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
+                .enterInvoiceNumber("102123")
                 .selectSupplierName()
-                .enterAttachment("125kj").setReceiverName("63")
-                .selectAnItemFromItemList().enterQuantity().enterPrice().clickOnAddItemButton().scrollDown()
-                .clickOnSaveButton().clickOnmessageSuccessbutton();
-                 int actualResults = itemReceivedRecord.totalPriceWithTaxes();
-                 int expectedResults = itemReceivedRecord.totalPrice();
-                 Assert.assertEquals(actualResults,expectedResults);
-
+                .enterAttachment("1250MNB")
+                .selectAnItemFromItemList()
+                .enterQuantity()
+                .enterPrice()
+                .clickOnAddItemButton()
+                .scrollDown()
+                .clickOnSaveButton()
+                .clickOnmessageSuccessbutton();
+        double actualResults = itemReceivedRecord.totalPriceWithTaxes();
+        double expectedResults = itemReceivedRecord.totalPrice();
+        Assert.assertEquals(actualResults,expectedResults);
     }
     @Test(description = "Edit record valid test ",priority = 3)
     public void Edit_Record_valid_Test() throws InterruptedException {

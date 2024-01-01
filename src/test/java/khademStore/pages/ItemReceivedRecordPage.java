@@ -168,20 +168,20 @@ public class ItemReceivedRecordPage {
         driver.findElement(itemPrice).sendKeys(price);
         return this;
     }
-    public int totalPriceWithTaxes(){
+    public double totalPriceWithTaxes(){
         String netValueStr = driver.findElement(netValue).getAttribute("value");
         String taxValueStr = driver.findElement(taxValue).getAttribute("value");
         Double netValueInt = Double.parseDouble(netValueStr);
         Double taxValueInt = Double.parseDouble(taxValueStr);
-        Double result = netValueInt + taxValueInt;
-        int resultAsInt = (int) Math.round(result);
-        return resultAsInt ;
+       return netValueInt + taxValueInt;
+       // int resultAsInt = (int) Math.round(result);
+       // return resultAsInt ;
     }
-    public int  totalPrice(){
+    public double  totalPrice(){
         String totalPrice =driver.findElement(totalValue).getAttribute("value");
-        Double netValueNumber = Double.parseDouble(totalPrice);
-        int resultInt = (int) Math.round(netValueNumber);
-        return resultInt;
+        return  Double.parseDouble(totalPrice);
+     //   int resultInt = (int) Math.round(netValueNumber);
+       // return resultInt;
     }
     public ItemReceivedRecordPage clickOnAddItemButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
