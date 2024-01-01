@@ -20,7 +20,7 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
     */
-    @Test(description = " item_Received_Record_Valid_Test" , priority = 2)
+    @Test(description = " item_Received_Record_Valid_Test" , priority = 5)
     public void item_Received_Record_Valid_Test_ForOneItem() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord
@@ -68,7 +68,7 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
      */
-    @Test(description = "Search Valid Test", priority = 5)
+    @Test(description = "Search Valid Test", priority = 2)
     public void search_Valid_Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
