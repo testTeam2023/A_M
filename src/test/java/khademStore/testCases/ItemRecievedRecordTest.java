@@ -19,17 +19,19 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSaveButton().clickOnmessageSuccessbutton();
     }
     */
-   @Test(description = "Search Valid Test", priority = 1)
-   public void search_Valid_Test() throws InterruptedException {
+   @Test(description = "Search Feature Valid Test" , priority = 1)
+   public void search_Feature_Valid_Test() throws InterruptedException{
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
-               .clickOnSearchTab().clickOnSearchTab()
+               .clickOnSearchTab()
+               .clickOnSearchTab()
                .clickOnSearchButton();
        boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
        Assert.assertTrue(searchResult);
    }
+
     @Test(description = " item_Received_Record_Valid_Test" , priority = 2)
-    public void itemsReceivedRecordValidTest() throws InterruptedException{
+    public void items_Received_Record_Valid_Test() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .enterInvoiceNumber("102123")
