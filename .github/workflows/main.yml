@@ -1,10 +1,11 @@
-name: Run Selenium Test
+name: Selenium Test and Email
 
 on:
   push:
     branches: ["master"]
   schedule:
     - cron: "0 8 * * 0-4"  # Run at 10:00 AM from Sunday to Thursday
+
 jobs:
   test:
     runs-on: windows-latest
@@ -24,14 +25,13 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge ||true
+          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge || true
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
           path: target/surefire-reports
-
 
   send-email:
     needs: test
@@ -43,15 +43,7 @@ jobs:
           name: test-reports
           path: target/surefire-reports
 
-      - name: Send email
-        run: |
-          EMAIL_PASS_ARRAY=($(echo "${{ secrets.EMAIL_PASS }}" | tr ',' '\n'))
-          TO_EMAIL=$(IFS=,; echo "${EMAIL_PASS_ARRAY[*]}")
-          echo "To email addresses: $TO_EMAIL"
-        env:
-          TO_EMAIL: ${{ secrets.EMAIL_PASS }}
-
-      - name: Send Email using action-send-mail
+      - name: Send Email using action-send-mail (Success)
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
@@ -67,4 +59,24 @@ jobs:
             The Selenium test results are attached. Please find the attached HTML report.
             </p>
           attachments: target/surefire-reports/emailable-report.html
-          to: ${{ needs.test.result == 'success' && env.TO_EMAIL || secrets.EMAIL_FAIL }}
+          to: ${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}
+
+      - name: Send Email using action-send-mail (Failure)
+        run: |
+          EMAIL_FAIL_ARRAY=($(echo "${{ secrets.EMAIL_FAIL }}" | tr ',' '\n'))
+          for email in "${EMAIL_FAIL_ARRAY[@]}"; do
+            echo "Sending failure email to: $email"
+            action-send-mail \
+              --server-address ${{ secrets.EMAIL_SERVER }} \
+              --server-port ${{ secrets.EMAIL_PORT }} \
+              --username ${{ secrets.EMAIL_USERNAME }} \
+              --password ${{ secrets.EMAIL_PASS }} \
+              --subject "Khadem Store Test Results (Failure)" \
+              --from "azkatestingteam@gmail.com" \
+              --content-type "text/html" \
+              --body "Dear Eng. Ahmed, The Selenium test results indicate a failure. Please review the attached HTML report." \
+              --attachments target/surefire-reports/emailable-report.html \
+              --to $email
+          done
+        env:
+          TO_EMAIL_FAILURE: ${{ secrets.EMAIL_FAIL }}
