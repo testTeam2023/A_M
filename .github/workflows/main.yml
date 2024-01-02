@@ -35,6 +35,7 @@ jobs:
 
   send-email:
     needs: test
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
@@ -42,10 +43,6 @@ jobs:
         with:
           name: test-reports
           path: target/surefire-reports
-
-      - name: Set email recipients
-        id: set-email-recipients
-        run: echo "::set-output name=email_recipients::${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}"
 
       - name: Send email
         uses: dawidd6/action-send-mail@v2
@@ -55,7 +52,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Khadem Store Test Results"
-          to: ${{ steps.set-email-recipients.outputs.email_recipients }}
+          to: ${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
           body: |
@@ -65,3 +62,4 @@ jobs:
             </p>
 
           attachments: target/surefire-reports/emailable-report.html
+  
