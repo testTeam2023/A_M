@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dbrowser=edge ||true
+          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
