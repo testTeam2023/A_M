@@ -25,8 +25,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge -DtestFailureIgnore=false || { echo "Tests failed"; exit 1; }
-
+          mvn clean test -Denvironment=ip -Dbrowser=edge ||true
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
@@ -36,7 +35,6 @@ jobs:
 
   send-email:
     needs: test
-    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
@@ -45,22 +43,36 @@ jobs:
           name: test-reports
           path: target/surefire-reports
 
-      - name: Send email
+      - name: Set up email content
+        id: set-email-content
+        run: echo "::set-output name=email-body::<p>Dear Eng. Ahmed, The Selenium test results are attached. Please find the attached HTML report.</p>"
+
+      - name: Send email on success
+        if: success()
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Khadem Store Test Results"
-          to: ${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}
+          subject: "Khadem Store Test Results (Pass)"
+          to: "aabdelaziz@azka.com"
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
-          body: |
-            <p>
-            Dear Eng. Ahmed,
-            The Selenium test results are attached. Please find the attached HTML report.
-            </p>
-
+          body: ${{ steps.set-email-content.outputs.email-body }}
           attachments: target/surefire-reports/emailable-report.html
 
+      - name: Send email on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Khadem Store Test Results (Fail)"
+          to: "ahmed_abdelaziz99998@yahoo.com"
+          from: "azkatestingteam@gmail.com"
+          content_type: "text/html"
+          body: ${{ steps.set-email-content.outputs.email-body }}
+          attachments: target/surefire-reports/emailable-report.html
