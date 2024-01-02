@@ -25,12 +25,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge
-          $exit_code = $LASTEXITCODE
-          if ($exit_code -ne 0) {
-            Write-Host "Tests failed with exit code $exit_code."
-            exit $exit_code
-          }
+          mvn clean test -Denvironment=ip -Dbrowser=edge || echo "Test failed" >> test_result.txt
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
@@ -48,36 +43,44 @@ jobs:
           name: test-reports
           path: target/surefire-reports
 
-      - name: Set up email content
-        id: set-email-content
-        run: echo "::set-output name=email-body::<p>Dear Eng. Ahmed, The Selenium test results are attached. Please find the attached HTML report.</p>"
-
-      - name: Send email on success
-        if: success()
-        uses: dawidd6/action-send-mail@v2
-        with:
-          server_address: ${{ secrets.EMAIL_SERVER }}
-          server_port: ${{ secrets.EMAIL_PORT }}
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Khadem Store Test Results (Pass)"
-          to: "aabdelaziz@azka.com"
-          from: "azkatestingteam@gmail.com"
-          content_type: "text/html"
-          body: ${{ steps.set-email-content.outputs.email-body }}
-          attachments: target/surefire-reports/emailable-report.html
+      - name: Check test result
+        id: check-test-result
+        run: echo "::set-output name=result::$(cat test_result.txt)"
 
       - name: Send email on failure
-        if: failure()
+        if: steps.check-test-result.outputs.result == 'Test failed'
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Khadem Store Test Results (Fail)"
+          subject: "Khadem Store Test Results - Failure"
           to: "ahmed_abdelaziz99998@yahoo.com"
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
-          body: ${{ steps.set-email-content.outputs.email-body }}
+          body: |
+            <p>
+            Dear Eng. Ahmed,
+            The Selenium test results indicate a failure. Please review the attached HTML report.
+            </p>
+          attachments: target/surefire-reports/emailable-report.html
+
+      - name: Send email on success
+        if: steps.check-test-result.outputs.result != 'Test failed'
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Khadem Store Test Results - Success"
+          to: "aabdelaziz@azka.com"
+          from: "azkatestingteam@gmail.com"
+          content_type: "text/html"
+          body: |
+            <p>
+            Dear Eng. Ahmed,
+            The Selenium test results indicate a success. Please find the attached HTML report.
+            </p>
           attachments: target/surefire-reports/emailable-report.html
