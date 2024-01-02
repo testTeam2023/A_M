@@ -61,6 +61,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           to: "ahmed_abdelaziz99998@yahoo.com"
+          from: "azkatestingteam@gmail.com"
           subject: "Khadem Store Test Results - Failure"
           body: |
             <p>
@@ -78,6 +79,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           to: "aabdelaziz@azka.com"
+          from: "azkatestingteam@gmail.com"
           subject: "Khadem Store Test Results - Success"
           body: |
             <p>
