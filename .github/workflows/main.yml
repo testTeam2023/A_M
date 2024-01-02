@@ -45,12 +45,13 @@ jobs:
 
       - name: Send email
         run: |
-            EMAIL_PASS_ARRAY=($(echo "${{ secrets.EMAIL_PASS }}" | tr ',' '\n'))
-            TO_EMAIL=$(IFS=,; echo "${EMAIL_PASS_ARRAY[*]}")
-            echo "To email addresses: $TO_EMAIL"
-            # Use $TO_EMAIL in your action configuration
-          env:
-            TO_EMAIL: ${{ secrets.EMAIL_PASS }}
+          EMAIL_PASS_ARRAY=($(echo "${{ secrets.EMAIL_PASS }}" | tr ',' '\n'))
+          TO_EMAIL=$(IFS=,; echo "${EMAIL_PASS_ARRAY[*]}")
+          echo "To email addresses: $TO_EMAIL"
+        env:
+          TO_EMAIL: ${{ secrets.EMAIL_PASS }}
+
+      - name: Send Email using action-send-mail
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
@@ -58,7 +59,6 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Khadem Store Test Results"
-          to: ${{ needs.test.result == 'success' && env.TO_EMAIL || secrets.EMAIL_FAIL }}
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
           body: |
@@ -66,5 +66,5 @@ jobs:
             Dear Eng. Ahmed,
             The Selenium test results are attached. Please find the attached HTML report.
             </p>
-
           attachments: target/surefire-reports/emailable-report.html
+          to: ${{ needs.test.result == 'success' && env.TO_EMAIL || secrets.EMAIL_FAIL }}
