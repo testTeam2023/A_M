@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip  -Dtest=ItemRecievedRecordTest  -Dbrowser=edge
+         mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge -Dsurefire.failIfNoTests=true || { echo "Tests failed"; exit 1; }
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
