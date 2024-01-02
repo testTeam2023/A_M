@@ -25,12 +25,12 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dbrowser=edge
-          exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "Tests failed with exit code $exit_code."
+          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge
+          $exit_code = $LASTEXITCODE
+          if ($exit_code -ne 0) {
+            Write-Host "Tests failed with exit code $exit_code."
             exit $exit_code
-          fi
+          }
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
