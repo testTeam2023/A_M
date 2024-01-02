@@ -25,7 +25,9 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dbrowser=edge -Dtest=ItemRecievedRecordTest || echo "Test failed" >> test_result.txt
+          mvn clean test -Denvironment=ip -Dbrowser=edge -Dtest=ItemRecievedRecordTest
+        continue-on-error: true
+
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
@@ -43,19 +45,22 @@ jobs:
           name: test-reports
           path: target/surefire-reports
 
-      - name: Check test result
-        id: check-test-result
-        run: echo "::set-output name=result::$(cat test_result.txt)"
+      - name: Check test results
+        id: check-test-results
+        run: |
+          failures=$(grep -E 'Tests run: [1-9]+, Failures: [1-9]+' target/surefire-reports/*.txt || true)
+          echo "::set-output name=test-failures::$failures"
+
 
       - name: Send email on failure
-        if: steps.check-test-result.outputs.result
+        if: ${{ steps.check-test-results.outputs.test-failures != 'NoFailures' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          to: "ahmed_abdelaziz99998@yahoo.com"
+          to: "x@example.com"
           subject: "Khadem Store Test Results - Failure"
           body: |
             <p>
@@ -65,14 +70,14 @@ jobs:
           attachments: target/surefire-reports/emailable-report.html
 
       - name: Send email on success
-        if: !steps.check-test-result.outputs.result
+        if: ${{ steps.check-test-results.outputs.test-failures == 'NoFailures' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          to: "aabdelaziz@azka.com"
+          to: "y@example.com"
           subject: "Khadem Store Test Results - Success"
           body: |
             <p>
@@ -80,3 +85,5 @@ jobs:
             The Selenium test results indicate a success. Please find the attached HTML report.
             </p>
           attachments: target/surefire-reports/emailable-report.html
+
+
