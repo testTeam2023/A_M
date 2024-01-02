@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge || true
+          mvn clean test -Denvironment=ip -Dbrowser=edge || true
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
@@ -43,6 +43,10 @@ jobs:
           name: test-reports
           path: target/surefire-reports
 
+      - name: Set email recipients
+        id: set-email-recipients
+        run: echo "::set-output name=email_recipients::${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}"
+
       - name: Send email
         uses: dawidd6/action-send-mail@v2
         with:
@@ -51,7 +55,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Khadem Store Test Results"
-          to: ${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}
+          to: ${{ steps.set-email-recipients.outputs.email_recipients }}
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
           body: |
