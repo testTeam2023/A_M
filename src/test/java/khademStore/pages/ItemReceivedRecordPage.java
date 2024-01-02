@@ -260,7 +260,7 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-    wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).sendKeys();
+    wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
     Thread.sleep(2000);
     return this ;
 }
