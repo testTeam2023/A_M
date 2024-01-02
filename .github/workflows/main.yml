@@ -1,4 +1,4 @@
-name: Selenium Test and Email
+name: Run Selenium Test
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
           name: test-reports
           path: target/surefire-reports
 
-      - name: Send Email using action-send-mail (Success)
+      - name: Send email
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
@@ -51,6 +51,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Khadem Store Test Results"
+          to: ${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
           body: |
@@ -58,25 +59,5 @@ jobs:
             Dear Eng. Ahmed,
             The Selenium test results are attached. Please find the attached HTML report.
             </p>
-          attachments: target/surefire-reports/emailable-report.html
-          to: ${{ needs.test.result == 'success' && secrets.EMAIL_PASS || secrets.EMAIL_FAIL }}
 
-      - name: Send Email using action-send-mail (Failure)
-        run: |
-          EMAIL_FAIL_ARRAY=($(echo "${{ secrets.EMAIL_FAIL }}" | tr ',' '\n'))
-          for email in "${EMAIL_FAIL_ARRAY[@]}"; do
-            echo "Sending failure email to: $email"
-            action-send-mail \
-              --server-address ${{ secrets.EMAIL_SERVER }} \
-              --server-port ${{ secrets.EMAIL_PORT }} \
-              --username ${{ secrets.EMAIL_USERNAME }} \
-              --password ${{ secrets.EMAIL_PASS }} \
-              --subject "Khadem Store Test Results (Failure)" \
-              --from "azkatestingteam@gmail.com" \
-              --content-type "text/html" \
-              --body "Dear Eng. Ahmed, The Selenium test results indicate a failure. Please review the attached HTML report." \
-              --attachments target/surefire-reports/emailable-report.html \
-              --to $email
-          done
-        env:
-          TO_EMAIL_FAILURE: ${{ secrets.EMAIL_FAIL }}
+          attachments: target/surefire-reports/emailable-report.html
