@@ -48,17 +48,15 @@ jobs:
         run: echo "::set-output name=result::$(cat test_result.txt)"
 
       - name: Send email on failure
-        if: steps.check-test-result.outputs.result == 'Test failed'
+        if: steps.check-test-result.outputs.result
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Khadem Store Test Results - Failure"
           to: "ahmed_abdelaziz99998@yahoo.com"
-          from: "azkatestingteam@gmail.com"
-          content_type: "text/html"
+          subject: "Khadem Store Test Results - Failure"
           body: |
             <p>
             Dear Eng. Ahmed,
@@ -67,17 +65,15 @@ jobs:
           attachments: target/surefire-reports/emailable-report.html
 
       - name: Send email on success
-        if: steps.check-test-result.outputs.result != 'Test failed'
+        if: !steps.check-test-result.outputs.result
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Khadem Store Test Results - Success"
           to: "aabdelaziz@azka.com"
-          from: "azkatestingteam@gmail.com"
-          content_type: "text/html"
+          subject: "Khadem Store Test Results - Success"
           body: |
             <p>
             Dear Eng. Ahmed,
