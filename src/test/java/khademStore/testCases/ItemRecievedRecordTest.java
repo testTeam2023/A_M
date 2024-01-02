@@ -24,8 +24,8 @@ public class ItemRecievedRecordTest extends TestBase {
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                .clickOnSearchTab()
-               .clickOnSearchTab()
-               .clickOnSearchButton();
+               .clickOnSearchTab();
+               //.clickOnSearchButton();
        boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
        Assert.assertTrue(searchResult);
    }

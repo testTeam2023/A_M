@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dbrowser=edge ||true
+          mvn clean test -Denvironment=ip -Dtest=ItemRecievedRecordTest -Dbrowser=edge ||true
       - name: Archive artifacts
         id: generate-report
         uses: actions/upload-artifact@v2
@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Khadem Store Test Results"
-          to: "ahmedali@azka.com, aabdelaziz@azka.com, mrashwan@azka.com"
+          to: ${{ needs.test.result == 'success' && join(',', split(',', secrets.EMAIL_PASS)) || secrets.EMAIL_FAIL }}
           from: "azkatestingteam@gmail.com"
           content_type: "text/html"
           body: |
