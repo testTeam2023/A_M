@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
-          path: target/surefire-reports/
+          path: test-output/ExtentReport.html
 
   send-email:
     needs: test
@@ -43,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: test-reports
-          path: target/surefire-reports
+          path: test-output
 
       - name: Check test results
         id: check-test-results
