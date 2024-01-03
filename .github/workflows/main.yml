@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
-          path: target/surefire-reports
+          path: target/surefire-reports/
 
   send-email:
     needs: test
@@ -48,12 +48,11 @@ jobs:
       - name: Check test results
         id: check-test-results
         run: |
-          failures=$(grep -E 'Tests run: [1-9]+, Failures: [1-9]+' target/surefire-reports/*.txt || true)
+          failures=$(awk '/Tests run:/ && /Failures: [1-9]+/ {print "Failures found"}' target/surefire-reports/*.txt || true)
           echo "::set-output name=test-failures::$failures"
 
-
       - name: Send email on failure
-        if: ${{ steps.check-test-results.outputs.test-failures != 'NoFailures' }}
+        if: ${{ steps.check-test-results.outputs.test-failures != '' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
@@ -71,7 +70,7 @@ jobs:
           attachments: target/surefire-reports/emailable-report.html
 
       - name: Send email on success
-        if: ${{ steps.check-test-results.outputs.test-failures == 'NoFailures' }}
+        if: ${{ steps.check-test-results.outputs.test-failures == '' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
@@ -87,5 +86,3 @@ jobs:
             The Selenium test results indicate a success. Please find the attached HTML report.
             </p>
           attachments: target/surefire-reports/emailable-report.html
-
-
