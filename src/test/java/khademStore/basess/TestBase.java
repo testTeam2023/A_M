@@ -22,7 +22,6 @@ public class TestBase {
     protected WebDriver driver;
     private ExtentReports extent;
     private ExtentTest test;
-
     @BeforeMethod
     public void setup() {
         driver = new Factory().initialization();
@@ -32,7 +31,6 @@ public class TestBase {
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
     }
-
     @AfterMethod
     public void tearDown(ITestResult result) {
         String testResult = result.getMethod().getMethodName();

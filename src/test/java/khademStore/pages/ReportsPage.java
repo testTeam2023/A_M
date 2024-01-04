@@ -37,14 +37,14 @@ public class ReportsPage {
     @Step
     public ReportsPage navigateToReportsPage()throws InterruptedException{
         driver.get(ConfigUtils.getInstance().getReportsPage());
-        Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     @Step
     public ReportsPage clickOnReceivedRecordReport()throws InterruptedException{
     wait=new WebDriverWait(driver, Duration.ofSeconds(20));
     wait.until(ExpectedConditions.elementToBeClickable(receivedRecordReport)).click();
-    Thread.sleep(1500);
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     return this ;
 }
     @Step
@@ -54,7 +54,7 @@ public ReportsPage openReceivedRecordReport() throws InterruptedException {
     String main =  driver.getWindowHandle();
     System.out.println(main);
     wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-    Thread.sleep(13000);
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     Set<String> windows = driver.getWindowHandles();
     for (String s :windows){
         if (!s.equals(main)){
@@ -73,7 +73,7 @@ public ReportsPage openReceivedRecordReport() throws InterruptedException {
     public ReportsPage clickOnStatisticalReceivedReport()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(statisticalReceivedReport)).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     @Step
@@ -104,7 +104,7 @@ public ReportsPage openReceivedRecordReport() throws InterruptedException {
         String main =  driver.getWindowHandle();
         System.out.println(main);
         wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(13000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         Set<String> windows = driver.getWindowHandles();
         for (String s :windows){
             if (!s.equals(main)){
@@ -118,9 +118,9 @@ public ReportsPage openReceivedRecordReport() throws InterruptedException {
     public ReportsPage extractPdf()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(clickOnsaveIcon)).click();
-        Thread.sleep(1300);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         wait.until(ExpectedConditions.elementToBeClickable(clickOnPdf)).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
 

@@ -21,7 +21,7 @@ public class ItemReceivedRecordPage {
     private By invoiceNumberError = By.xpath("//*[@id=\"InvoiceNumber-error\"]");
     private By supplierName = By.xpath("/html/body/div[6]/div/div[2]/div/div[2]/div[1]/form/div[3]/div[3]/div/span[1]/span[1]/span/span[1]");
     private By supplierNameError = By.xpath("//*[@id=\"SuppID-error\"]");
-    private By searcSupplierName   = By.xpath("/html/body/span/span/span[1]/input");
+    //private By searchInSupplierName   = By.xpath("/html/body/span/span/span[1]/input");
     private By parentSupplierName   = By.xpath("//*[@id=\"select2-SuppID-results\"]");
     private By childSupplierName   = By.tagName("li");
     private By selectSupplierName   = By.xpath("//li[contains(text(), 'تيست')]");
@@ -55,24 +55,24 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException{
         try {
             wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-           driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
-           driver.navigate().refresh();
+            driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
+            driver.navigate().refresh();
             Thread.sleep(5000);
             Actions action = new Actions(driver);
             action.doubleClick(wait.until(ExpectedConditions.visibilityOf(driver.findElement(invoiceNumber))));
         }
-     catch (Exception e) {
-        // Handle the case where the element is not found within the specified timeout
-         throw new RuntimeException("No internet connection or the page took too long to load.");
+        catch (Exception e) {
+            // Handle the case where the element is not found within the specified timeout
+            throw new RuntimeException("No internet connection or the page took too long to load.");
+        }
+        return this;
     }
-       return this;
-   }
-   public ItemReceivedRecordPage enterInvoiceNumber(String invoice_Number) throws InterruptedException {
-       wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-       wait.until(ExpectedConditions.presenceOfElementLocated(invoiceNumber)).sendKeys(invoice_Number);
-       Thread.sleep(1000);
-       return this;
-   }
+    public ItemReceivedRecordPage enterInvoiceNumber(String invoice_Number) throws InterruptedException {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.presenceOfElementLocated(invoiceNumber)).sendKeys(invoice_Number);
+        Thread.sleep(1000);
+        return this;
+    }
     public ItemReceivedRecordPage selectSupplierName() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(supplierName)).click();
@@ -105,7 +105,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage addTheItem(String item) throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(itemName)).sendKeys(item);
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public ItemReceivedRecordPage selectMultipleItems() throws InterruptedException {
@@ -121,7 +121,7 @@ public class ItemReceivedRecordPage {
             System.out.println("Selecting item: " + itemName);
             try {
                 item.click();
-                // Thread.sleep(1000);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
                 enterQuantity();
                 enterPrice();
                 clickOnAddItemButton();
@@ -144,11 +144,11 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage selectAnItemFromItemList()throws InterruptedException{
      wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         addTheItem("v");
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         WebElement parentItems = wait.until(ExpectedConditions.presenceOfElementLocated(parentItemsSelection));
         List<WebElement> childItem = parentItems.findElements(childItems);
         childItem.get(0).click();
-        Thread.sleep(500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public ItemReceivedRecordPage enterQuantity(){
@@ -187,7 +187,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnAddItemButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(addItemButton)).click();
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public ItemReceivedRecordPage scrollDown(){
@@ -198,13 +198,13 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnSaveButton()throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public ItemReceivedRecordPage clickOnmessageSuccessbutton()throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(messaageSuccessButton)).click();
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public String invoiceNumberValidationText(){
@@ -255,13 +255,13 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnSearchTab()throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(searchTab))).click();
-        Thread.sleep(4000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
     wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
-    Thread.sleep(2000);
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     return this ;
 }
 
@@ -288,7 +288,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage selectFinancialYear()throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
       wait.until(ExpectedConditions.visibilityOf(driver.findElement(financialYear))).click();
-      Thread.sleep(500);
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         WebElement parentFinancial = wait.until(ExpectedConditions.presenceOfElementLocated(parentFinancialYear));
         List<WebElement>childFinancial = parentFinancial.findElements(childFinancialYear);
         childFinancial.get(1).click();
@@ -305,7 +305,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage selectStore() throws InterruptedException {
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(selectStore))).click();
-        Thread.sleep(500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         WebElement parentStore = wait.until(ExpectedConditions.presenceOfElementLocated(parentSelectStore));
         List<WebElement>childStore = parentStore.findElements(childSelectStore);
         childStore.get(3).click();
@@ -315,7 +315,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage selectReceiver() throws InterruptedException {
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(receiver))).click();
-        Thread.sleep(500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         WebElement parent_Receiver = wait.until(ExpectedConditions.presenceOfElementLocated(parentReceiver));
         List<WebElement>childReceiver = parent_Receiver.findElements(childSelectStore);
         childReceiver.get(1).click();
@@ -325,7 +325,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage selectSupplier() throws InterruptedException {
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(supplier))).click();
-        Thread.sleep(500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         WebElement parent_Supplier = wait.until(ExpectedConditions.presenceOfElementLocated(parentSupplier));
         List<WebElement>child_Supplier = parent_Supplier.findElements(childSelectStore);
         child_Supplier.get(1).click();
@@ -344,7 +344,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage selectRecordMaker() throws InterruptedException {
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(recordMaker))).click();
-        Thread.sleep(500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         WebElement parent_RecordMaker = wait.until(ExpectedConditions.visibilityOf(driver.findElement(parentRecordMaker)));
         List<WebElement>child_RecordMaker = parent_RecordMaker.findElements(childRecordMaker);
         child_RecordMaker.get(6).click();
@@ -353,7 +353,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnPaginationSign() throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(paginationSign))).click();
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 public boolean searchResultIsDisplayed(){
@@ -403,13 +403,13 @@ public String number(){
         WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentButtons)));
         List<WebElement>childButtonEdit = parentButtonEdit.findElements(childButtons);
         childButtonEdit.get(0).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     public ItemReceivedRecordPage clickOnSaveEditButton()throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(editRecordButton)).click();
-        Thread.sleep(1200);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     public boolean messageOfSuccess(){
@@ -424,10 +424,10 @@ public String number(){
        WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentButtons)));
        List<WebElement>childButtonEdit = parentButtonEdit.findElements(childButtons);
        childButtonEdit.get(1).click();
-       Thread.sleep(1000);
+       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
        Alert alert = driver.switchTo().alert();
        alert.accept();
-       Thread.sleep(800);
+       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
        return this ;
    }
 //----------------------------------------------------------------------------------------------------
@@ -443,7 +443,7 @@ public String number(){
     WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentButtons)));
     List<WebElement>childButtonEdit = parentButtonEdit.findElements(childButtons);
     childButtonEdit.get(2).click();
-    Thread.sleep(1200);
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
     return this ;
 }
@@ -453,7 +453,7 @@ public String number(){
         WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentSelectStoreOnRecordPage)));
         List<WebElement> childButtonEdit = parentButtonEdit.findElements(childSelectStoreOnRecordPage);
         childButtonEdit.get(2).click();
-        Thread.sleep(1200);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
     public ItemReceivedRecordPage editTheRecordWithInvalid() throws InterruptedException {
@@ -462,7 +462,7 @@ public String number(){
         WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentSelectStoreOnRecordPage)));
         List<WebElement> childButtonEdit = parentButtonEdit.findElements(childSelectStoreOnRecordPage);
         childButtonEdit.get(10).click();
-        Thread.sleep(1200);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
 

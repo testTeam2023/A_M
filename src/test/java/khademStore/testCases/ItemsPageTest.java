@@ -76,7 +76,7 @@ khademStore.pages.ItemsPage itemsPage;
     }
 
      */
-    @Test(priority = 3 , description = "Click on edit button ")
+    @Test(priority = 3 , description = "Click on edit button " )
     public void Edit_Button_Valid_Test()throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage.navigateToItemsPage()
@@ -87,7 +87,7 @@ khademStore.pages.ItemsPage itemsPage;
         boolean editMessageIsDisplayed=itemsPage.editMessageSuccess();
         Assert.assertTrue(editMessageIsDisplayed);
     }
-    @Test(priority = 4 , description = "Delete item added")
+    @Test(priority = 4 , description = "Delete item added", dependsOnMethods = "items_Added_Valid_Test")
     public void delete_Item_Valid_Test() throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage

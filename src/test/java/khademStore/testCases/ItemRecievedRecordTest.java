@@ -7,7 +7,8 @@ import org.testng.annotations.Test;
 
 public class ItemRecievedRecordTest extends TestBase {
     ItemReceivedRecordPage itemReceivedRecord ;
-   /* @Test(description = " item Received Record for Multiple items" , priority = 1)
+    /*
+   @Test(description = " item Received Record for Multiple items" , priority = 1)
     public void item_Received_Record_Valid_Test_ForMultipleItem() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord
@@ -18,7 +19,8 @@ public class ItemRecievedRecordTest extends TestBase {
                 .selectMultipleItems().scrollDown()
                 .clickOnSaveButton().clickOnmessageSuccessbutton();
     }
-    */
+
+     */
    @Test(description = "Search Feature Valid Test" , priority = 1)
    public void search_Feature_Valid_Test() throws InterruptedException{
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
@@ -30,7 +32,7 @@ public class ItemRecievedRecordTest extends TestBase {
        Assert.assertTrue(searchResult);
    }
 
-    @Test(description = " item_Received_Record_Valid_Test" , priority = 2)
+    @Test(description = " item Received Record Valid Test" , priority = 2)
     public void items_Received_Record_Valid_Test() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
@@ -48,7 +50,7 @@ public class ItemRecievedRecordTest extends TestBase {
         double expectedResults = itemReceivedRecord.totalPrice();
         Assert.assertEquals(actualResults,expectedResults);
     }
-    @Test(description = "Edit record valid test ",priority = 3)
+    @Test(description = "Edit record valid test ",priority = 3 , dependsOnMethods = "items_Received_Record_Valid_Test")
     public void Edit_Record_valid_Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
@@ -59,7 +61,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSaveEditButton()
                 .clickOnmessageSuccessbutton();
     }
-    @Test(description = "Copy the record valid test ",priority =4 )
+    @Test(description = "Copy the record valid test ",priority =4 , dependsOnMethods = "items_Received_Record_Valid_Test")
     public void copy_The_Record_valid_Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()

@@ -9,11 +9,9 @@ import org.testng.annotations.Test;
 
 @Feature("OpenPages")
 public class RestPagesTest extends TestBase {
-
     RestPages restPages ;
-    /*
     @Test(priority = 1)
-    public void settingPageValidTest() throws InterruptedException{
+    public void openSettingPage() throws InterruptedException{
         restPages=new RestPages(driver);
        boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToSettingPage().settingPageIsDisplayed();
         Assert.assertTrue(actual);
@@ -63,7 +61,7 @@ public class RestPagesTest extends TestBase {
 
     public void managementPageValidTest() throws InterruptedException{
         restPages=new RestPages(driver);
-        boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToManagementPage().ManagementPageIsDisplayed();
+        boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToManagementPage().managementPageIsDisplayed();
         Assert.assertTrue(actual);
     }
     @Test(priority = 9)
@@ -101,8 +99,7 @@ public class RestPagesTest extends TestBase {
         boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToFinancialYearPage().financialYearPageIsDisplayed();
         Assert.assertTrue(actual);
     }
-
-     */
+/*
     @Test(priority = 1)
    public void pagesValidTest ()throws InterruptedException {
          restPages = new RestPages(driver);
@@ -150,7 +147,8 @@ public class RestPagesTest extends TestBase {
          boolean actualForItemsReceivedRecordPage = restPages.itemsReceivedRecordPageIsDisplayed();
          Assert.assertTrue(actualForItemsReceivedRecordPage);
     }
-         @Test(priority = 2)
+    */
+         @Test(priority = 14)
          public void reportValidTest ()throws InterruptedException{
               restPages=new RestPages(driver);
               restPages.mainPageLoad()

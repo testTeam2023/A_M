@@ -54,11 +54,12 @@ public class RestPages {
             System.out.println("No internet connection or the page took too long to load.");
             throw new RuntimeException("Page load timed out.");
         }
-        Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
            return this ;
     }
     public RestPages clickOnSystemSettingsButton(){
         driver.findElement(systemSettingButton).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     public RestPages navigateToSettingPage() throws InterruptedException{
@@ -66,7 +67,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(0).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -79,7 +80,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(1).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
 
@@ -92,7 +93,8 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(2).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
         return this;
     }
 
@@ -105,7 +107,8 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(3).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
         return this ;
     }
 
@@ -119,7 +122,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(4).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
 
@@ -132,7 +135,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(5).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
 
@@ -145,7 +148,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(6).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -158,7 +161,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(7).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -171,7 +174,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(8).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -184,7 +187,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(9).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -197,7 +200,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(10).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -210,7 +213,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(11).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -223,7 +226,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(12).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -237,7 +240,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(13).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
 
@@ -253,7 +256,7 @@ public class RestPages {
     public RestPages navigateToItemsReceivedRecordPage() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     public boolean itemsReceivedRecordPageIsDisplayed() {
@@ -288,14 +291,14 @@ public class RestPages {
     public RestPages navigateToMainOperationReportPage() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.get(ConfigUtils.getInstance().getReportsPage());
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     @Step
     public RestPages clickOnReceivedRecordReport()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(receivedRecordReport)).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     @Step
@@ -304,7 +307,7 @@ public class RestPages {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
         wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(8000);
+        Thread.sleep(10000);
         Set<String> windows = driver.getWindowHandles();
         for (String s :windows){
             if (!s.equals(main)){
@@ -332,7 +335,7 @@ public class RestPages {
     public RestPages clickOnStatisticalReceivedReport()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(statisticalReceivedReport)).click();
-        Thread.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     @Step
@@ -362,7 +365,7 @@ public class RestPages {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
         wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(8000);
+        Thread.sleep(10000);
         Set<String> windows = driver.getWindowHandles();
         for (String s :windows){
             if (!s.equals(main)){
@@ -380,9 +383,9 @@ public class RestPages {
     public RestPages extractPdf()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(clickOnsaveIcon)).click();
-        Thread.sleep(1300);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));;
         wait.until(ExpectedConditions.elementToBeClickable(clickOnPdf)).click();
-        Thread.sleep(2500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
 
