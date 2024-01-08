@@ -50,7 +50,7 @@ public class ItemRecievedRecordTest extends TestBase {
         double expectedResults = itemReceivedRecord.totalPrice();
         Assert.assertEquals(actualResults,expectedResults);
     }
-    @Test(description = "Edit record valid test ",priority = 3 , dependsOnMethods = "items_Received_Record_Valid_Test")
+    @Test(description = "Edit record valid test ",priority = 3 )
     public void Edit_Record_valid_Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
@@ -61,7 +61,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSaveEditButton()
                 .clickOnmessageSuccessbutton();
     }
-    @Test(description = "Copy the record valid test ",priority =4 , dependsOnMethods = "items_Received_Record_Valid_Test")
+    @Test(description = "Copy the record valid test ",priority =4)
     public void copy_The_Record_valid_Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()

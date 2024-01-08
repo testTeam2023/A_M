@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class RestPages {
@@ -23,6 +24,38 @@ public class RestPages {
     }
 
     private By systemSettingButton  = By.xpath("//a[@href=\"#\"]/i[contains(@class, \"px-nav-icon fa fa-gear\")]/following-sibling::span[contains(@class, \"px-nav-label\")]");
+    private By saveButton  = By.xpath("//*[@id=\"btnSave\"]");
+    private By messageSuccessButton  = By.xpath("//*[@id=\"btn-ok-modal\"]");
+    private By messageSuccessIsDisplayed  = By.xpath("/html/body/div[9]/div/div");
+    private By citeyName=By.xpath("//*[@id=\"City_Name\"]");
+    private By unitName=By.xpath("//*[@id=\"unit_name\"]");
+    private By bankName= By.xpath("//*[@id=\"BanksName\"]");
+    private By bankCode= By.xpath("//*[@id=\"BanksCode\"]");
+    private By classifcationName = By.xpath("//*[@id=\"CategoryName\"]");
+    private By suppWorkAreaName = By.xpath("//*[@id=\"SuppClassName\"]");
+    private By suppName = By.xpath("//*[@id=\"Supp_Name\"]");
+    private By aadNewClassificationButton = By.xpath("//*[@id=\"btnAddNewClassification\"]");
+    private By departmentName= By.xpath("//*[@id=\"DepartmentName\"]");
+    private By department= By.xpath("/html/body/div[6]/div/div[2]/div/div[2]/form/div[1]/div[2]/div/span[1]/span[1]/span/span[1]");
+    private By departmentParent= By.xpath("//*[@id=\"select2-DepartmentparentId-results\"]");
+    private By departmentChild= By.tagName("li");
+   // private By employee= By.xpath("//*[@id=\"select2-EmployeeDepartmentId-container\"]");
+   // private By employeeParent= By.xpath("//*[@id=\"select2-EmployeeDepartmentId-results\"]");
+  //  private By employeeChild= By.tagName("li");
+ //   private By employeeName = By.xpath("//*[@id=\"EmployeeName\"]");
+  //  private By employeeCode= By.xpath("//*[@id=\"EmployeeUserName\"]");
+   // private By storeName = By.xpath("//*[@id=\"store_name\"]");
+   // private By StoresLocation = By.xpath("//*[@id=\"store_place\"]");
+  //  private By storesType = By.xpath("//*[@id=\"StoreTypeId\"]");
+   // private By StoresName = By.xpath("//*[@id=\"select2-Store_id-container\"]");
+  //  private By StoresEmployeeParent = By.xpath("//*[@id=\"select2-Store_id-results\"]");
+ // private By StoresEmployeeChild = By.tagName("li");
+    //
+   private By employeeDepartmentWanted= By.xpath("//*[@id=\"EmployeeDepartmentId-error\"]");
+   private By storeNameWanted= By.xpath("//*[@id=\"store_name-error\"]");
+    private By employeeNameWanted= By.xpath("//*[@id=\"EmployeeId-error\"]");
+    private By classificationNameWanted= By.xpath("//*[@id=\"class_name-error\"]");
+    private By financialYearNameWanted= By.xpath("//*[@id=\"FinanceYearName\"]");
     private By mainOperationsButton  = By.xpath("/html/body/nav[1]/div/ul/li[3]/a");
     private By reportsButton  = By.xpath("/html/body/nav[1]/div/ul/li[4]/a");
     private By systemSettings = By.xpath("/html/body/nav[1]/div/ul/li[2]/a");
@@ -48,16 +81,18 @@ public class RestPages {
     public RestPages mainPageLoad()throws InterruptedException{
         try {
             driver.get(ConfigUtils.getInstance().getUrl());
+            Thread.sleep(2500);
         }
         catch (Exception e) {
             // Handle the case where the element is not found within the specified timeout
             System.out.println("No internet connection or the page took too long to load.");
             throw new RuntimeException("Page load timed out.");
         }
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
            return this ;
     }
-    public RestPages clickOnSystemSettingsButton(){
+    public RestPages clickOnSystemSettingsButton() throws InterruptedException{
         driver.findElement(systemSettingButton).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
@@ -80,6 +115,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(1).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
@@ -93,6 +129,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(2).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
         return this;
@@ -107,6 +144,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(3).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
         return this ;
@@ -122,6 +160,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(4).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
@@ -135,6 +174,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(5).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
@@ -148,6 +188,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(6).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -161,6 +202,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(7).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -174,6 +216,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(8).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -187,6 +230,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(9).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -200,6 +244,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(10).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -213,6 +258,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(11).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -226,6 +272,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(12).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -240,6 +287,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(13).click();
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -256,6 +304,7 @@ public class RestPages {
     public RestPages navigateToItemsReceivedRecordPage() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
+        Thread.sleep(800);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -263,6 +312,107 @@ public class RestPages {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(itemsReceivedRecordAssertion)).isDisplayed();
     }
+
+    public RestPages clickOnSaveButton () throws InterruptedException {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        Actions actions = new Actions(driver);
+        actions.scrollToElement(driver.findElement(saveButton));
+        wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+        Thread.sleep(2500);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+    public RestPages clickOnSuccessMessageButton() throws InterruptedException {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+
+    public boolean successMessageIsDisplayed(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+       return wait.until(ExpectedConditions.visibilityOfElementLocated(messageSuccessIsDisplayed)).isDisplayed();
+
+    }
+    public RestPages enterCityName(String cityName){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(citeyName)).sendKeys(cityName);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+    public RestPages enterUnitName(String unitsName){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(unitName)).sendKeys(unitsName);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+
+    }
+    public RestPages enterBankDetails(String banksName , String BanksCode){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(bankName)).sendKeys(banksName);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(bankCode)).sendKeys(BanksCode);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+    public RestPages enterClassificationDetails(String classificationsName){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(classifcationName)).sendKeys(classificationsName);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+    public RestPages enterSuppWorkAreaDetails(String suppsWorkAreaName){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(suppWorkAreaName)).sendKeys(suppsWorkAreaName);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+    public RestPages enterSuppDetails(String suppsName ){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(suppName)).sendKeys(suppsName);
+        Actions actions = new Actions(driver);
+        actions.scrollToElement(driver.findElement(aadNewClassificationButton));
+        wait.until(ExpectedConditions.elementToBeClickable(aadNewClassificationButton)).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this ;
+    }
+
+    public RestPages enterDepartmentDetails(String departmntName){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(departmentName)).sendKeys(departmntName);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(department)).click();
+        WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(departmentParent));
+        List<WebElement>child = parent.findElements(departmentChild);
+        child.get(1).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return this;
+    }
+
+    public boolean employeeErrorMessageIsDisplayed(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(employeeDepartmentWanted))
+                .isDisplayed();
+    }
+    public boolean storeErrorMessageIsDisplayed(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(storeNameWanted))
+                .isDisplayed();
+    }
+    public boolean storeEmployeeErrorMessageIsDisplayed(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(employeeNameWanted))
+                .isDisplayed();
+    }
+    public boolean classificationErrorMessageIsDisplayed(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(classificationNameWanted))
+                .isDisplayed();
+    }
+    public boolean financialYearErrorMessageIsDisplayed(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(financialYearNameWanted))
+                .isDisplayed();
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////
     private By receivedRecordReport = By.xpath("//*[@href=\"/KhademStores/Reports/ReportParamters?ReportID=13\"]");

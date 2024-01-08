@@ -87,6 +87,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
    public ItemsPage navigateToItemsPage() throws InterruptedException {
         try {
             driver.get(ConfigUtils.getInstance().getItemsPageUrl());
+            Thread.sleep(3000);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
         catch (Exception e) {
@@ -189,19 +190,31 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
   public ItemsPage addStockAndStores(String store1OpenStock  , String store2OpenStock,String store3OpenStock ) throws InterruptedException {
       wait = new WebDriverWait(driver,Duration.ofSeconds(15));
       wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN1Selection))).click();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf(driver.findElement(openStockForStore1))).clear();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf(driver.findElement(openStockForStore1))).sendKeys(store1OpenStock);
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN2Selection))).click();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf(driver.findElement(openStockForStore2))).clear();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf( driver.findElement(openStockForStore2))).sendKeys(store2OpenStock );
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf( driver.findElement(openStockForStore3))).clear();
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf( driver.findElement(openStockForStore3))).sendKeys(store3OpenStock);
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       try {
+
           wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(save))).click();
+          Thread.sleep(2500);
           driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
           Alert alert = driver.switchTo().alert();
           alert.accept();
+          Thread.sleep(1000);
           driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
           setUnits();
           wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(save))).click();
@@ -215,9 +228,10 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
       wait = new WebDriverWait(driver,Duration.ofSeconds(10));
       return wait.until(ExpectedConditions.visibilityOf(driver.findElement(messageSuccess))).getText();
   }
-   public ItemsPage clickMessageButton() {
+   public ItemsPage clickMessageButton() throws InterruptedException {
        wait = new WebDriverWait(driver,Duration.ofSeconds(15));
       wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+      Thread.sleep(1000);
       return this;
 
 }
@@ -230,6 +244,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
     public ItemsPage clickOnSearchTab() throws InterruptedException {
         wait=new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(search_TabLink))).click();
+        Thread.sleep(2500);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
@@ -237,6 +252,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
         JavascriptExecutor js = (JavascriptExecutor) driver;
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
         js.executeScript("window.scrollBy(0,900)");
+        Thread.sleep(2000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
@@ -314,12 +330,12 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         Actions actions = new Actions(driver);
         actions.scrollToElement(driver.findElement(openStockForStore2));
-        Thread.sleep(1500);
+        Thread.sleep(2000);
          wait.until(ExpectedConditions.visibilityOfElementLocated(openStockForStore2)).clear();
          driver.findElement(openStockForStore2).sendKeys(editStock);
         try {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
-        Thread.sleep(1500);
+        Thread.sleep(2000);
             wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
         }
         catch (Exception e){
@@ -327,8 +343,9 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
             actions1.scrollToElement(driver.findElement(storeN3Selection));
             wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
             wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
-            Thread.sleep(1500);
+            Thread.sleep(2500);
             wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+            Thread.sleep(1000);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
         return this;
@@ -345,16 +362,19 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
     public ItemsPage clickOnDeleteButton()throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(clickOnDeleteButton)).click();
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
         try {
             Alert alert = driver.switchTo().alert();
             alert.accept();
+            Thread.sleep(1000);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
             // Try to handle a potential second alert
             Alert alert1 = driver.switchTo().alert();
             alert1.accept();
+            Thread.sleep(1000);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         } catch (NoAlertPresentException e) {
             // No second alert present, do nothing or log a message
@@ -375,9 +395,11 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
         WebElement parentEditButton = wait.until(ExpectedConditions.presenceOfElementLocated(parentButtons));
         List<WebElement> childEditButton = parentEditButton.findElements(childButtons);
         childEditButton.get(1).click();
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         Alert alert1= driver.switchTo().alert();
         alert1.accept();
