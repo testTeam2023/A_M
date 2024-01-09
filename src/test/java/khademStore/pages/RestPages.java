@@ -22,7 +22,7 @@ public class RestPages {
 
     private By systemSettingButton  = By.xpath("//a[@href=\"#\"]/i[contains(@class, \"px-nav-icon fa fa-gear\")]/following-sibling::span[contains(@class, \"px-nav-label\")]");
     private By saveButton  = By.xpath("//*[@id=\"btnSave\"]");
-    private By messageSuccessButton  = By.xpath("//*[@id=\"btn-ok-modal\"]");
+    private By messageSuccessButton  = By.xpath("//button[@id=\"btn-ok-modal\"]");
     private By messageSuccessIsDisplayed  = By.xpath("/html/body/div[9]/div/div");
     private By citeyName=By.xpath("//*[@id=\"City_Name\"]");
     private By unitName=By.xpath("//*[@id=\"unit_name\"]");
@@ -315,7 +315,7 @@ public class RestPages {
         Actions actions = new Actions(driver);
         actions.scrollToElement(driver.findElement(saveButton));
         wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        Thread.sleep(2500);
+        Thread.sleep(4000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -462,7 +462,7 @@ public class RestPages {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         String main = driver.getWindowHandle();
 
-        int maxAttempts = 3;
+        int maxAttempts = 2;
         int attempt = 0;
 
         while (attempt < maxAttempts) {
@@ -532,12 +532,12 @@ public class RestPages {
     public RestPages openStatisticalReceivedReport() throws InterruptedException {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
-        int maxAttempt = 1 ;
+        int maxAttempt = 3 ;
         int attempt = 0 ;
         while (attempt<maxAttempt) {
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-                Thread.sleep(13000);
+                Thread.sleep(15000);
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
                 Set<String> windows = driver.getWindowHandles();
                 for (String s : windows) {
@@ -547,6 +547,7 @@ public class RestPages {
                         List<WebElement> child = parent.findElements(childReportContent);
                         boolean result = child.get(2).isDisplayed();
                         System.out.println(result);
+                        driver.close();
                         driver.switchTo().window(main);
                     }
                 }
@@ -556,7 +557,7 @@ public class RestPages {
                 attempt++;
             }
         }
-            throw new RuntimeException("Failed to open received record report after " + maxAttempt + " attempts");
+            throw new RuntimeException("Failed to open statistical received record report after " + maxAttempt + " attempts");
     }
     @Step
     public RestPages extractPdf()throws InterruptedException{
