@@ -22,7 +22,7 @@ public class RestPages {
 
     private By systemSettingButton  = By.xpath("//a[@href=\"#\"]/i[contains(@class, \"px-nav-icon fa fa-gear\")]/following-sibling::span[contains(@class, \"px-nav-label\")]");
     private By saveButton  = By.xpath("//*[@id=\"btnSave\"]");
-    private By messageSuccessButton  = By.xpath("//button[@id=\"btn-ok-modal\"]");
+    private By messageSuccessButton  = By.xpath("//*[@id=\"btn-ok-modal\"]");
     private By messageSuccessIsDisplayed  = By.xpath("/html/body/div[9]/div/div");
     private By citeyName=By.xpath("//*[@id=\"City_Name\"]");
     private By unitName=By.xpath("//*[@id=\"unit_name\"]");
@@ -321,9 +321,18 @@ public class RestPages {
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        return this ;
+        boolean clickable = true;
+        while (clickable) {
+            try {
+                Actions actions = new Actions(driver);
+                actions.moveToElement(driver.findElement(messageSuccessButton)).click().perform();
+                // wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+                clickable = false;
+            } catch (Exception e) {
+                System.out.println("Retrying ... to click on element ");
+            }
+        }
+        return this;
     }
 
     public boolean successMessageIsDisplayed(){
