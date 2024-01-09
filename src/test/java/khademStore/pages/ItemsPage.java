@@ -224,7 +224,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
       }
     return this ;
       }
-  public String saveValidation(){
+  public String saveation(){
       wait = new WebDriverWait(driver,Duration.ofSeconds(10));
       return wait.until(ExpectedConditions.visibilityOf(driver.findElement(messageSuccess))).getText();
   }
@@ -356,7 +356,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
     }
     public boolean editMessageSuccess() {
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.presenceOfElementLocated(messageSuccess)).isDisplayed();
+        return wait.until(ExpectedConditions.elementToBeClickable(messageSuccess)).isDisplayed();
     }
     // Delete Section
     public ItemsPage clickOnDeleteButton()throws InterruptedException{

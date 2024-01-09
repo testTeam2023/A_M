@@ -9,7 +9,7 @@ public class ItemRecievedRecordTest extends TestBase {
     ItemReceivedRecordPage itemReceivedRecord ;
     /*
    @Test(description = " item Received Record for Multiple items" , priority = 1)
-    public void item_Received_Record_Valid_Test_ForMultipleItem() throws InterruptedException{
+    public void item_Received_Record__Test_ForMultipleItem() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord
                 .navigateToTheItemReceivedRecordPage()
@@ -21,8 +21,8 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
      */
-   @Test(description = "Search Feature Valid Test" , priority = 1)
-   public void search_Feature_Valid_Test() throws InterruptedException{
+   @Test(description = "Search Feature  Test" , priority = 1)
+   public void search_Feature__Test() throws InterruptedException{
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                .clickOnSearchTab()
@@ -32,8 +32,8 @@ public class ItemRecievedRecordTest extends TestBase {
        Assert.assertTrue(searchResult);
    }
 
-    @Test(description = " item Received Record Valid Test" , priority = 2)
-    public void items_Received_Record_Valid_Test() throws InterruptedException{
+    @Test(description = " item Received Record  Test" , priority = 2)
+    public void items_Received_Record__Test() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .enterInvoiceNumber("102123")
@@ -50,8 +50,8 @@ public class ItemRecievedRecordTest extends TestBase {
         double expectedResults = itemReceivedRecord.totalPrice();
         Assert.assertEquals(actualResults,expectedResults);
     }
-    @Test(description = "Edit record valid test ",priority = 3 )
-    public void Edit_Record_valid_Test() throws InterruptedException {
+    @Test(description = "Edit record  test ",priority = 3 )
+    public void Edit_Record__Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .clickOnSearchTab().clickOnSearchTab()
@@ -61,8 +61,8 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSaveEditButton()
                 .clickOnmessageSuccessbutton();
     }
-    @Test(description = "Copy the record valid test ",priority =4)
-    public void copy_The_Record_valid_Test() throws InterruptedException {
+    @Test(description = "Copy the record  test ",priority =4)
+    public void copy_The_Record__Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .clickOnSearchTab()
@@ -73,8 +73,8 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSaveButton()
                 .clickOnmessageSuccessbutton();
     }
-    @Test(description = "Delete record valid test ",priority = 5)
-    public void Delete_Record_valid_Test() throws InterruptedException {
+    @Test(description = "Delete record  test ",priority = 5)
+    public void Delete_Record__Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .clickOnSearchTab()
@@ -84,15 +84,15 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
     /*
-    @Test(description = " item Received Record validation test" , priority = 3)
-    public void item_Received_Record_Valid_Test_For_Validations() throws InterruptedException{
+    @Test(description = " item Received Record ation test" , priority = 3)
+    public void item_Received_Record__Test_For_ations() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord
                 .navigateToTheItemReceivedRecordPage()
                 .clickOnSaveButton();
         String expectedResult = "مطلوب";
-        String invoiceNumberValidationText = itemReceivedRecord.invoiceNumberValidationText();
-        Assert.assertEquals(invoiceNumberValidationText,expectedResult);
+        String invoiceNumberationText = itemReceivedRecord.invoiceNumberationText();
+        Assert.assertEquals(invoiceNumberationText,expectedResult);
         String attachmentValidationText = itemReceivedRecord.attachmentErrorValidationText();
         Assert.assertEquals(attachmentValidationText,expectedResult);
         String supplierNameValidationText = itemReceivedRecord.supplierNameErrorValidationText();

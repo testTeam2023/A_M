@@ -20,7 +20,7 @@ public class RestPagesTest extends TestBase {
                .clickOnSuccessMessageButton();
     }
     @Test(priority = 2)
-    public void citiesPageValidTest() throws InterruptedException{
+    public void citiesPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
          restPages.mainPageLoad().clickOnSystemSettingsButton()
                  .navigateToCitiesPage()
@@ -30,7 +30,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 3)
 
-    public void unitsPageValidTest() throws InterruptedException{
+    public void unitsPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         restPages.mainPageLoad()
                 .clickOnSystemSettingsButton()
@@ -41,7 +41,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 4)
 
-    public void banksPageValidTest() throws InterruptedException{
+    public void banksPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         restPages.mainPageLoad().clickOnSystemSettingsButton()
                 .navigateToBanksPage()
@@ -51,7 +51,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 5)
 
-    public void lkCategoryPageValidTest() throws InterruptedException{
+    public void lkCategoryPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
       restPages.mainPageLoad().clickOnSystemSettingsButton()
               .navigateToLkCategoryPage()
@@ -59,7 +59,7 @@ public class RestPagesTest extends TestBase {
               .clickOnSaveButton().clickOnSuccessMessageButton();
     }
     @Test(priority =6)
-    public void supplierWorkAreaPageValidTest() throws InterruptedException{
+    public void supplierWorkAreaPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
          restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToSuppliersWorkAreaPage()
                  .enterSuppWorkAreaDetails(RandomArItems.randomArData())
@@ -67,7 +67,7 @@ public class RestPagesTest extends TestBase {
 
     }
     @Test(priority =7)
-    public void suppliersPageValidTest() throws InterruptedException{
+    public void suppliersPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         restPages.mainPageLoad().clickOnSystemSettingsButton()
                 .navigateToSuppliersPage().enterSuppDetails(RandomArItems.randomArData())
@@ -76,7 +76,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 8)
 
-    public void managementPageValidTest() throws InterruptedException{
+    public void departmentPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToManagementPage()
                 .enterDepartmentDetails(RandomArItems.randomArData())
@@ -85,7 +85,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 9)
 
-    public void employeesPageValidTest() throws InterruptedException{
+    public void employeesPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         Boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToEmployeesPage()
                 .clickOnSaveButton()
@@ -94,7 +94,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority =10)
 
-    public void storesPageValidTest() throws InterruptedException{
+    public void storesPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToStoresPage()
                 .clickOnSaveButton()
@@ -103,7 +103,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 11)
 
-    public void storesCuratorPageValidTest() throws InterruptedException{
+    public void storesCuratorPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToStoresCuratorPage()
                 .clickOnSaveButton()
@@ -112,7 +112,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority =12)
 
-    public void classificationsPageValidTest() throws InterruptedException{
+    public void classificationsPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToClassificationsPage()
                 .clickOnSaveButton()
@@ -121,7 +121,7 @@ public class RestPagesTest extends TestBase {
     }
     @Test(priority = 13)
 
-    public void financialYearPageValidTest() throws InterruptedException{
+    public void financialYearPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton()
                 .navigateToFinancialYearPage()
@@ -131,7 +131,7 @@ public class RestPagesTest extends TestBase {
     }
 /*
     @Test(priority = 1)
-   public void pagesValidTest ()throws InterruptedException {
+   public void pagesTest ()throws InterruptedException {
          restPages = new RestPages(driver);
          restPages.mainPageLoad().clickOnSystemSettingsButton()
                  .navigateToSettingPage()
@@ -179,13 +179,19 @@ public class RestPagesTest extends TestBase {
     }
     */
          @Test(priority = 14)
-         public void reportValidTest ()throws InterruptedException{
-              restPages=new RestPages(driver);
-              restPages.mainPageLoad()
-                .clickOnReporsButton()
-                .navigateToMainOperationReportPage()
-                .clickOnReceivedRecordReport()
-                .openReceivedRecordReport()
+         public void receivedRecordReportTest ()throws InterruptedException {
+             restPages = new RestPages(driver);
+             restPages.mainPageLoad()
+                     .clickOnReporsButton()
+                     .navigateToMainOperationReportPage()
+                     .clickOnReceivedRecordReport()
+                     .openReceivedRecordReport();
+         }
+         @Test(priority = 15)
+    public void StatisticalReceivedRecordReportTest ()throws InterruptedException{
+             restPages = new RestPages(driver);
+             restPages.mainPageLoad()
+             .clickOnReporsButton()
                 .navigateToMainOperationReportPage().clickOnStatisticalReceivedReport()
                 .openStatisticalReceivedReport();
 

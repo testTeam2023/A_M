@@ -378,12 +378,20 @@ public class RestPages {
 
     public RestPages enterDepartmentDetails(String departmntName){
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(departmentName)).sendKeys(departmntName);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(department)).click();
-        WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(departmentParent));
-        List<WebElement>child = parent.findElements(departmentChild);
-        child.get(1).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        boolean staleElement = true;
+        while (staleElement) {
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(departmentName)).sendKeys(departmntName);
+                wait.until(ExpectedConditions.visibilityOfElementLocated(department)).click();
+                WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(departmentParent));
+                List<WebElement> child = parent.findElements(departmentChild);
+                child.get(1).click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                staleElement = false;
+            } catch (Exception e) {
+                System.out.println("StaleElementReferenceException occurred. Retrying...");;
+            }
+        }
         return this;
     }
 
@@ -515,7 +523,8 @@ public class RestPages {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
         wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(10000);
+        Thread.sleep(13000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         Set<String> windows = driver.getWindowHandles();
         for (String s :windows){
             if (!s.equals(main)){

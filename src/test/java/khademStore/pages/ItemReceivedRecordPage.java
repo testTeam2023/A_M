@@ -50,7 +50,7 @@ public class ItemReceivedRecordPage {
     private By messaageSuccessButton  = By.xpath("//*[@id=\"btn-ok-modal\"]");
     private By messaageSuccess  = By.xpath("/html/body/div[10]/div/div/div[3]");
 
-    private By enterItemValidation  = By.xpath("//*[@id=\"div-error-modal\"]/div/div/div[3]");
+    private By enterItemation  = By.xpath("//*[@id=\"div-error-modal\"]/div/div/div[3]");
 
     public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException{
         try {
@@ -75,12 +75,20 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage selectSupplierName() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(supplierName)).click();
-        Thread.sleep(1000);
-        WebElement parentSuppName= wait.until(ExpectedConditions.presenceOfElementLocated(parentSupplierName));
-        List<WebElement>childSuppName = parentSuppName.findElements(childSupplierName);
-        childSuppName.get(1).click();
-        Thread.sleep(1000);
+        boolean staleElement = true;
+        while (staleElement) {
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(supplierName)).click();
+                Thread.sleep(1000);
+                WebElement parentSuppName = wait.until(ExpectedConditions.presenceOfElementLocated(parentSupplierName));
+                List<WebElement> childSuppName = parentSuppName.findElements(childSupplierName);
+                childSuppName.get(1).click();
+                Thread.sleep(1000);
+                staleElement = false;
+            } catch (Exception e) {
+                System.out.println("StaleElementReferenceException occurred. Retrying...");
+            }
+        }
         return this;
     }
     public ItemReceivedRecordPage enterAttachment(String attachemnt){
@@ -208,17 +216,17 @@ public class ItemReceivedRecordPage {
         Thread.sleep(1000);
         return this;
     }
-    public String invoiceNumberValidationText(){
+    public String invoiceNumberationText(){
        return driver.findElement(invoiceNumberError).getText();
     }
-    public String attachmentErrorValidationText(){
+    public String attachmentErrorationText(){
         return driver.findElement(attachmentError).getText();
     }
-    public String supplierNameErrorValidationText(){
+    public String supplierNameErrorationText(){
         return driver.findElement(supplierNameError).getText();
     }
-    public String enterItemValidationText(){
-        return driver.findElement(enterItemValidation).getText();
+    public String enterItemationText(){
+        return driver.findElement(enterItemation).getText();
     }
     //-----------------------------------------------------------------------------------------------------------------//
     private By searchTab = By.xpath("//a[@id=\"AnchorfirstTab\"]");
@@ -459,7 +467,7 @@ public String number(){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
-    public ItemReceivedRecordPage editTheRecordWithInvalid() throws InterruptedException {
+    public ItemReceivedRecordPage editTheRecordWithIn() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(selectStoreOnRecordPage)).click();
         WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentSelectStoreOnRecordPage)));

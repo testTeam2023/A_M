@@ -7,8 +7,8 @@ import org.testng.annotations.Test;
 
 public class ItemsPageTest extends TestBase {
 khademStore.pages.ItemsPage itemsPage;
-    @Test(priority = 1 , description = "Make a New Valid Item ")
-    public void items_Added_Valid_Test()throws InterruptedException{
+    @Test(priority = 1 , description = "Make a New  Item ")
+    public void items_Added__Test()throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage
              .navigateToItemsPage()
@@ -23,8 +23,8 @@ khademStore.pages.ItemsPage itemsPage;
              .setUnits()
              .addStockAndStores("2","1","3").clickMessageButton();
     }
-    @Test(priority = 2, description = "Valid search without Filters")
-    public void search_Valid_Test() throws InterruptedException {
+    @Test(priority = 2, description = " search without Filters")
+    public void search__Test() throws InterruptedException {
         itemsPage = new khademStore.pages.ItemsPage(driver);
          itemsPage.navigateToItemsPage().clickOnSearchTab().clickOnSearchTab().clickOnsearch_button();
          boolean condition = itemsPage.searchResultIsDisplayed();
@@ -77,7 +77,7 @@ khademStore.pages.ItemsPage itemsPage;
 
      */
     @Test(priority = 3 , description = "Click on edit button " )
-    public void Edit_Button_Valid_Test()throws InterruptedException{
+    public void Edit_Items__Test()throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage.navigateToItemsPage()
                 .clickOnSearchTab().clickOnSearchTab()
@@ -87,8 +87,8 @@ khademStore.pages.ItemsPage itemsPage;
         boolean editMessageIsDisplayed=itemsPage.editMessageSuccess();
         Assert.assertTrue(editMessageIsDisplayed);
     }
-    @Test(priority = 4 , description = "Delete item added", dependsOnMethods = "items_Added_Valid_Test")
-    public void delete_Item_Valid_Test() throws InterruptedException{
+    @Test(priority = 4 , description = "Delete item added", dependsOnMethods = "items_Added__Test")
+    public void delete_Items__Test() throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage
                 .navigateToItemsPage()
