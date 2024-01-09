@@ -2,10 +2,7 @@ package khademStore.pages;
 
 import io.qameta.allure.Step;
 import khademStore.utils.ConfigUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -462,23 +459,36 @@ public class RestPages {
     @Step
 
     public RestPages openReceivedRecordReport() throws InterruptedException {
-        wait=new WebDriverWait(driver, Duration.ofSeconds(20));
-        String main =  driver.getWindowHandle();
-        wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(10000);
-        Set<String> windows = driver.getWindowHandles();
-        for (String s :windows){
-            if (!s.equals(main)){
-                driver.switchTo().window(s);
-                WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentReportContent));
-                List<WebElement>child = parent.findElements(childReportContent);
-                boolean result= child.get(2).isDisplayed();
-                System.out.println(result);
-                driver.close();
-                driver.switchTo().window(main);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        String main = driver.getWindowHandle();
+
+        int maxAttempts = 3;
+        int attempt = 0;
+
+        while (attempt < maxAttempts) {
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
+                Thread.sleep(13000);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                Set<String> windows = driver.getWindowHandles();
+                for (String s : windows) {
+                    if (!s.equals(main)) {
+                        driver.switchTo().window(s);
+                        WebElement parent = wait.until(ExpectedConditions.visibilityOfElementLocated(parentReportContent));
+                        List<WebElement> child = parent.findElements(childReportContent);
+                        boolean result = child.get(2).isDisplayed();
+                        System.out.println(result);
+                        driver.close();
+                        driver.switchTo().window(main);
+                    }
+                }
+                return this;
+            } catch (Exception e) {
+                System.out.println("Attempt #" + (attempt + 1) + " failed: " + e.getMessage());
+                attempt++;
             }
         }
-        return this ;
+        throw new RuntimeException("Failed to open received record report after " + maxAttempts + " attempts");
     }
     @Step
 
@@ -522,21 +532,31 @@ public class RestPages {
     public RestPages openStatisticalReceivedReport() throws InterruptedException {
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         String main =  driver.getWindowHandle();
-        wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-        Thread.sleep(13000);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        Set<String> windows = driver.getWindowHandles();
-        for (String s :windows){
-            if (!s.equals(main)){
-                driver.switchTo().window(s);
-                WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentStatisticalReportContent));
-                List<WebElement>child = parent.findElements(childReportContent);
-                boolean result= child.get(2).isDisplayed();
-                System.out.println(result);
-                driver.switchTo().window(main);
+        int maxAttempt = 1 ;
+        int attempt = 0 ;
+        while (attempt<maxAttempt) {
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
+                Thread.sleep(13000);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                Set<String> windows = driver.getWindowHandles();
+                for (String s : windows) {
+                    if (!s.equals(main)) {
+                        driver.switchTo().window(s);
+                        WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentStatisticalReportContent));
+                        List<WebElement> child = parent.findElements(childReportContent);
+                        boolean result = child.get(2).isDisplayed();
+                        System.out.println(result);
+                        driver.switchTo().window(main);
+                    }
+                }
+                return this;
+            } catch (Exception e) {
+                System.out.println("Attempt #" + (attempt + 1) + " failed: " + e.getMessage());
+                attempt++;
             }
         }
-        return this ;
+            throw new RuntimeException("Failed to open received record report after " + maxAttempt + " attempts");
     }
     @Step
     public RestPages extractPdf()throws InterruptedException{

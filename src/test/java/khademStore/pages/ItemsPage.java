@@ -244,17 +244,32 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
     public ItemsPage clickOnSearchTab() throws InterruptedException {
         wait=new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(search_TabLink))).click();
-        Thread.sleep(2500);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        Thread.sleep(3000);
         return this;
     }
     public ItemsPage clickOnsearch_button() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
-        js.executeScript("window.scrollBy(0,900)");
-        Thread.sleep(2000);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        return this;
+
+        // Set the maximum number of attempts
+        int maxAttempts = 1;
+        int attempt = 0;
+        while (attempt < maxAttempts) {
+            try {
+                // Wait for the element to be clickable
+                wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
+                Thread.sleep(2500);
+                js.executeScript("window.scrollBy(0,900)");
+                // If everything succeeds, return
+                return this;
+            } catch (TimeoutException | StaleElementReferenceException | ElementClickInterceptedException e) {
+                // Catch known exceptions and log the error (you can modify this part as needed)
+                System.out.println("Attempt #" + (attempt + 1) + " failed: " + e.getMessage());
+                // Increment the attempt counter
+                attempt++;
+            }
+        }
+        // If the maximum number of attempts is reached without success, you might want to throw an exception or log an error.
+        throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts");
     }
     public int numberOfsearchResult(){
         wait=new WebDriverWait(driver,Duration.ofSeconds(30));
