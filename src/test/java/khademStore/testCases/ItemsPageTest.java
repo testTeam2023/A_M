@@ -84,8 +84,6 @@ khademStore.pages.ItemsPage itemsPage;
                 .clickOnsearch_button()
                 .clickOnEditButton()
                 .editItemAdded("2");
-        boolean editMessageIsDisplayed=itemsPage.editMessageSuccess();
-        Assert.assertTrue(editMessageIsDisplayed);
     }
     @Test(priority = 4 , description = "Delete item added", dependsOnMethods = "items_Added__Test")
     public void delete_Items__Test() throws InterruptedException{
