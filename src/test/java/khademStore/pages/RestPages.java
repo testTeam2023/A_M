@@ -313,26 +313,28 @@ public class RestPages {
     public RestPages clickOnSaveButton () throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         Actions actions = new Actions(driver);
-        actions.scrollToElement(driver.findElement(saveButton));
-        wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+        actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
+       // wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
         Thread.sleep(4000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        boolean clickable = true;
-        while (clickable) {
+        int maxAttempts = 3 ;
+        int attempts = 0 ;
+        while (attempts<maxAttempts) {
             try {
                 Actions actions = new Actions(driver);
                 actions.moveToElement(driver.findElement(messageSuccessButton)).click().perform();
                 // wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
-                clickable = false;
+                return this;
             } catch (Exception e) {
-                System.out.println("Retrying ... to click on element ");
+                System.out.println("Retrying" + attempts+1 + "... to click on element ");
+                attempts++;
             }
         }
-        return this;
+        throw new RuntimeException("process fails check the element click ability") ;
     }
 
     public boolean successMessageIsDisplayed(){

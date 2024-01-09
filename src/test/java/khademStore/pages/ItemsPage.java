@@ -251,7 +251,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         // Set the maximum number of attempts
-        int maxAttempts = 1;
+        int maxAttempts = 2;
         int attempt = 0;
         while (attempt < maxAttempts) {
             try {

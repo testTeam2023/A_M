@@ -29,7 +29,6 @@ public class RestPagesTest extends TestBase {
                  .clickOnSuccessMessageButton();
     }
     @Test(priority = 3)
-
     public void unitsPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
         restPages.mainPageLoad()
