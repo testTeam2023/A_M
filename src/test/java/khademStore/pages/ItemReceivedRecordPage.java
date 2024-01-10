@@ -212,7 +212,7 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOutsideTheModal () {
         Actions actions = new Actions(driver);
-        actions.moveByOffset(200, 50).click().build().perform();
+        actions.moveByOffset(200, -50).click().build().perform();
         return this ;
     }
     public ItemReceivedRecordPage clickOnmessageSuccessbutton()throws InterruptedException {
@@ -276,7 +276,10 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
     try {
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        Actions actions = new Actions(driver);
+        actions.scrollToElement(driver.findElement(Search_button));
+        actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
         Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
@@ -284,8 +287,9 @@ public class ItemReceivedRecordPage {
         driver.navigate().refresh();
         clickOnSearchTab();
         clickOnSearchTab();
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(Search_button)).click().build().perform();        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
     return this ;

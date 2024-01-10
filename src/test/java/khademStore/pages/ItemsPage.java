@@ -255,15 +255,19 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
     public ItemsPage clickOnsearch_button() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
             try {
-                wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+                Actions actions = new Actions(driver);
+                actions.scrollToElement(driver.findElement(Search_button));
+                actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
                 Thread.sleep(2500);
                 js.executeScript("window.scrollBy(0,900)");
             } catch (TimeoutException | StaleElementReferenceException | ElementClickInterceptedException e) {
                driver.navigate().refresh();
                clickOnSearchTab();
                 clickOnSearchTab();
-                wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
-                Thread.sleep(2500);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+                Actions actions = new Actions(driver);
+                actions.moveToElement(driver.findElement(Search_button)).click().build().perform();                Thread.sleep(2500);
                 js.executeScript("window.scrollBy(0,900)");
         }
         return this;
