@@ -210,7 +210,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
       try {
 
           wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(save))).click();
-          Thread.sleep(2500);
+          Thread.sleep(8000);
           driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
           Alert alert = driver.switchTo().alert();
           alert.accept();
@@ -218,6 +218,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
           driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
           setUnits();
           wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(save))).click();
+          Thread.sleep(8000);
       }
       catch (Exception e){
           System.out.println(e);
@@ -231,16 +232,16 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
 
    public ItemsPage clickMessageButton() throws InterruptedException {
        wait = new WebDriverWait(driver,Duration.ofSeconds(15));
-       try {
+      // try {
            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
            Actions actions = new Actions(driver);
            actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
            actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
-       }
-       catch (Exception e){
-           Actions actions = new Actions(driver);
-           actions.moveByOffset(-80, -80).click().build().perform();
-       }
+    //   }
+    //   catch (Exception e){
+     //      Actions actions = new Actions(driver);
+      //     actions.moveByOffset(-80, -80).click().build().perform();
+    //   }
       return this;
 }
     public ItemsPage clickOutsideTheModal () {
@@ -359,7 +360,7 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
          driver.findElement(openStockForStore2).sendKeys(editStock);
         try {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
-        Thread.sleep(2000);
+        Thread.sleep(8000);
             wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
         }
         catch (Exception e){
@@ -367,20 +368,22 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
             actions1.scrollToElement(driver.findElement(storeN3Selection));
             wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
             wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
-            Thread.sleep(2500);
-            try {
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-                Actions actions2 = new Actions(driver);
-                actions2.scrollToElement(driver.findElement(messageSuccessButton)).perform();
-                actions2.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
-            }
-            catch (Exception ee){
-                Actions actions3 = new Actions(driver);
-                actions3.moveByOffset(-80, -80).click().build().perform();
+            Thread.sleep(8000);
+            wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+        }
+           // try {
+             //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+           //     Actions actions2 = new Actions(driver);
+             //   actions2.scrollToElement(driver.findElement(messageSuccessButton)).perform();
+             //   actions2.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
+           // }
+           // catch (Exception ee){
+           //     Actions actions3 = new Actions(driver);
+             //   actions3.moveByOffset(-80, -80).click().build().perform();
            // wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
            // Thread.sleep(1000);
            // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        }}
+    //    }}
         return this;
     }
     public String setEditButtonIsDisplay(){
