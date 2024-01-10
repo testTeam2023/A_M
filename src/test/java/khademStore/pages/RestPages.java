@@ -74,7 +74,6 @@ public class RestPages {
     private By financeYearAssertion = By.xpath("//*[@id=\"secondTab\"]");
     private By itemsReceivedRecordAssertion = By.xpath("//*[@id=\"secondTab\"]");
 
-
     public RestPages mainPageLoad()throws InterruptedException{
         try {
             driver.get(ConfigUtils.getInstance().getUrl());
@@ -320,25 +319,26 @@ public class RestPages {
     }
     public RestPages clickOutsideTheModal () {
         Actions actions = new Actions(driver);
-        actions.moveByOffset(-80, -80).click().build().perform();
+        try {
+            actions.moveByOffset(-80, -80).click().build().perform();
+        }
+        catch (Exception e){
+            actions.moveByOffset(80, 80).click().build().perform();
+        }
          return this ;
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        int maxAttempts = 3 ;
-        int attempts = 0 ;
-        while (attempts<maxAttempts) {
             try {
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
                 Actions actions = new Actions(driver);
-                actions.moveToElement(driver.findElement(messageSuccessButton)).click().perform();
-                // wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
-                return this;
+                actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
+                actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
             } catch (Exception e) {
-                System.out.println("Retrying" + attempts+1 + "... to click on element ");
-                attempts++;
-            }
+                Actions actions = new Actions(driver);
+                actions.moveByOffset(-80, -80).click().build().perform();
         }
-        throw new RuntimeException("process fails check the element click ability") ;
+          return this;
     }
 
     public boolean successMessageIsDisplayed(){

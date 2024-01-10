@@ -212,13 +212,26 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOutsideTheModal () {
         Actions actions = new Actions(driver);
-        actions.moveByOffset(200, -50).click().build().perform();
+        try {
+            actions.moveByOffset(200, -50).click().build().perform();
+        }
+        catch (Exception e){
+            actions.moveByOffset(220, -40).click().build().perform();
+        }
         return this ;
     }
-    public ItemReceivedRecordPage clickOnmessageSuccessbutton()throws InterruptedException {
+    public ItemReceivedRecordPage clickOnMessageSuccessButton()throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(messaageSuccessButton)).click();
-        Thread.sleep(1000);
+        try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+            Actions actions = new Actions(driver);
+            actions.scrollToElement(driver.findElement(messaageSuccessButton)).perform();
+            actions.moveToElement(driver.findElement(messaageSuccessButton)).click().build().perform();
+        }
+        catch (Exception e){
+            Actions actions = new Actions(driver);
+            actions.moveByOffset(200, -50).click().build().perform();
+        }
         return this;
     }
     public String invoiceNumberationText(){

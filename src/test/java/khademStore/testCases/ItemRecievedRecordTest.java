@@ -17,7 +17,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .selectSupplierName()
                 .enterAttachment("125kj")
                 .selectMultipleItems().scrollDown()
-                .clickOnSaveButton().clickOutsideTheModal();
+                .clickOnSaveButton().clickOnMessageSuccessButton();
     }
 
      */
@@ -45,7 +45,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnAddItemButton()
                 .scrollDown()
                 .clickOnSaveButton()
-                .clickOutsideTheModal();
+                .clickOnMessageSuccessButton();
         double actualResults = itemReceivedRecord.totalPriceWithTaxes();
         double expectedResults = itemReceivedRecord.totalPrice();
         Assert.assertEquals(actualResults,expectedResults);
@@ -59,7 +59,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnEditButton()
                 .setReceiverName("62")
                 .clickOnSaveEditButton()
-                .clickOutsideTheModal();
+                .clickOnMessageSuccessButton();
     }
     @Test(description = "Copy the record  test ",priority =4)
     public void copy_The_Record__Test() throws InterruptedException {
@@ -71,7 +71,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .editTheRecord()
                 .enterAttachment("10")
                 .clickOnSaveButton()
-                .clickOutsideTheModal();
+                .clickOnMessageSuccessButton();
     }
     @Test(description = "Delete record  test ",priority = 5)
     public void Delete_Record__Test() throws InterruptedException {
@@ -80,7 +80,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSearchTab()
                 .clickOnSearchButton().clickOnSearchTab()
                 .clickOnDeleteButton()
-                .clickOutsideTheModal();
+                .clickOnMessageSuccessButton();
     }
 
     /*
