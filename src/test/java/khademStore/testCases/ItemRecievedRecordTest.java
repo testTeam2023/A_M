@@ -43,7 +43,6 @@ public class ItemRecievedRecordTest extends TestBase {
                 .enterQuantity()
                 .enterPrice()
                 .clickOnAddItemButton()
-                .scrollDown()
                 .clickOnSaveButton()
                 .clickOnMessageSuccessButton();
         double actualResults = itemReceivedRecord.totalPriceWithTaxes();

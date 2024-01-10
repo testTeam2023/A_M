@@ -468,7 +468,7 @@ public class RestPages {
     public RestPages clickOnReceivedRecordReport()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(receivedRecordReport)).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        Thread.sleep(2000);
         return this ;
     }
     @Step
@@ -483,12 +483,13 @@ public class RestPages {
         while (attempt < maxAttempts) {
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-                Thread.sleep(13000);
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
                 Set<String> windows = driver.getWindowHandles();
                 for (String s : windows) {
                     if (!s.equals(main)) {
                         driver.switchTo().window(s);
+                        driver.navigate().refresh();
+                        Thread.sleep(13000);
                         WebElement parent = wait.until(ExpectedConditions.visibilityOfElementLocated(parentReportContent));
                         List<WebElement> child = parent.findElements(childReportContent);
                         boolean result = child.get(2).isDisplayed();
@@ -518,7 +519,7 @@ public class RestPages {
     public RestPages clickOnStatisticalReceivedReport()throws InterruptedException{
         wait=new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(statisticalReceivedReport)).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        Thread.sleep(2000);
         return this ;
     }
     @Step
@@ -552,12 +553,13 @@ public class RestPages {
         while (attempt<maxAttempt) {
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(displayReportButton)).click();
-                Thread.sleep(15000);
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
                 Set<String> windows = driver.getWindowHandles();
                 for (String s : windows) {
                     if (!s.equals(main)) {
                         driver.switchTo().window(s);
+                        driver.navigate().refresh();
+                        Thread.sleep(15000);
                         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentStatisticalReportContent));
                         List<WebElement> child = parent.findElements(childReportContent);
                         boolean result = child.get(2).isDisplayed();

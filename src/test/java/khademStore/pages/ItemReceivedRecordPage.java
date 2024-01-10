@@ -206,7 +206,10 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOnSaveButton()throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+        Actions actions = new Actions(driver);
+        actions.scrollToElement(driver.findElement(saveButton)).perform();
+        actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
+
         Thread.sleep(3000);
         return this;
     }
@@ -216,7 +219,7 @@ public class ItemReceivedRecordPage {
             actions.moveByOffset(200, -50).click().build().perform();
         }
         catch (Exception e){
-            actions.moveByOffset(220, -40).click().build().perform();
+            actions.moveByOffset(0, 0).click().build().perform();
         }
         return this ;
     }
@@ -229,8 +232,14 @@ public class ItemReceivedRecordPage {
             actions.moveToElement(driver.findElement(messaageSuccessButton)).click().build().perform();
         }
         catch (Exception e){
+            try {
             Actions actions = new Actions(driver);
             actions.moveByOffset(200, -50).click().build().perform();
+        }
+            catch (Exception ee){
+                Actions actions = new Actions(driver);
+                actions.moveByOffset(0, 0).click().build().perform();
+            }
         }
         return this;
     }
