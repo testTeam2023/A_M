@@ -254,27 +254,19 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
     }
     public ItemsPage clickOnsearch_button() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        // Set the maximum number of attempts
-        int maxAttempts = 2;
-        int attempt = 0;
-        while (attempt < maxAttempts) {
             try {
-                // Wait for the element to be clickable
                 wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
                 Thread.sleep(2500);
                 js.executeScript("window.scrollBy(0,900)");
-                // If everything succeeds, return
-                return this;
             } catch (TimeoutException | StaleElementReferenceException | ElementClickInterceptedException e) {
-                // Catch known exceptions and log the error (you can modify this part as needed)
-                System.out.println("Attempt #" + (attempt + 1) + " failed: " + e.getMessage());
-                // Increment the attempt counter
-                attempt++;
-            }
+               driver.navigate().refresh();
+               clickOnSearchTab();
+                clickOnSearchTab();
+                wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
+                Thread.sleep(2500);
+                js.executeScript("window.scrollBy(0,900)");
         }
-        // If the maximum number of attempts is reached without success, you might want to throw an exception or log an error.
-        throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts");
+        return this;
     }
     public int numberOfsearchResult(){
         wait=new WebDriverWait(driver,Duration.ofSeconds(30));

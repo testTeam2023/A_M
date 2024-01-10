@@ -275,9 +275,19 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-    wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
-    Thread.sleep(1000);
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    try {
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
+        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    }
+    catch (Exception e){
+        driver.navigate().refresh();
+        clickOnSearchTab();
+        clickOnSearchTab();
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(Search_button))).click();
+        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+    }
     return this ;
 }
 
