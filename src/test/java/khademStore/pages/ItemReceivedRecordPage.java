@@ -207,8 +207,13 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnSaveButton()throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        Thread.sleep(2500);
+        Thread.sleep(3000);
         return this;
+    }
+    public ItemReceivedRecordPage clickOutsideTheModal () {
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(200, 50).click().build().perform();
+        return this ;
     }
     public ItemReceivedRecordPage clickOnmessageSuccessbutton()throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));

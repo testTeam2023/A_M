@@ -21,7 +21,7 @@ khademStore.pages.ItemsPage itemsPage;
              .elec_Qty("100","1000")
              .someChoices()
              .setUnits()
-             .addStockAndStores("2","1","3").clickMessageButton();
+             .addStockAndStores("2","1","3").clickOutsideTheModal();
     }
     @Test(priority = 2, description = " search without Filters")
     public void search__Test() throws InterruptedException {

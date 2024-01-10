@@ -315,9 +315,13 @@ public class RestPages {
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
        // wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        Thread.sleep(4000);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        Thread.sleep(3500);
         return this ;
+    }
+    public RestPages clickOutsideTheModal () {
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(-80, -80).click().build().perform();
+         return this ;
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));

@@ -228,13 +228,18 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
       wait = new WebDriverWait(driver,Duration.ofSeconds(10));
       return wait.until(ExpectedConditions.visibilityOf(driver.findElement(messageSuccess))).getText();
   }
+
    public ItemsPage clickMessageButton() throws InterruptedException {
        wait = new WebDriverWait(driver,Duration.ofSeconds(15));
       wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
       Thread.sleep(1000);
       return this;
-
 }
+    public ItemsPage clickOutsideTheModal () {
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(-80, -80).click().build().perform();
+        return this ;
+    }
    public void setUnitDelete(){
       driver.findElement(unitDelete).sendKeys();
  }
@@ -359,9 +364,10 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
             wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
             wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
             Thread.sleep(2500);
-            wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
-            Thread.sleep(1000);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+            actions1.moveByOffset(-80, -80).click().build().perform();
+           // wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+           // Thread.sleep(1000);
+           // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
         return this;
     }

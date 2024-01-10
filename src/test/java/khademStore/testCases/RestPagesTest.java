@@ -17,7 +17,7 @@ public class RestPagesTest extends TestBase {
        restPages.mainPageLoad().clickOnSystemSettingsButton()
                .navigateToSettingPage()
                .clickOnSaveButton()
-               .clickOnSuccessMessageButton();
+               .clickOutsideTheModal();
     }
     @Test(priority = 2)
     public void citiesPageTest() throws InterruptedException{
@@ -26,7 +26,7 @@ public class RestPagesTest extends TestBase {
                  .navigateToCitiesPage()
                  .enterCityName(RandomArItems.randomArData())
                  .clickOnSaveButton()
-                 .clickOnSuccessMessageButton();
+                 .clickOutsideTheModal();
     }
     @Test(priority = 3)
     public void unitsPageTest() throws InterruptedException{
@@ -36,7 +36,7 @@ public class RestPagesTest extends TestBase {
                 .navigateToUnitPage()
                 .enterUnitName(RandomArItems.randomArData())
                 .clickOnSaveButton()
-                .clickOnSuccessMessageButton();
+                .clickOutsideTheModal();
     }
     @Test(priority = 4)
 
@@ -46,7 +46,7 @@ public class RestPagesTest extends TestBase {
                 .navigateToBanksPage()
                 .enterBankDetails(RandomArItems.randomArData(), RandomArItems.randomArData())
                 .clickOnSaveButton()
-                .clickOnSuccessMessageButton();
+                .clickOutsideTheModal();
     }
     @Test(priority = 5)
 
@@ -55,14 +55,14 @@ public class RestPagesTest extends TestBase {
       restPages.mainPageLoad().clickOnSystemSettingsButton()
               .navigateToLkCategoryPage()
               .enterClassificationDetails(RandomArItems.randomArData())
-              .clickOnSaveButton().clickOnSuccessMessageButton();
+              .clickOnSaveButton().clickOutsideTheModal();
     }
     @Test(priority =6)
     public void supplierWorkAreaPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
          restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToSuppliersWorkAreaPage()
                  .enterSuppWorkAreaDetails(RandomArItems.randomArData())
-                 .clickOnSaveButton().clickOnSuccessMessageButton();
+                 .clickOnSaveButton().clickOutsideTheModal();
 
     }
     @Test(priority =7)
@@ -70,7 +70,7 @@ public class RestPagesTest extends TestBase {
         restPages=new RestPages(driver);
         restPages.mainPageLoad().clickOnSystemSettingsButton()
                 .navigateToSuppliersPage().enterSuppDetails(RandomArItems.randomArData())
-                        .clickOnSaveButton().clickOnSuccessMessageButton();
+                        .clickOnSaveButton().clickOutsideTheModal();
 
     }
     @Test(priority = 8)
@@ -80,7 +80,7 @@ public class RestPagesTest extends TestBase {
         restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToManagementPage()
                 .enterDepartmentDetails(RandomArItems.randomArData())
                 .clickOnSaveButton()
-                .clickOnSuccessMessageButton();
+                .clickOutsideTheModal();
     }
     @Test(priority = 9)
 
