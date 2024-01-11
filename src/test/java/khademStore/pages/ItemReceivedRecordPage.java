@@ -226,8 +226,8 @@ public class ItemReceivedRecordPage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         if (driver.findElement(modalSuccess).isDisplayed()){
       try {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-            Actions actions = new Actions(driver);
+          wait.until(ExpectedConditions.visibilityOfElementLocated(messaageSuccessButton));
+          Actions actions = new Actions(driver);
             actions.scrollToElement(driver.findElement(messaageSuccessButton)).perform();
             actions.moveToElement(driver.findElement(messaageSuccessButton)).click().build().perform();
       }

@@ -333,7 +333,7 @@ public class RestPages {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         if (driver.findElement(modalSuccess).isDisplayed()) {
             try {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(messageSuccessButton));
             Actions actions = new Actions(driver);
             actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
             actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
@@ -385,14 +385,14 @@ public class RestPages {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
-    public RestPages enterSuppDetails(String suppsName ){
+    public RestPages enterSuppDetails(String suppsName ) throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(suppName)).sendKeys(suppsName);
         Actions actions = new Actions(driver);
         actions.scrollToElement(driver.findElement(aadNewClassificationButton));
         wait.until(ExpectedConditions.elementToBeClickable(aadNewClassificationButton)).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        return this ;
+        Thread.sleep(1500);
+    return this ;
     }
 
     public RestPages enterDepartmentDetails(String departmntName){

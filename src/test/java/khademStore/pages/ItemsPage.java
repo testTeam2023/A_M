@@ -236,7 +236,7 @@ public class ItemsPage {
        wait = new WebDriverWait(driver,Duration.ofSeconds(15));
        if( driver.findElement(modalSuccess).isDisplayed()) {
            try {
-               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+               wait.until(ExpectedConditions.visibilityOfElementLocated(messageSuccessButton));
                Actions actions = new Actions(driver);
                actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
                actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();

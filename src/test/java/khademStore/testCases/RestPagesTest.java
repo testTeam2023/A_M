@@ -65,13 +65,10 @@ public class RestPagesTest extends TestBase {
                  .clickOnSaveButton().clickOnSuccessMessageButton();
 
     }
-    @Test(priority =7)
-    public void suppliersPageTest() throws InterruptedException{
-        restPages=new RestPages(driver);
-        restPages.mainPageLoad().clickOnSystemSettingsButton()
-                .navigateToSuppliersPage().enterSuppDetails(RandomArItems.randomArData())
-                        .clickOnSaveButton().clickOnSuccessMessageButton();
-
+    @Test(priority = 7 )
+    public void suppPageTest()throws InterruptedException{
+        restPages = new RestPages(driver);
+        restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToSuppliersPage().enterSuppDetails(RandomArItems.randomArData()).clickOnSaveButton().clickOnSuccessMessageButton();
     }
     @Test(priority = 8)
 
