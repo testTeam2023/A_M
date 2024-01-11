@@ -44,7 +44,7 @@ public class ItemsPage {
     private  By openStockForStore3 = By.xpath("//*[@id=\"divItemDtlList\"]/table/tbody/tr[3]/td[7]/input[1]");
     private   By save = By.xpath("//input[@value=\"حفظ\"]");
     private   By messageSuccess = By.xpath("//*[@id=\"div-success-modal\"]/div/div");
-    private  By messageSuccessButton = By.xpath(" //button[@id=\"btn-ok-modal\"]");
+    private  By messageSuccessButton = By.cssSelector("#btn-ok-modal");
     private By editButtonIsDisplay = By.xpath("//*[@id=\"btnSave\"]");
     private By search_TabLink = By.xpath("//*[@id=\"AnchorfirstTab\"]");
     private By  itemNumber_searchBox = By.xpath("//*[@id=\"SearchControl_Criteria_List_0__Value\"]");
@@ -78,8 +78,10 @@ public class ItemsPage {
     private By deleteMessageText= By.xpath("//*[@id=\"div-success-modal\"]/div/div/div[3]");
     private By deleteButtonHasRecord= By.xpath("//*[contains(@onclick,'Delete/7825')]");
     private By pagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div/input[6]");
-private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div");
+    private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div");
     private By childPagination= By.tagName("input");
+    private By modalSuccess = By.cssSelector("#div-success-modal > div > div");
+
     public ItemsPage(WebDriver driver){
         this.driver=driver;
     }
@@ -232,17 +234,22 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
 
    public ItemsPage clickMessageButton() throws InterruptedException {
        wait = new WebDriverWait(driver,Duration.ofSeconds(15));
-      // try {
-           driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-           Actions actions = new Actions(driver);
-           actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
-           actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
-    //   }
-    //   catch (Exception e){
-     //      Actions actions = new Actions(driver);
-      //     actions.moveByOffset(-80, -80).click().build().perform();
-    //   }
+       if( driver.findElement(modalSuccess).isDisplayed()) {
+           try {
+               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+               Actions actions = new Actions(driver);
+               actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
+               actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
+           } catch (Exception e) {
+               Actions actions = new Actions(driver);
+               actions.moveByOffset(-80, -80).click().build().perform();
+           }
+       }
+       else {
+           System.out.println("Modal success element is not displayed.");
+       }
       return this;
+
 }
     public ItemsPage clickOutsideTheModal () {
         Actions actions = new Actions(driver);
@@ -360,16 +367,30 @@ private By parentPagination= By.xpath("//*[@id=\"datatables_paginate\"]/div/div"
          driver.findElement(openStockForStore2).sendKeys(editStock);
         try {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
-        Thread.sleep(8000);
-            wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+        Thread.sleep(5000);
+            if(driver.findElement(modalSuccess).isDisplayed()) {
+                try {
+                    wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+                } catch (Exception s) {
+                    Actions action = new Actions(driver);
+                    action.moveByOffset(-80, -80).click().build().perform();
+                }
+            }
         }
         catch (Exception e){
             Actions actions1 =new Actions(driver);
             actions1.scrollToElement(driver.findElement(storeN3Selection));
             wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
             wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
-            Thread.sleep(8000);
-            wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+            Thread.sleep(5000);
+            if(driver.findElement(modalSuccess).isDisplayed()) {
+                try {
+                    wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+                } catch (Exception ee) {
+                    Actions actions3 = new Actions(driver);
+                    actions3.moveByOffset(-80, -80).click().build().perform();
+                }
+            }
         }
            // try {
              //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));

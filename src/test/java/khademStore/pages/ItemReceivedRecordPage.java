@@ -47,10 +47,10 @@ public class ItemReceivedRecordPage {
     private By percentDiscountBox  = By.xpath("//*[@id=\"DIS_PER\"]");
     private By valueDiscountBox  = By.xpath("//*[@id=\"DIS_VAL\"]");
     private By saveButton  = By.xpath("//*[contains(@class,\"btn btn-3d btn-success margin-left-20\")]");
-    private By messaageSuccessButton  = By.xpath("//*[@id=\"btn-ok-modal\"]");
+    private By messaageSuccessButton  = By.cssSelector("#btn-ok-modal");
     private By messaageSuccess  = By.xpath("/html/body/div[10]/div/div/div[3]");
-
     private By enterItemation  = By.xpath("//*[@id=\"div-error-modal\"]/div/div/div[3]");
+    private By modalSuccess = By.cssSelector("#div-success-modal > div > div");
 
     public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException{
         try {
@@ -209,7 +209,7 @@ public class ItemReceivedRecordPage {
         Actions actions = new Actions(driver);
         actions.scrollToElement(driver.findElement(saveButton)).perform();
         actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
-        Thread.sleep(8000);
+        Thread.sleep(5000);
         return this;
     }
     public ItemReceivedRecordPage clickOutsideTheModal () {
@@ -224,23 +224,27 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOnMessageSuccessButton()throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-      //  try {
+        if (driver.findElement(modalSuccess).isDisplayed()){
+      try {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             Actions actions = new Actions(driver);
             actions.scrollToElement(driver.findElement(messaageSuccessButton)).perform();
             actions.moveToElement(driver.findElement(messaageSuccessButton)).click().build().perform();
-   //     }
-    //    catch (Exception e){
-   //         try {
-       //     Actions actions = new Actions(driver);
-      //      actions.moveByOffset(200, -50).click().build().perform();
-    //    }
-        //    catch (Exception ee){
-          //      Actions actions = new Actions(driver);
-         //       actions.moveByOffset(0, 0).click().build().perform();
-         //   }
-   //     }
+      }
+        catch (Exception e){
+           try {
+          Actions actions = new Actions(driver);actions.moveByOffset(200, -50).click().build().perform();
+       } catch (Exception ee){
+               Actions actions = new Actions(driver);
+               actions.moveByOffset(0, 0).click().build().perform();
+           }
+      }
+             }
+        else {
+            System.out.println("Modal success element is not displayed.");
+        }
         return this;
+
     }
     public String invoiceNumberationText(){
        return driver.findElement(invoiceNumberError).getText();

@@ -22,7 +22,7 @@ public class RestPages {
 
     private By systemSettingButton  = By.xpath("//a[@href=\"#\"]/i[contains(@class, \"px-nav-icon fa fa-gear\")]/following-sibling::span[contains(@class, \"px-nav-label\")]");
     private By saveButton  = By.xpath("//*[@id=\"btnSave\"]");
-    private By messageSuccessButton  = By.xpath("//*[@id=\"btn-ok-modal\"]");
+    private By messageSuccessButton  = By.cssSelector("#btn-ok-modal");
     private By messageSuccessIsDisplayed  = By.xpath("/html/body/div[9]/div/div");
     private By citeyName=By.xpath("//*[@id=\"City_Name\"]");
     private By unitName=By.xpath("//*[@id=\"unit_name\"]");
@@ -73,6 +73,8 @@ public class RestPages {
     private By itemsAssertion = By.xpath("//*[@id=\"secondTab\"]");
     private By financeYearAssertion = By.xpath("//*[@id=\"secondTab\"]");
     private By itemsReceivedRecordAssertion = By.xpath("//*[@id=\"secondTab\"]");
+    private By modalSuccess = By.cssSelector("#div-success-modal > div > div");
+
 
     public RestPages mainPageLoad()throws InterruptedException{
         try {
@@ -314,7 +316,7 @@ public class RestPages {
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
        // wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        Thread.sleep(8000);
+        Thread.sleep(5000);
         return this ;
     }
     public RestPages clickOutsideTheModal () {
@@ -329,15 +331,20 @@ public class RestPages {
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        //    try {
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-                Actions actions = new Actions(driver);
-                actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
-                actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
-          //  } catch (Exception e) {
-            //    Actions actions = new Actions(driver);
-             //   actions.moveByOffset(-80, -80).click().build().perform();
-       // }
+        if (driver.findElement(modalSuccess).isDisplayed()) {
+            try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+            Actions actions = new Actions(driver);
+            actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
+            actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
+             } catch (Exception e) {
+              Actions actions = new Actions(driver);
+              actions.moveByOffset(-80, -80).click().build().perform();
+           }
+        }
+        else {
+            System.out.println("Modal success element is not displayed.");
+        }
           return this;
     }
 
