@@ -331,6 +331,8 @@ public class RestPages {
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(modalSuccess));
+        wait.until(ExpectedConditions.presenceOfElementLocated(modalSuccess));
         if (driver.findElement(modalSuccess).isDisplayed()) {
             try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(messageSuccessButton));
