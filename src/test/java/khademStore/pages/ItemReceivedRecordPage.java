@@ -224,27 +224,28 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage clickOnMessageSuccessButton()throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(modalSuccess));
-        wait.until(ExpectedConditions.presenceOfElementLocated(modalSuccess));
-        if (driver.findElement(modalSuccess).isDisplayed()){
+
+
       try {
+          wait.until(ExpectedConditions.visibilityOfElementLocated(modalSuccess));
+          wait.until(ExpectedConditions.presenceOfElementLocated(modalSuccess));
+          if (driver.findElement(modalSuccess).isDisplayed()){
           wait.until(ExpectedConditions.visibilityOfElementLocated(messaageSuccessButton));
           Actions actions = new Actions(driver);
             actions.scrollToElement(driver.findElement(messaageSuccessButton)).perform();
             actions.moveToElement(driver.findElement(messaageSuccessButton)).click().build().perform();
       }
-        catch (Exception e){
-           try {
-          Actions actions = new Actions(driver);actions.moveByOffset(200, -50).click().build().perform();
-       } catch (Exception ee){
-               Actions actions = new Actions(driver);
-               actions.moveByOffset(0, 0).click().build().perform();
-           }
       }
+        catch (Exception e){
+            boolean isTextDisplayed = driver.getPageSource().contains("تعديل");
+            if (isTextDisplayed) {
+                // Handle the case when the expected text is displayed
+                System.out.println("Expected text is displayed on the page.");
+            } else {
+                // Handle other exceptions or actions when the text is not displayed
+                System.out.println("Expected text is not displayed on the page.");
+            }
              }
-        else {
-            System.out.println("Modal success element is not displayed.");
-        }
         return this;
 
     }

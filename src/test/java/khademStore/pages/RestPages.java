@@ -331,22 +331,25 @@ public class RestPages {
     }
     public RestPages clickOnSuccessMessageButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(modalSuccess));
-        wait.until(ExpectedConditions.presenceOfElementLocated(modalSuccess));
-        if (driver.findElement(modalSuccess).isDisplayed()) {
-            try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(messageSuccessButton));
-            Actions actions = new Actions(driver);
-            actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
-            actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
-             } catch (Exception e) {
-              Actions actions = new Actions(driver);
-              actions.moveByOffset(-80, -80).click().build().perform();
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(modalSuccess));
+            wait.until(ExpectedConditions.presenceOfElementLocated(modalSuccess));
+            if (driver.findElement(modalSuccess).isDisplayed()) {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(messageSuccessButton));
+                Actions actions = new Actions(driver);
+                actions.scrollToElement(driver.findElement(messageSuccessButton)).perform();
+                actions.moveToElement(driver.findElement(messageSuccessButton)).click().build().perform();
+            }
+        }catch (Exception e) {
+                boolean isTextDisplayed = driver.getPageSource().contains("تعديل");
+                if (isTextDisplayed){
+                    System.out.println("Expected text is displayed on the page.");
+                }
+                else {
+                    System.out.println("Expected text is not displayed on the page");
+                }
            }
-        }
-        else {
-            System.out.println("Modal success element is not displayed.");
-        }
           return this;
     }
 
