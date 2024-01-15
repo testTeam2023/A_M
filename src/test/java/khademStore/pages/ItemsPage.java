@@ -357,7 +357,7 @@ public class ItemsPage {
         WebElement parentEditButton = wait.until(ExpectedConditions.presenceOfElementLocated(parentButtons));
         List<WebElement> childEditButton = parentEditButton.findElements(childButtons);
         childEditButton.get(0).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        Thread.sleep(2500);
         return this;
     }
 
@@ -382,6 +382,8 @@ public class ItemsPage {
             }
 
         catch (Exception e){
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(clickOnErrorButton)));
+            Thread.sleep(1000);
             Actions actions1 =new Actions(driver);
             actions1.scrollToElement(driver.findElement(storeN3Selection));
             wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
@@ -422,7 +424,7 @@ public class ItemsPage {
     public ItemsPage clickOnDeleteButton()throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(clickOnDeleteButton)).click();
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
         try {
