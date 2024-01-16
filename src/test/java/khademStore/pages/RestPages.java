@@ -79,7 +79,7 @@ public class RestPages {
     public RestPages mainPageLoad()throws InterruptedException{
         try {
             driver.get(ConfigUtils.getInstance().getUrl());
-            Thread.sleep(2500);
+            Thread.sleep(3000);
         }
         catch (Exception e) {
             // Handle the case where the element is not found within the specified timeout
@@ -92,6 +92,7 @@ public class RestPages {
     }
     public RestPages clickOnSystemSettingsButton() throws InterruptedException{
         driver.findElement(systemSettingButton).click();
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -285,7 +286,7 @@ public class RestPages {
         WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
         List<WebElement>child = parent.findElements(childMenu);
         child.get(13).click();
-        Thread.sleep(800);
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -441,7 +442,7 @@ public class RestPages {
     }
     public boolean financialYearErrorMessageIsDisplayed(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(financialYearNameWanted))
+        return wait.until(ExpectedConditions.presenceOfElementLocated(financialYearNameWanted))
                 .isDisplayed();
     }
 
