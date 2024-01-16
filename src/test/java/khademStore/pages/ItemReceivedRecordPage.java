@@ -46,6 +46,7 @@ public class ItemReceivedRecordPage {
     private By percentDiscountType  = By.xpath("//input[@name=\"DIS_Type\" and @value=\"1\"]");
     private By percentDiscountBox  = By.xpath("//*[@id=\"DIS_PER\"]");
     private By valueDiscountBox  = By.xpath("//*[@id=\"DIS_VAL\"]");
+    private By totalAfterAddedValueText  = By.xpath("//*[@id=\"TotalAfterAddedValueText\"]");
     private By saveButton  = By.xpath("//*[contains(@class,\"btn btn-3d btn-success margin-left-20\")]");
     private By messaageSuccessButton  = By.cssSelector("#btn-ok-modal");
     private By messaageSuccess  = By.xpath("/html/body/div[10]/div/div/div[3]");
@@ -91,10 +92,11 @@ public class ItemReceivedRecordPage {
         }
         return this;
     }
-    public ItemReceivedRecordPage enterAttachment(String attachemnt){
+    public ItemReceivedRecordPage enterAttachment(String attachemnt)throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(attachment)).sendKeys(attachemnt);
-        return this;
+        Thread.sleep(1000);
+    return this;
     }
     public ItemReceivedRecordPage setReceiverName(String receiver){
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -195,7 +197,7 @@ public class ItemReceivedRecordPage {
     public ItemReceivedRecordPage clickOnAddItemButton() throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(addItemButton)).click();
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
@@ -203,6 +205,14 @@ public class ItemReceivedRecordPage {
         Actions actions = new Actions(driver);
         actions.scrollToElement(driver.findElement(saveButton)).perform();
         return this ;
+    }
+    public ItemReceivedRecordPage TotalValueInText(String TotalValueWritten) throws InterruptedException{
+        wait =new WebDriverWait(driver,Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(totalAfterAddedValueText)).clear();
+        wait.until(ExpectedConditions.elementToBeClickable(totalAfterAddedValueText))
+                .sendKeys(TotalValueWritten);
+        Thread.sleep(1000);
+        return this;
     }
     public ItemReceivedRecordPage clickOnSaveButton()throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -461,6 +471,7 @@ public String number(){
         WebElement parentButtonEdit = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(parentButtons)));
         List<WebElement>childButtonEdit = parentButtonEdit.findElements(childButtons);
         childButtonEdit.get(0).click();
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }

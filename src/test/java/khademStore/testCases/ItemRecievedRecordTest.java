@@ -43,6 +43,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .enterQuantity()
                 .enterPrice()
                 .clickOnAddItemButton()
+                .TotalValueInText("ألف مائة وتسعون")
                 .clickOnSaveButton()
                 .clickOnMessageSuccessButton();
         double actualResults = itemReceivedRecord.totalPriceWithTaxes();
@@ -56,7 +57,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnSearchTab().clickOnSearchTab()
                 .clickOnSearchButton()
                 .clickOnEditButton()
-                .setReceiverName("62")
+                .setReceiverName("62").TotalValueInText("ألف خمسمائة وستون ")
                 .clickOnSaveEditButton()
                 .clickOnMessageSuccessButton();
     }
@@ -69,6 +70,7 @@ public class ItemRecievedRecordTest extends TestBase {
                 .clickOnRecordCopyButton()
                 .editTheRecord()
                 .enterAttachment("10")
+                .TotalValueInText("ألف خمسمائه وسبعون ")
                 .clickOnSaveButton()
                 .clickOnMessageSuccessButton();
     }
