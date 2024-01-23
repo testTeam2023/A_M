@@ -319,7 +319,6 @@ public class ItemReceivedRecordPage {
         actions.scrollToElement(driver.findElement(Search_button));
         actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
         Thread.sleep(1000);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
     catch (Exception e){
         driver.navigate().refresh();
@@ -327,7 +326,8 @@ public class ItemReceivedRecordPage {
         clickOnSearchTab();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(Search_button)).click().build().perform();        Thread.sleep(1000);
+        actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
+        Thread.sleep(1000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
     return this ;
@@ -424,10 +424,12 @@ public class ItemReceivedRecordPage {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
-public boolean searchResultIsDisplayed(){
+public boolean searchResultIsDisplayed() throws InterruptedException {
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-     return wait.until(ExpectedConditions.presenceOfElementLocated(parentSearchResult)).isDisplayed();
-}
+     boolean searchResultIsDisplayed = wait.until(ExpectedConditions.presenceOfElementLocated(parentSearchResult))
+             .isDisplayed();
+     return searchResultIsDisplayed ;
+    }
 public String number(){
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
     WebElement parentSearchResults = wait.until(ExpectedConditions.visibilityOf(driver.findElement(parentSearchResult)));

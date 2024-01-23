@@ -190,7 +190,6 @@ public class RestPagesTest extends TestBase {
              .clickOnReporsButton()
                 .navigateToMainOperationReportPage().clickOnStatisticalReceivedReport()
                 .openStatisticalReceivedReport();
-
     }
 
 

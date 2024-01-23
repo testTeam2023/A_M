@@ -79,6 +79,7 @@ public class RestPages {
     public RestPages mainPageLoad()throws InterruptedException{
         try {
             driver.get(ConfigUtils.getInstance().getUrl());
+            driver.navigate().refresh();
             Thread.sleep(3000);
         }
         catch (Exception e) {
