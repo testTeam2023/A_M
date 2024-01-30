@@ -52,6 +52,7 @@ public class ItemReceivedRecordPage {
     private By messaageSuccess  = By.xpath("/html/body/div[10]/div/div/div[3]");
     private By enterItemation  = By.xpath("//*[@id=\"div-error-modal\"]/div/div/div[3]");
     private By modalSuccess = By.cssSelector("#div-success-modal > div > div");
+    private By clickOnTotalValueBox = By.xpath("//*[@id=\"ChkText\"]");
 
     public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException{
         try {
@@ -208,6 +209,7 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage TotalValueInText(String TotalValueWritten) throws InterruptedException{
         wait =new WebDriverWait(driver,Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(clickOnTotalValueBox)).click();
         wait.until(ExpectedConditions.elementToBeClickable(totalAfterAddedValueText)).clear();
         wait.until(ExpectedConditions.elementToBeClickable(totalAfterAddedValueText))
                 .sendKeys(TotalValueWritten);
