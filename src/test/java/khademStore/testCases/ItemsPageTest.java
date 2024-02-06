@@ -85,7 +85,7 @@ khademStore.pages.ItemsPage itemsPage;
                 .clickOnEditButton()
                 .editItemAdded("2");
     }
-    @Test(priority = 4 , description = "Delete item added", dependsOnMethods = "items_Added__Test")
+    @Test(priority = 4 , description = "Delete item added")
     public void delete_Items__Test() throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage
