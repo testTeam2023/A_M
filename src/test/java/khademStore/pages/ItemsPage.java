@@ -362,8 +362,8 @@ public class ItemsPage {
     }
     public ItemsPage scrollDown() throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(openStockForStore2)).sendKeys(Keys.ARROW_DOWN).build().perform();
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+        javascriptExecutor.executeScript("window.scrollBy(0, 700);");
         Thread.sleep(2000);
         return this;
 
