@@ -360,12 +360,60 @@ public class ItemsPage {
         Thread.sleep(2500);
         return this;
     }
+    public ItemsPage scrollDown() throws InterruptedException{
+        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(openStockForStore2)).sendKeys(Keys.ARROW_DOWN).build().perform();
+        Thread.sleep(2000);
+        return this;
 
-    public ItemsPage editItemAdded(String editStock) throws InterruptedException {
+    }
+    public ItemsPage editStock(String editStock){
+        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(openStockForStore2)).clear();
+        driver.findElement(openStockForStore2).sendKeys(editStock);
+        return this ;
+    }
+    public ItemsPage setClickOnEditButtn() throws InterruptedException{
+        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
+        Thread.sleep(5000);
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(modalSuccess)).isDisplayed();
+            if(driver.findElement(modalSuccess).isDisplayed()) {
+                try {
+                    wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+                } catch (Exception s) {
+                    System.out.println(s.getMessage());
+                }
+            }
+        }
+        catch (Exception e){
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(clickOnErrorButton)));
+            Thread.sleep(1000);
+            Actions actions1 =new Actions(driver);
+            actions1.scrollToElement(driver.findElement(storeN3Selection));
+            wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(storeN3Selection))).click();
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
+            Thread.sleep(5000);
+            if(driver.findElement(modalSuccess).isDisplayed()) {
+                try {
+                    wait.until(ExpectedConditions.elementToBeClickable(messageSuccessButton)).click();
+                } catch (Exception ee) {
+                    System.out.println(ee.getMessage());
+                }
+            }
+        }
+        return this;
+    }
+
+   /* public ItemsPage editItemAdded(String editStock) throws InterruptedException {
+
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         Actions actions = new Actions(driver);
         actions.scrollToElement(driver.findElement(openStockForStore2));
         Thread.sleep(2000);
+
          wait.until(ExpectedConditions.visibilityOfElementLocated(openStockForStore2)).clear();
          driver.findElement(openStockForStore2).sendKeys(editStock);
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(editButtonIsDisplay))).click();
@@ -411,7 +459,9 @@ public class ItemsPage {
            // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     //    }}
         return this;
-    }
+       }
+    */
+
     public String setEditButtonIsDisplay(){
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.presenceOfElementLocated(editButtonIsDisplay)).getText();

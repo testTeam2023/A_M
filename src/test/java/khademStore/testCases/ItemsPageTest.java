@@ -83,7 +83,7 @@ khademStore.pages.ItemsPage itemsPage;
                 .clickOnSearchTab().clickOnSearchTab()
                 .clickOnsearch_button()
                 .clickOnEditButton()
-                .editItemAdded("2");
+                .scrollDown().editStock("2").setClickOnEditButtn();
     }
     @Test(priority = 4 , description = "Delete item added")
     public void delete_Items__Test() throws InterruptedException{

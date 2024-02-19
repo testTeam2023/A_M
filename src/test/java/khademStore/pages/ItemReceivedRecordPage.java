@@ -162,12 +162,13 @@ public class ItemReceivedRecordPage {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this;
     }
-    public ItemReceivedRecordPage enterQuantity(){
+    public ItemReceivedRecordPage enterQuantity() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         Random random = new Random();
         int randomQty= random.nextInt(91)+10;
         String itemQty = String.valueOf(randomQty);
         wait.until(ExpectedConditions.elementToBeClickable(itemQuantity)).clear();
+        Thread.sleep(1000);
         wait.until(ExpectedConditions.elementToBeClickable(itemQuantity)).sendKeys(itemQty);
         return this;
     }

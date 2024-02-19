@@ -6,7 +6,6 @@ import java.util.Properties;
 public class PropertiesUtils {
     public Properties propertiesLoad(String filePath){
         File file = new File(filePath);
-
         try {
             InputStream inputStream = new FileInputStream(file);
             Properties properties=new Properties();
