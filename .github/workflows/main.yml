@@ -59,7 +59,7 @@ jobs:
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          to: "ahmedali@azka.com,aabdelaziz@azka.com, mrashwan@azka.com"
+          to: "ahmedali@azka.com,aabdelaziz@azka.com"
           from: "azkatestingteam@gmail.com"
           subject: "Khadem Store Test Results - Failure"
           body: |
@@ -77,7 +77,7 @@ jobs:
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          to: "aabdelaziz@azka.com, mrashwan@azka.com"
+          to: "aabdelaziz@azka.com"
           from: "azkatestingteam@gmail.com"
           subject: "Khadem Store Test Results - Success"
           body: |
