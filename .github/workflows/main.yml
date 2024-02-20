@@ -24,7 +24,8 @@ jobs:
         uses: browser-actions/setup-chrome@latest
 
       - name: Remove old Allure results
-        run: rm -rf allure-results
+        run: |
+            Remove-Item -Path .\allure-results -Recurse -Force
 
       - name: Run Selenium Tests and Generate Report
         run: |
