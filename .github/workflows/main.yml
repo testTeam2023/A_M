@@ -8,10 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        java-version: ['21']
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -20,46 +17,48 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ matrix.java-version }}
+          java-version: "21"  # Choose the appropriate Java version for your project
           cache: maven
           distribution: "adopt"
+
+      - name: Set up Chrome browser
+        uses: browser-actions/setup-chrome@latest
 
       - name: Run Selenium Tests and Generate Allure Report
         run: |
           mvn clean test -Denvironment=ip -Dtest=TestForTest
 
-      - name: Get Allure history (Windows)
-        run: |
-          git clone --branch gh-pages --single-branch --depth 1 https://github.com/testTeam2023/A_M.git gh-pages
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
-      - name: Allure Report action from marketplace (Windows)
-        run: |
-          allure generate allure-results -o allure-report
-          cp -r allure-report/* gh-pages/allure-report
-          cp -r allure-results/history gh-pages/allure-history
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@master
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
 
-      - name: Run PowerShell script to parse Allure report and set environment variable
-        shell: powershell
+      - name: Deploy report to Github Pages
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+      - name: Set TEST_CASE_FAILED variable
+        id: set-test-failed
         run: |
-          # Replace the script command with your actual PowerShell script or tool
-          # Example PowerShell script (replace with actual parsing logic):
-          $TEST_CASE_FAILED = Get-Content allure-results/widgets/summary.json | ConvertFrom-Json | Select-Object -ExpandProperty data | Where-Object { $_.statistic == "failed" }
-          if ($TEST_CASE_FAILED) {
-            Write-Host "TEST_CASE_FAILED=true"
-          } else {
-            Write-Host "TEST_CASE_FAILED=false"
-          }
+            if grep -q "status=\"failed\"" allure-results/*.xml; then
+              echo "TEST_CASE_FAILED=true" >> $GITHUB_ENV
+            else
+              echo "TEST_CASE_FAILED=false" >> $GITHUB_ENV
+            fi    
 
-          # Set the environment variable for later use
-          Write-Host "##vso[task.setvariable variable=TEST_CASE_FAILED;isOutput=true]$TEST_CASE_FAILED"
-
-      - name: Deploy report to Github Pages (Windows)
-        run: |
-          git add gh-pages
-          git commit -m "Update Allure report"
-          git push origin gh-pages
-          ALLURE_REPORT_LINK=$(echo "https://testteam2023.github.io/A_M/allure-report")
-          echo "::set-output name=allure_report_link::${ALLURE_REPORT_LINK}"
 
   notify:
     runs-on: ubuntu-latest
