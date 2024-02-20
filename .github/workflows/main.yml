@@ -23,36 +23,17 @@ jobs:
       - name: Set up Chrome browser
         uses: browser-actions/setup-chrome@latest
 
-      - name: Remove old Allure results
+      - name: Run Selenium Tests and Generate Allure Report
         run: |
-            Remove-Item -Path .\allure-results -Recurse -Force
-
-      - name: Run Selenium Tests and Generate Report
-        run: |
-          mvn clean test -Denvironment=ip -Dtest=TestForTest
-
-      - name: Get Allure history
-        uses: actions/checkout@v2
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@master
-        id: allure-report
-        with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+          mvn clean test -Denvironment=ip
+          allure generate --clean allure-results -o allure-report
 
       - name: Deploy report to Github Pages
         uses: peaceiris/actions-gh-pages@v2
         env:
           PERSONAL_TOKEN: ${{ secrets.TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          PUBLISH_DIR: allure-report
 
   notify:
     runs-on: ubuntu-latest
@@ -69,7 +50,8 @@ jobs:
           subject: 'Selenium Test Failure Notification'
           body: |
             The Selenium tests have failed. Please check the workflow for details.
-            Allure Report: [Link to Allure Report](https://testteam2023.github.io/A_M/121/)
+            Allure Report: [Link to Allure Report](https://testteam2023.github.io/A_M/allure-report)
+
           to: 'aabdelaziz@azka.com'
           from: 'azkatestingteam@gmail.com'
 
@@ -84,6 +66,7 @@ jobs:
           subject: 'Selenium Test Success Notification with Allure Report'
           body: |
             The Selenium tests have passed successfully.
-            Allure Report: [Link to Allure Report](https://testteam2023.github.io/A_M/121/)
-          to: 'azkatestingteam@gmail.com'
+            Allure Report: [Link to Allure Report](https://testteam2023.github.io/A_M/allure-report)
+
+          to: 'ahmedali@azka.com,aabdelaziz@azka.com'
           from: 'azkatestingteam@gmail.com'
