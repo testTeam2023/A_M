@@ -1,4 +1,4 @@
-name: Run Selenium Test
+name: Run Selenium and Allure Tests
 
 on:
   push:
@@ -23,54 +23,82 @@ jobs:
       - name: Set up Chrome browser
         uses: browser-actions/setup-chrome@latest
 
-      - name: Run Selenium Tests and Generate Report
+      - name: Run Selenium Tests and Generate Allure Report
         run: |
-          mvn clean test -Denvironment=ip
+          mvn clean test -Denvironment=ip -Dtest=TestForTest
+          # Generate Allure report
+          mvn allure:report
+          # Copy the generated Allure report to a separate directory
+          mkdir -p allure-results
+          cp -R target/allure-results allure-results
         continue-on-error: true
 
-      - name: Archive artifacts
-        id: generate-report
+      - name: Archive Allure results
         uses: actions/upload-artifact@v2
         with:
-          name: test-reports
-          path: target/surefire-reports/
+          name: allure-results
+          path: allure-results
 
-  send-email:
+  generate-allure-report:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifacts
+      - name: Download Allure results
         uses: actions/download-artifact@v2
         with:
-          name: test-reports
-          path: target/surefire-reports
+          name: allure-results
+          path: allure-results
 
-      - name: Check test results
-        id: check-test-results
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+
+      - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+
+  send-email:
+    needs: generate-allure-report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Allure report
+        uses: actions/download-artifact@v2
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Check Allure test results
+        id: check-allure-results
         run: |
-          failures=$(awk '/Tests run:/ && /Failures: [1-9]+/ {print "Failures found"}' target/surefire-reports/*.txt || true)
-          echo "::set-output name=test-failures::$failures"
+          failures=$(grep -c 'failures="1"' allure-results/widgets/summary.json || true)
+          echo "::set-output name=allure-failures::$failures"
 
-      - name: Send email on failure
-        if: ${{ steps.check-test-results.outputs.test-failures != '' }}
+      - name: Send email on failure (Allure)
+        if: ${{ steps.check-allure-results.outputs.allure-failures != '0' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          to: "ahmedali@azka.com,aabdelaziz@azka.com"
+          to: "azkatestingteam@gmail.com"
           from: "azkatestingteam@gmail.com"
-          subject: "Khadem Store Test Results - Failure"
+          subject: "Khadem Store Allure Test Results - Failure"
           body: |
             <p>
             Dear Eng. Ahmed,
-            The Selenium test results indicate a failure. Please review the attached HTML report.
+            The Allure test results indicate a failure. Please review the attached Allure report.
             </p>
-          attachments: target/surefire-reports/emailable-report.html
+          attachments: allure-results/index.html
 
-      - name: Send email on success
-        if: ${{ steps.check-test-results.outputs.test-failures == '' }}
+      - name: Send email on success (Allure)
+        if: ${{ steps.check-allure-results.outputs.allure-failures == '0' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
@@ -79,10 +107,10 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           to: "aabdelaziz@azka.com"
           from: "azkatestingteam@gmail.com"
-          subject: "Khadem Store Test Results - Success"
+          subject: "Khadem Store Allure Test Results - Success"
           body: |
             <p>
             Dear Eng. Ahmed,
-            The Selenium test results indicate a success. Please find the attached HTML report.
+            The Allure test results indicate a success. Please find the attached Allure report.
             </p>
-          attachments: target/surefire-reports/emailable-report.html
+          attachments: allure-results/index.html
