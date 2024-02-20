@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Selenium Tests and Generate Allure Report
         run: |
-          mvn clean test -Denvironment=ip
+          mvn clean test -Denvironment=ip -Dtest=TestForTest
           allure generate --clean allure-results -o allure-report
 
       - name: Deploy report to Github Pages
