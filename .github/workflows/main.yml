@@ -30,7 +30,7 @@ jobs:
 
       - name: Get Allure history (Windows)
         run: |
-          git clone --branch gh-pages --single-branch --depth 1 https://github.com/your-username/your-repo.git gh-pages
+          git clone --branch gh-pages --single-branch --depth 1 https://github.com/testTeam2023/A_M.git gh-pages
 
       - name: Allure Report action from marketplace (Windows)
         run: |
@@ -55,11 +55,11 @@ jobs:
 
       - name: Deploy report to Github Pages (Windows)
         run: |
-               git add gh-pages
-               git commit -m "Update Allure report"
-               git push origin gh-pages
-               ALLURE_REPORT_LINK=$(echo "https://testteam2023.github.io/A_M/allure-report")
-               echo "::set-output name=allure_report_link::${ALLURE_REPORT_LINK}"
+          git add gh-pages
+          git commit -m "Update Allure report"
+          git push origin gh-pages
+          ALLURE_REPORT_LINK=$(echo "https://testteam2023.github.io/A_M/allure-report")
+          echo "::set-output name=allure_report_link::${ALLURE_REPORT_LINK}"
 
   notify:
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
           subject: 'Selenium Test Failure Notification'
           body: |
             The Selenium tests have failed. Please check the workflow for details.
-          Allure Report: [Link to Allure Report](${{ steps.mail.outputs.allure_report_link }})
+            Allure Report: [Link to Allure Report](${{ steps.mail.outputs.allure_report_link }})
 
           to: 'aabdelaziz@azka.com'
           from: 'azkatestingteam@gmail.com'
