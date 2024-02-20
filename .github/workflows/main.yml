@@ -8,8 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,80 +16,73 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: "21"  # Choose the appropriate Java version for your project
+          java-version: "21"
           cache: maven
           distribution: "adopt"
 
       - name: Set up Chrome browser
         uses: browser-actions/setup-chrome@latest
 
-      - name: Run Selenium Tests and Generate Allure Report
+      - name: Run Selenium Tests and Generate Report
         run: |
-          mvn clean test -Denvironment=ip -Dtest=TestForTest
-
-      - name: Get Allure history
-        uses: actions/checkout@v2
+          mvn clean test -Denvironment=ip
         continue-on-error: true
+
+      - name: Archive artifacts
+        id: generate-report
+        uses: actions/upload-artifact@v2
         with:
-          ref: gh-pages
-          path: gh-pages
+          name: test-reports
+          path: target/surefire-reports/
 
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@master
-        id: allure-report
-        with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
-
-      - name: Deploy report to Github Pages
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
-      - name: Set TEST_CASE_FAILED variable
-        id: set-test-failed
-        run: |
-            if grep -q "status=\"failed\"" allure-results/*.xml; then
-              echo "TEST_CASE_FAILED=true" >> $GITHUB_ENV
-            else
-              echo "TEST_CASE_FAILED=false" >> $GITHUB_ENV
-            fi    
-
-
-  notify:
-    runs-on: ubuntu-latest
+  send-email:
     needs: test
+    runs-on: ubuntu-latest
     steps:
-      - name: Send email on test failure
-        if: env.TEST_CASE_FAILED == 'true'
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: test-reports
+          path: target/surefire-reports
+
+      - name: Check test results
+        id: check-test-results
+        run: |
+          failures=$(awk '/Tests run:/ && /Failures: [1-9]+/ {print "Failures found"}' target/surefire-reports/*.txt || true)
+          echo "::set-output name=test-failures::$failures"
+
+      - name: Send email on failure
+        if: ${{ steps.check-test-results.outputs.test-failures != '' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: 'Selenium Test Failure Notification'
+          to: "ahmedali@azka.com,aabdelaziz@azka.com"
+          from: "azkatestingteam@gmail.com"
+          subject: "Khadem Store Test Results - Failure"
           body: |
-            The Selenium tests have failed. Please check the workflow for details.
-            Allure Report: [Link to Allure Report](${{ steps.mail.outputs.allure_report_link }})
+            <p>
+            Dear Eng. Ahmed,
+            The Selenium test results indicate a failure. Please review the attached HTML report.
+            </p>
+          attachments: target/surefire-reports/emailable-report.html
 
-          to: 'aabdelaziz@azka.com'
-          from: 'azkatestingteam@gmail.com'
-
-      - name: Send email on test success
-        if: env.TEST_CASE_FAILED != 'true'
+      - name: Send email on success
+        if: ${{ steps.check-test-results.outputs.test-failures == '' }}
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: ${{ secrets.EMAIL_SERVER }}
           server_port: ${{ secrets.EMAIL_PORT }}
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: 'Selenium Test Success Notification with Allure Report'
+          to: "aabdelaziz@azka.com"
+          from: "azkatestingteam@gmail.com"
+          subject: "Khadem Store Test Results - Success"
           body: |
-            The Selenium tests have passed successfully.
-            Allure Report: [Link to Allure Report](${{ steps.mail.outputs.allure_report_link }})
-          to: 'ahmedali@azka.com,aabdelaziz@azka.com'
-          from: 'azkatestingteam@gmail.com'
+            <p>
+            Dear Eng. Ahmed,
+            The Selenium test results indicate a success. Please find the attached HTML report.
+            </p>
+          attachments: target/surefire-reports/emailable-report.html
