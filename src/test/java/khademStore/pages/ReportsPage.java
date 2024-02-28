@@ -36,9 +36,19 @@ public class ReportsPage {
 
     @Step
     public ReportsPage navigateToReportsPage()throws InterruptedException{
-        driver.get(ConfigUtils.getInstance().getReportsPage());
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        return this ;
+        int maxAttempt = 2;
+        int attempt = 0;
+        while (attempt < maxAttempt) {
+            try {
+                driver.get(ConfigUtils.getInstance().getReportsPage());
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                return this;
+            }
+            catch (Exception e){
+                attempt++;
+            }
+        }
+            throw new RuntimeException("page take too long too load");
     }
     @Step
     public ReportsPage clickOnReceivedRecordReport()throws InterruptedException{

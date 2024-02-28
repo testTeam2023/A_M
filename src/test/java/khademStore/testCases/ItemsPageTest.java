@@ -94,7 +94,7 @@ khademStore.pages.ItemsPage itemsPage;
                 .clickOnsearch_button()
                 .clickOnDeleteButton();
     }
-    /*
+/*
     @Test(priority = 9 , description = "Delete item has record")
     public void delete_Item_Has_Record() throws InterruptedException {
         itemsPage = new khademStore.pages.ItemsPage(driver);

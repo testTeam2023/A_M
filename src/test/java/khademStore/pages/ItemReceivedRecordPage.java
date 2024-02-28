@@ -54,21 +54,25 @@ public class ItemReceivedRecordPage {
     private By modalSuccess = By.cssSelector("#div-success-modal > div > div");
     private By clickOnTotalValueBox = By.xpath("//*[@id=\"ChkText\"]");
 
-    public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException{
-        try {
-            wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
-            driver.navigate().refresh();
+    public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException {
+        int maxAttempt = 2;
+        int attempt = 0;
+        while (attempt < maxAttempt) {
+            try {
+                wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+                driver.get(ConfigUtils.getInstance().getItemReceivedRecordPage());
+                driver.navigate().refresh();
                 Thread.sleep(5000);
-            Actions action = new Actions(driver);
-            action.doubleClick(wait.until(ExpectedConditions.visibilityOf(driver.findElement(invoiceNumber))));
+                Actions action = new Actions(driver);
+                action.doubleClick(wait.until(ExpectedConditions.visibilityOf(driver.findElement(invoiceNumber))));
+                return this;
+            } catch (Exception e) {
+                attempt++;
+            }
         }
-        catch (Exception e) {
-            // Handle the case where the element is not found within the specified timeout
             throw new RuntimeException("No internet connection or the page took too long to load.");
-        }
-        return this;
     }
+
     public ItemReceivedRecordPage enterInvoiceNumber(String invoice_Number) throws InterruptedException {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.presenceOfElementLocated(invoiceNumber)).sendKeys(invoice_Number);

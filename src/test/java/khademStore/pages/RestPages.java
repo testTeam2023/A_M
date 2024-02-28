@@ -77,19 +77,22 @@ public class RestPages {
 
 
     public RestPages mainPageLoad()throws InterruptedException{
+        int maxAttempt = 2;
+        int attempt = 0;
+        while (attempt < maxAttempt) {
         try {
             driver.get(ConfigUtils.getInstance().getUrl());
             driver.navigate().refresh();
             Thread.sleep(3000);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+            return this ;
         }
         catch (Exception e) {
-            // Handle the case where the element is not found within the specified timeout
-            System.out.println("No internet connection or the page took too long to load.");
-            throw new RuntimeException("Page load timed out.");
+            attempt++;
         }
+        }
+            throw new RuntimeException("Page load timed out.");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-           return this ;
     }
     public RestPages clickOnSystemSettingsButton() throws InterruptedException{
         driver.findElement(systemSettingButton).click();
@@ -474,9 +477,19 @@ public class RestPages {
     @Step
     public RestPages navigateToMainOperationReportPage() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        driver.get(ConfigUtils.getInstance().getReportsPage());
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        return this ;
+        int maxAttempt = 2;
+        int attempt = 0;
+        while (attempt < maxAttempt) {
+            try {
+                driver.get(ConfigUtils.getInstance().getReportsPage());
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                return this;
+            }
+            catch (Exception e) {
+                attempt++;
+            }
+        }
+        throw new RuntimeException("Page load timed out.");
     }
     @Step
     public RestPages clickOnReceivedRecordReport()throws InterruptedException{
