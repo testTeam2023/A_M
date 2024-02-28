@@ -31,7 +31,6 @@ public class ItemRecievedRecordTest extends TestBase {
        boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
        Assert.assertTrue(searchResult);
    }
-
     @Test(description = " item Received Record  Test" , priority = 2)
     public void items_Received_Record__Test() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);

@@ -66,7 +66,7 @@ jobs:
             Dear Eng. Ahmed,
             The Selenium test results indicate a failure. Please review the attached HTML report.
             </p>
-          attachments: target/surefire-reports/emailable-report.html, target/screenshots/
+          attachments: target/surefire-reports/emailable-report.html
 
       - name: Send email on success
         if: ${{ steps.check-test-results.outputs.test-failures == '' }}
@@ -84,4 +84,4 @@ jobs:
             Dear Eng. Ahmed,
             The Selenium test results indicate a success. Please find the attached HTML report.
             </p>
-          attachments: target/surefire-reports/emailable-report.html, target/screenshots/
+          attachments: target/surefire-reports/emailable-report.html
