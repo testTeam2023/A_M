@@ -276,22 +276,19 @@ public class ItemsPage {
         return this;
     }
     public ItemsPage clickOnsearch_button() throws InterruptedException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
             try {
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
                 Actions actions = new Actions(driver);
                 actions.scrollToElement(driver.findElement(Search_button));
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
                 Thread.sleep(2500);
-                js.executeScript("window.scrollBy(0,900)");
             } catch (TimeoutException | StaleElementReferenceException | ElementClickInterceptedException e) {
                driver.navigate().refresh();
+               Thread.sleep(2500);
                clickOnSearchTab();
                 clickOnSearchTab();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
                 Actions actions = new Actions(driver);
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();                Thread.sleep(2500);
-                js.executeScript("window.scrollBy(0,900)");
         }
         return this;
     }
@@ -357,6 +354,8 @@ public class ItemsPage {
     //Edit Section
 
     public ItemsPage clickOnEditButton()throws InterruptedException{
+        JavascriptExecutor js = (JavascriptExecutor) driver ;
+        js.executeScript("window.scrollBy(0, 600);") ;
         wait=new WebDriverWait(driver,Duration.ofSeconds(20));
         WebElement parentEditButton = wait.until(ExpectedConditions.presenceOfElementLocated(parentButtons));
         List<WebElement> childEditButton = parentEditButton.findElements(childButtons);
