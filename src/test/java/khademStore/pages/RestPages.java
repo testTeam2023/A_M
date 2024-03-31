@@ -16,11 +16,12 @@ public class RestPages {
     private WebDriver driver ;
     private WebDriverWait wait;
 
+
     public RestPages(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By systemSettingButton  = By.xpath("//a[@href=\"#\"]/i[contains(@class, \"px-nav-icon fa fa-gear\")]/following-sibling::span[contains(@class, \"px-nav-label\")]");
+    private By systemSettingButton  = By.xpath("/html/body/nav[1]/div/ul/li[2]/a");
     private By saveButton  = By.xpath("//*[@id=\"btnSave\"]");
     private By messageSuccessButton  = By.cssSelector("#btn-ok-modal");
     private By messageSuccessIsDisplayed  = By.xpath("/html/body/div[9]/div/div");
@@ -55,7 +56,6 @@ public class RestPages {
     private By financialYearNameWanted= By.xpath("//*[@id=\"FinanceYearName\"]");
     private By mainOperationsButton  = By.xpath("/html/body/nav[1]/div/ul/li[3]/a");
     private By reportsButton  = By.xpath("/html/body/nav[1]/div/ul/li[4]/a");
-    private By systemSettings = By.xpath("/html/body/nav[1]/div/ul/li[2]/a");
     private By parentMenu = By.xpath("/html/body/nav[1]/div/ul/li[2]/ul");
     private By childMenu = By.tagName("a");
     private By settingAssertion = By.xpath("//*[@id=\"secondTab\"]");
@@ -95,8 +95,9 @@ public class RestPages {
 
     }
     public RestPages clickOnSystemSettingsButton() throws InterruptedException{
-        driver.findElement(systemSettingButton).click();
-        Thread.sleep(1000);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(systemSettingButton)).click();
+        Thread.sleep(2000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return this ;
     }
@@ -244,11 +245,7 @@ public class RestPages {
     }
     public RestPages navigateToStoresCuratorPage() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        WebElement parent = wait.until(ExpectedConditions.presenceOfElementLocated(parentMenu));
-        List<WebElement>child = parent.findElements(childMenu);
-        child.get(10).click();
-        Thread.sleep(800);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.get(ConfigUtils.getInstance().getStoreCurator());
         return this ;
     }
 
@@ -434,11 +431,22 @@ public class RestPages {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(storeNameWanted))
                 .isDisplayed();
     }
+
     public boolean storeEmployeeErrorMessageIsDisplayed(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(employeeNameWanted))
-                .isDisplayed();
-    }
+        int MaxAttempt = 3 ;
+        for (int attempt =0; attempt<MaxAttempt; attempt++) {
+            try {
+
+                return wait.until(ExpectedConditions.presenceOfElementLocated(employeeNameWanted))
+                        .isDisplayed();
+            } catch (TimeoutException e) {
+                System.out.println("retrying");
+            }
+        }
+            throw new RuntimeException("fail to assert");
+        }
+
     public boolean classificationErrorMessageIsDisplayed(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(classificationNameWanted))

@@ -46,6 +46,15 @@ public class ConfigUtils {
         }
         throw new RuntimeException("itemReceivedRecord doesn't exist");
     }
+
+    public String getStoreCurator(){
+        String property = properties.getProperty("storeCurator");
+        if (property!=null){
+            return property;
+        }
+        throw new RuntimeException("Reports Page doesn't exist");
+
+    }
     public String getReportsPage(){
         String property=properties.getProperty("reports");
         if (property!=null){

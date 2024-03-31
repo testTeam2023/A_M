@@ -99,13 +99,13 @@ public class RestPagesTest extends TestBase {
         Assert.assertTrue(actual);
     }
     @Test(priority = 11)
-
     public void storesCuratorPageTest() throws InterruptedException{
         restPages=new RestPages(driver);
-        boolean actual = restPages.mainPageLoad().clickOnSystemSettingsButton().navigateToStoresCuratorPage()
-                .clickOnSaveButton()
-                .storeEmployeeErrorMessageIsDisplayed();
-        Assert.assertTrue(actual);
+        restPages.mainPageLoad()
+                .navigateToStoresCuratorPage()
+                .clickOnSaveButton();
+        Assert.assertTrue(restPages.storeEmployeeErrorMessageIsDisplayed());
+
     }
     @Test(priority =12)
 
