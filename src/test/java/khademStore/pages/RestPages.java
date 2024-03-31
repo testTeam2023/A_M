@@ -50,7 +50,7 @@ public class RestPages {
     //
    private By employeeDepartmentWanted= By.xpath("//*[@id=\"EmployeeDepartmentId-error\"]");
    private By storeNameWanted= By.xpath("//*[@id=\"store_name-error\"]");
-    private By employeeNameWanted= By.xpath("//*[@id=\"EmployeeId-error\"]");
+    private By employeeNameWanted= By.xpath("//*[@id=\"Store_id-error\"]");
     private By classificationNameWanted= By.xpath("//*[@id=\"class_name-error\"]");
     private By financialYearNameWanted= By.xpath("//*[@id=\"FinanceYearName\"]");
     private By mainOperationsButton  = By.xpath("/html/body/nav[1]/div/ul/li[3]/a");
