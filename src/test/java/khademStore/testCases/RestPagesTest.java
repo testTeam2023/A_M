@@ -2,6 +2,7 @@ package khademStore.testCases;
 
 import io.qameta.allure.Feature;
 import khademStore.basess.TestBase;
+import khademStore.pages.ItemReceivedRecordPage;
 import khademStore.pages.MainPage;
 import khademStore.pages.RestPages;
 import khademStore.utils.RandomArItems;
@@ -177,6 +178,19 @@ public class RestPagesTest extends TestBase {
          @Test(priority = 14)
          public void receivedRecordReportTest ()throws InterruptedException {
              restPages = new RestPages(driver);
+             ItemReceivedRecordPage itemReceivedRecordPage = new ItemReceivedRecordPage(driver);
+             itemReceivedRecordPage.navigateToTheItemReceivedRecordPage()
+                     .enterInvoiceNumber("102123")
+                     .selectSupplierName()
+                     .enterAttachment("1250MNB")
+                     .selectAnItemFromItemList()
+                     .enterQuantity()
+                     .enterPrice()
+                     .clickOnAddItemButton()
+                     .TotalValueInText("10000")
+                     .clickOnSaveButton()
+                     .clickOnMessageSuccessButton();
+
              restPages.mainPageLoad()
                      .clickOnReporsButton()
                      .navigateToMainOperationReportPage()
@@ -186,6 +200,18 @@ public class RestPagesTest extends TestBase {
          @Test(priority = 15)
     public void StatisticalReceivedRecordReportTest ()throws InterruptedException{
              restPages = new RestPages(driver);
+             ItemReceivedRecordPage itemReceivedRecordPage = new ItemReceivedRecordPage(driver);
+             itemReceivedRecordPage.navigateToTheItemReceivedRecordPage()
+                     .enterInvoiceNumber("102123")
+                     .selectSupplierName()
+                     .enterAttachment("1250MNB")
+                     .selectAnItemFromItemList()
+                     .enterQuantity()
+                     .enterPrice()
+                     .clickOnAddItemButton()
+                     .TotalValueInText("10000")
+                     .clickOnSaveButton()
+                     .clickOnMessageSuccessButton();
              restPages.mainPageLoad()
              .clickOnReporsButton()
                 .navigateToMainOperationReportPage().clickOnStatisticalReceivedReport()

@@ -21,7 +21,7 @@ public class ItemRecievedRecordTest extends TestBase {
     }
 
      */
-   @Test(description = "Search Feature  Test" , priority = 1)
+   @Test(description = "Search Feature  Test" , priority = 2)
    public void search_Feature__Test() throws InterruptedException{
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
@@ -31,7 +31,7 @@ public class ItemRecievedRecordTest extends TestBase {
        boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
        Assert.assertTrue(searchResult);
    }
-    @Test(description = " item Received Record  Test" , priority = 2)
+    @Test(description = " item Received Record  Test" , priority = 1)
     public void items_Received_Record__Test() throws InterruptedException{
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()

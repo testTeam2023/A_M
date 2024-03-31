@@ -504,7 +504,7 @@ public class RestPages {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         String main = driver.getWindowHandle();
 
-        int maxAttempts = 2;
+        int maxAttempts = 3;
         int attempt = 0;
 
         while (attempt < maxAttempts) {
