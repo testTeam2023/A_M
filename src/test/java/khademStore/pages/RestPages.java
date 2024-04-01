@@ -5,6 +5,7 @@ import khademStore.utils.ConfigUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -15,6 +16,7 @@ import java.util.Set;
 public class RestPages {
     private WebDriver driver ;
     private WebDriverWait wait;
+    private FluentWait<WebDriver> waitt ;
 
 
     public RestPages(WebDriver driver) {
@@ -434,12 +436,15 @@ public class RestPages {
     }
 
     public String storeEmployeeErrorMessageText(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        waitt= new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(60))
+                .pollingEvery(Duration.ofSeconds(2))
+                .ignoring(NoSuchElementException.class);
         int MaxAttempt = 3 ;
         for (int attempt =0; attempt<MaxAttempt; attempt++) {
             try {
 
-               String getText= wait.until(ExpectedConditions.visibilityOfElementLocated(employeeNameWanted))
+               String getText= waitt.until(ExpectedConditions.presenceOfElementLocated(employeeNameWanted))
                         .getText();
                 System.out.println(getText);
                 return getText ;
