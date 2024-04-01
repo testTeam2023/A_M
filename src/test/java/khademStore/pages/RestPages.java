@@ -51,7 +51,7 @@ public class RestPages {
     //
    private By employeeDepartmentWanted= By.xpath("//*[@id=\"EmployeeDepartmentId-error\"]");
    private By storeNameWanted= By.xpath("//*[@id=\"store_name-error\"]");
-    private By employeeNameWanted= By.xpath("//*[@id=\"Store_id-error\"]");
+    private By employeeNameWanted= By.xpath("//*[@id=\"EmployeeName-error\"]");
     private By classificationNameWanted= By.xpath("//*[@id=\"class_name-error\"]");
     private By financialYearNameWanted= By.xpath("//*[@id=\"FinanceYearName\"]");
     private By mainOperationsButton  = By.xpath("/html/body/nav[1]/div/ul/li[3]/a");
@@ -433,14 +433,16 @@ public class RestPages {
                 .isDisplayed();
     }
 
-    public boolean storeEmployeeErrorMessageIsDisplayed(){
+    public String storeEmployeeErrorMessageText(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         int MaxAttempt = 3 ;
         for (int attempt =0; attempt<MaxAttempt; attempt++) {
             try {
 
-                return wait.until(ExpectedConditions.presenceOfElementLocated(employeeNameWanted))
-                        .isDisplayed();
+               String getText= wait.until(ExpectedConditions.visibilityOfElementLocated(employeeNameWanted))
+                        .getText();
+                System.out.println(getText);
+                return getText ;
             } catch (TimeoutException e) {
                 System.out.println("retrying");
             }
