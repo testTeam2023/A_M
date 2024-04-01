@@ -12,9 +12,7 @@ public class Factory {
         switch (browser){
             case "chrome" :
                  WebDriverManager.chromedriver().setup();
-                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--headless");
-                driver= new ChromeDriver(options);
+                driver= new ChromeDriver();
                 break;
             case "edge" :
                 WebDriverManager.edgedriver().setup();

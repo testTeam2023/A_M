@@ -81,8 +81,9 @@ public class ItemReceivedRecordPage {
     }
     public ItemReceivedRecordPage selectSupplierName() throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        boolean staleElement = true;
-        while (staleElement) {
+        int attempt = 0;
+        int maxAttempt = 3 ;
+        while (attempt<maxAttempt) {
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(supplierName)).click();
                 Thread.sleep(1000);
@@ -90,13 +91,14 @@ public class ItemReceivedRecordPage {
                 List<WebElement> childSuppName = parentSuppName.findElements(childSupplierName);
                 childSuppName.get(1).click();
                 Thread.sleep(1000);
-                staleElement = false;
+                return this;
             } catch (Exception e) {
                 System.out.println("StaleElementReferenceException occurred. Retrying...");
             }
         }
-        return this;
-    }
+            throw new RuntimeException("Failed to select Supplier") ;
+        }
+
     public ItemReceivedRecordPage enterAttachment(String attachemnt)throws InterruptedException{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(attachment)).sendKeys(attachemnt);

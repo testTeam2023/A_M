@@ -404,8 +404,9 @@ public class RestPages {
 
     public RestPages enterDepartmentDetails(String departmntName){
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        boolean staleElement = true;
-        while (staleElement) {
+         int attempt =0;
+        int maxAttempt = 3 ;
+        while (attempt<maxAttempt) {
             try {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(departmentName)).sendKeys(departmntName);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(department)).click();
@@ -413,12 +414,12 @@ public class RestPages {
                 List<WebElement> child = parent.findElements(departmentChild);
                 child.get(1).click();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-                staleElement = false;
+                return this;
             } catch (Exception e) {
-                System.out.println("StaleElementReferenceException occurred. Retrying...");;
+                System.out.println("StaleElementReferenceException occurred. Retrying...");
             }
         }
-        return this;
+        throw new RuntimeException("failed to enter department Details");
     }
 
     public boolean employeeErrorMessageIsDisplayed(){
@@ -490,10 +491,11 @@ public class RestPages {
         while (attempt < maxAttempt) {
             try {
                 driver.get(ConfigUtils.getInstance().getReportsPage());
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
                 return this;
             }
             catch (Exception e) {
+                driver.navigate().refresh();
+                System.out.println("Retrying navigate to main operation report page");
                 attempt++;
             }
         }

@@ -149,20 +149,20 @@ public class ItemsPage {
          try {
              // Attempt to click the supplier element
              wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(supplierName))).click();
-
              // Obtain a fresh reference to the parent element
              WebElement parentSupp = wait.until(ExpectedConditions.presenceOfElementLocated(parentSupplierName));
              List<WebElement> childSupp = parentSupp.findElements(childSupplierName);
              childSupp.get(1).click();
              // Exit the loop if the operation is successful
-             break;
+             return this;
          } catch (StaleElementReferenceException e) {
              // Log or print the exception
              System.out.println("StaleElementReferenceException: Retrying...");
              retryCount++;
          }
      }
-     return this;
+     throw new RuntimeException("failed to choose supplier") ;
+
 }
    public ItemsPage setItemType() {
        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
