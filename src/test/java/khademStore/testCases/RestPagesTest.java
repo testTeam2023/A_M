@@ -104,7 +104,8 @@ public class RestPagesTest extends TestBase {
         restPages.mainPageLoad()
                 .navigateToStoresCuratorPage()
                 .clickOnSaveButton();
-        Assert.assertEquals("مطلوب",restPages.storeEmployeeErrorMessageText());
+        String actual ="أمناء المستودعات - اعدادات النظام";
+        Assert.assertEquals(actual,restPages.storeEmployeeErrorMessageText());
 
     }
     @Test(priority =12)
