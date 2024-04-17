@@ -39,18 +39,6 @@ public class RestPages {
     private By department= By.xpath("/html/body/div[6]/div/div[2]/div/div[2]/form/div[1]/div[2]/div/span[1]/span[1]/span/span[1]");
     private By departmentParent= By.xpath("//*[@id=\"select2-DepartmentparentId-results\"]");
     private By departmentChild= By.tagName("li");
-   // private By employee= By.xpath("//*[@id=\"select2-EmployeeDepartmentId-container\"]");
-   // private By employeeParent= By.xpath("//*[@id=\"select2-EmployeeDepartmentId-results\"]");
-  //  private By employeeChild= By.tagName("li");
- //   private By employeeName = By.xpath("//*[@id=\"EmployeeName\"]");
-  //  private By employeeCode= By.xpath("//*[@id=\"EmployeeUserName\"]");
-   // private By storeName = By.xpath("//*[@id=\"store_name\"]");
-   // private By StoresLocation = By.xpath("//*[@id=\"store_place\"]");
-  //  private By storesType = By.xpath("//*[@id=\"StoreTypeId\"]");
-   // private By StoresName = By.xpath("//*[@id=\"select2-Store_id-container\"]");
-  //  private By StoresEmployeeParent = By.xpath("//*[@id=\"select2-Store_id-results\"]");
- // private By StoresEmployeeChild = By.tagName("li");
-    //
    private By employeeDepartmentWanted= By.xpath("//*[@id=\"EmployeeDepartmentId-error\"]");
    private By storeNameWanted= By.xpath("//*[@id=\"store_name-error\"]");
     private By employeeNameWanted= By.xpath("//*[@id=\"content\"]/div[1]/div/div");

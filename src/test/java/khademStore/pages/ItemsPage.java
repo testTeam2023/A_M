@@ -214,6 +214,7 @@ public class ItemsPage {
       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
       wait.until(ExpectedConditions.visibilityOf( driver.findElement(openStockForStore3))).sendKeys(store3OpenStock);
       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+      Thread.sleep(2000);
       try {
 
           wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(save))).click();
@@ -270,10 +271,29 @@ public class ItemsPage {
 
    // Search Section
     public ItemsPage clickOnSearchTab() throws InterruptedException {
-        wait=new WebDriverWait(driver,Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(search_TabLink))).click();
-        Thread.sleep(3000);
-        return this;
+
+        int maxAttempt = 3 ;
+        for (int attempt=0; attempt<maxAttempt; attempt++) {
+            try {
+                //wait.until(ExpectedConditions.elementToBeClickable(searchTab)).click();
+                //   JavascriptExecutor js = (JavascriptExecutor) driver;
+                //  js.executeScript("window.scrollBy(0, 200);");
+                wait = new WebDriverWait(driver,Duration.ofSeconds(15));
+                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(search_TabLink));
+                JavascriptExecutor executor = (JavascriptExecutor) driver;
+                executor.executeScript("arguments[0].scrollIntoView(true);", element);
+                element.click();
+                Thread.sleep(3000);
+                return this;
+            } catch (Exception e) {
+                System.out.println("Exception occured " + e.getMessage());
+                driver.navigate().refresh();
+                System.out.println("Page refreshed. Retrying click...");
+
+            }
+        }
+        throw new RuntimeException("Failed to click on search tab after " + maxAttempt + " attempts");
+
     }
     public ItemsPage clickOnsearch_button() throws InterruptedException {
             try {
@@ -286,12 +306,19 @@ public class ItemsPage {
                driver.navigate().refresh();
                Thread.sleep(2500);
                clickOnSearchTab();
-                clickOnSearchTab();
                 Actions actions = new Actions(driver);
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();                Thread.sleep(2500);
         }
         return this;
+
     }
+    public ItemsPage scrollDownc(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,250);");
+        return this ;
+    }
+
+
     public int numberOfsearchResult(){
         wait=new WebDriverWait(driver,Duration.ofSeconds(30));
         WebElement parentTable = wait.until(ExpectedConditions.presenceOfElementLocated(parentSearchResultTable));
@@ -371,10 +398,11 @@ public class ItemsPage {
         return this;
 
     }
-    public ItemsPage editStock(String editStock){
+    public ItemsPage editStock(String editStock) throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(openStockForStore2)).clear();
         driver.findElement(openStockForStore2).sendKeys(editStock);
+        Thread.sleep(2000);
         return this ;
     }
     public ItemsPage setClickOnEditButtn() throws InterruptedException{

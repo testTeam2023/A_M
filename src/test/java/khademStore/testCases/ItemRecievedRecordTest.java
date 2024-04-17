@@ -26,7 +26,7 @@ public class ItemRecievedRecordTest extends TestBase {
        itemReceivedRecord=new ItemReceivedRecordPage(driver);
        itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                .clickOnSearchTab()
-               .clickOnSearchTab()
+               .scrollDownc()
                .clickOnSearchButton();
        boolean searchResult = itemReceivedRecord.searchResultIsDisplayed();
        Assert.assertTrue(searchResult);
@@ -53,7 +53,8 @@ public class ItemRecievedRecordTest extends TestBase {
     public void Edit_Record__Test() throws InterruptedException {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
-                .clickOnSearchTab().clickOnSearchTab()
+                .clickOnSearchTab()
+                .scrollDownc()
                 .clickOnSearchButton()
                 .clickOnEditButton()
                 .setReceiverName("62").TotalValueInText("10000")
@@ -65,9 +66,9 @@ public class ItemRecievedRecordTest extends TestBase {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .clickOnSearchTab()
-                .clickOnSearchButton().clickOnSearchTab()
+                .scrollDownc()
+                .clickOnSearchButton()
                 .clickOnRecordCopyButton()
-                .editTheRecord()
                 .enterAttachment("10")
                 .TotalValueInText("10000 ")
                 .clickOnSaveButton()
@@ -78,7 +79,8 @@ public class ItemRecievedRecordTest extends TestBase {
         itemReceivedRecord=new ItemReceivedRecordPage(driver);
         itemReceivedRecord.navigateToTheItemReceivedRecordPage()
                 .clickOnSearchTab()
-                .clickOnSearchButton().clickOnSearchTab()
+                .scrollDownc()
+                .clickOnSearchButton()
                 .clickOnDeleteButton()
                 .clickOnMessageSuccessButton();
     }

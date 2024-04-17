@@ -224,12 +224,20 @@ public class ItemReceivedRecordPage {
         return this;
     }
     public ItemReceivedRecordPage clickOnSaveButton()throws InterruptedException{
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        Actions actions = new Actions(driver);
-        actions.scrollToElement(driver.findElement(saveButton)).perform();
-        actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
-        Thread.sleep(5000);
-        return this;
+        int maxAttempt = 5;
+        for (int attempt = 0; attempt < maxAttempt; attempt++) {
+            try {
+                wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                Actions actions = new Actions(driver);
+                actions.scrollToElement(driver.findElement(saveButton)).perform();
+                actions.moveToElement(driver.findElement(saveButton)).click().build().perform();
+                Thread.sleep(5000);
+                return this;
+            } catch (Exception e) {
+                System.out.println("Retrying click on SaveBtn");
+            }
+        }
+        throw new RuntimeException("failed to click on save btn after"+maxAttempt+ " attempt");
     }
     public ItemReceivedRecordPage clickOutsideTheModal () {
         Actions actions = new Actions(driver);
@@ -314,11 +322,27 @@ public class ItemReceivedRecordPage {
     private By childSearchResult = By.tagName("td");
     private By paginationSign = By.xpath("//*[contains(@class,\"btn-outline\") and @value=\">\"]");
     public ItemReceivedRecordPage clickOnSearchTab()throws InterruptedException{
-        wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(searchTab))).click();
-        Thread.sleep(1000);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        return this;
+        int maxAttempt = 3 ;
+        for (int attempt=0; attempt<maxAttempt; attempt++) {
+            try {
+                //wait.until(ExpectedConditions.elementToBeClickable(searchTab)).click();
+                //   JavascriptExecutor js = (JavascriptExecutor) driver;
+                //  js.executeScript("window.scrollBy(0, 200);");
+                wait = new WebDriverWait(driver,Duration.ofSeconds(15));
+                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(searchTab));
+                JavascriptExecutor executor = (JavascriptExecutor) driver;
+                executor.executeScript("arguments[0].scrollIntoView(true);", element);
+                element.click();
+                Thread.sleep(3000);
+                return this;
+            } catch (Exception e) {
+                System.out.println("Exception occured " + e.getMessage());
+                driver.navigate().refresh();
+                System.out.println("Page refreshed. Retrying click...");
+
+            }
+        }
+        throw new RuntimeException("Failed to click on search tab after " + maxAttempt + " attempts");
     }
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
     wait = new WebDriverWait(driver,Duration.ofSeconds(20));
@@ -340,8 +364,14 @@ public class ItemReceivedRecordPage {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
     return this ;
-}
 
+
+}
+    public ItemReceivedRecordPage scrollDownc(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,250);");
+        return this ;
+    }
     public ItemReceivedRecordPage searchWithInvoiceNumber(String invoiceNo){
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(inoviceNo_searchBox))).sendKeys(invoiceNo);
@@ -487,10 +517,19 @@ public String number(){
         return this ;
     }
     public ItemReceivedRecordPage clickOnSaveEditButton()throws InterruptedException{
-        wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(editRecordButton)).click();
-        Thread.sleep(2500);
-        return this ;
+        int maxAttempt = 5;
+        for (int attempt = 0; attempt < maxAttempt; attempt++) {
+            try {
+                wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+                wait.until(ExpectedConditions.elementToBeClickable(editRecordButton)).click();
+                Thread.sleep(2500);
+                return this;
+            }
+            catch (Exception e){
+                System.out.println("retrying click on edit save btn");
+            }
+        }
+        throw new RuntimeException("failed to click on edit save btn after " +maxAttempt+ " ATTEMPT");
     }
     public boolean messageOfSuccess(){
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));

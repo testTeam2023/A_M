@@ -26,7 +26,7 @@ khademStore.pages.ItemsPage itemsPage;
     @Test(priority = 2, description = " search without Filters")
     public void search__Test() throws InterruptedException {
         itemsPage = new khademStore.pages.ItemsPage(driver);
-         itemsPage.navigateToItemsPage().clickOnSearchTab().clickOnSearchTab().clickOnsearch_button();
+         itemsPage.navigateToItemsPage().clickOnSearchTab().scrollDownc().clickOnsearch_button();
          boolean condition = itemsPage.searchResultIsDisplayed();
         Assert.assertTrue(condition);
     }
@@ -80,7 +80,8 @@ khademStore.pages.ItemsPage itemsPage;
     public void Edit_Items__Test()throws InterruptedException{
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage.navigateToItemsPage()
-                .clickOnSearchTab().clickOnSearchTab()
+                .clickOnSearchTab()
+                .scrollDownc()
                 .clickOnsearch_button()
                 .clickOnEditButton()
                 .scrollDown().editStock("2").setClickOnEditButtn();
@@ -90,7 +91,8 @@ khademStore.pages.ItemsPage itemsPage;
         itemsPage = new khademStore.pages.ItemsPage(driver);
         itemsPage
                 .navigateToItemsPage()
-                .clickOnSearchTab().clickOnSearchTab()
+                .clickOnSearchTab()
+                .scrollDownc()
                 .clickOnsearch_button()
                 .clickOnDeleteButton();
     }
