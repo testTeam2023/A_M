@@ -55,7 +55,7 @@ public class ItemReceivedRecordPage {
     private By clickOnTotalValueBox = By.xpath("//*[@id=\"ChkText\"]");
 
     public ItemReceivedRecordPage navigateToTheItemReceivedRecordPage() throws InterruptedException {
-        int maxAttempt = 2;
+        int maxAttempt = 5;
         int attempt = 0;
         while (attempt < maxAttempt) {
             try {
@@ -70,7 +70,7 @@ public class ItemReceivedRecordPage {
                 attempt++;
             }
         }
-            throw new RuntimeException("No internet connection or the page took too long to load.");
+        throw new RuntimeException("Page load timed out. or publish issues");
     }
 
     public ItemReceivedRecordPage enterInvoiceNumber(String invoice_Number) throws InterruptedException {

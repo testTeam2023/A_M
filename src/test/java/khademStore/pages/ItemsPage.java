@@ -88,7 +88,7 @@ public class ItemsPage {
     }
     //Add new Item
    public ItemsPage navigateToItemsPage() throws InterruptedException {
-       int maxAttempt = 2;
+       int maxAttempt = 5;
        int attempt = 0;
        while (attempt < maxAttempt) {
         try {
@@ -101,18 +101,27 @@ public class ItemsPage {
             attempt++;
         }
        }
-            throw new RuntimeException("Page load timed out.");
+            throw new RuntimeException("Page load timed out. or publish issues");
         }
 
 
   public ItemsPage enterItemName(String randomItemName) throws InterruptedException{
    wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-   Actions actions = new Actions(driver);
-   actions.moveToElement(driver.findElement(itemName)).perform();
-        wait
-            .until(ExpectedConditions.elementToBeClickable(driver.findElement(itemName)))
-            .sendKeys(randomItemName);
-      return this;
+      int maxAttempt = 3;
+      int attempt = 0;
+      while (attempt < maxAttempt) {
+          try {
+              Actions actions = new Actions(driver);
+              actions.moveToElement(driver.findElement(itemName)).perform();
+              wait
+                      .until(ExpectedConditions.elementToBeClickable(driver.findElement(itemName)))
+                      .sendKeys(randomItemName);
+              return this;
+          } catch (Exception e) {
+              System.out.println("Retrying enter itemName ");
+          }
+      }
+          throw new RuntimeException("failed to enter item name check the page navigation") ;
   }
   public ItemsPage chooseClassificationOfItem(String classificationSearchBox)  {
    wait = new WebDriverWait(driver,Duration.ofSeconds(10));
@@ -302,7 +311,7 @@ public class ItemsPage {
                 actions.scrollToElement(driver.findElement(Search_button));
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
                 Thread.sleep(2500);
-            } catch (TimeoutException | StaleElementReferenceException | ElementClickInterceptedException e) {
+            } catch (Exception e) {
                driver.navigate().refresh();
                Thread.sleep(2500);
                clickOnSearchTab();
@@ -314,7 +323,7 @@ public class ItemsPage {
     }
     public ItemsPage scrollDownc(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,250);");
+        js.executeScript("window.scrollBy(0,150);");
         return this ;
     }
 

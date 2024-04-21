@@ -36,7 +36,7 @@ public class ReportsPage {
 
     @Step
     public ReportsPage navigateToReportsPage()throws InterruptedException{
-        int maxAttempt = 2;
+        int maxAttempt = 5;
         int attempt = 0;
         while (attempt < maxAttempt) {
             try {
@@ -48,8 +48,7 @@ public class ReportsPage {
                 attempt++;
             }
         }
-            throw new RuntimeException("page take too long too load");
-    }
+        throw new RuntimeException("Page load timed out. or publish issues");    }
     @Step
     public ReportsPage clickOnReceivedRecordReport()throws InterruptedException{
     wait=new WebDriverWait(driver, Duration.ofSeconds(20));
