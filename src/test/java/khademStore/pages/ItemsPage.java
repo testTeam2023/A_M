@@ -305,21 +305,44 @@ public class ItemsPage {
 
     }
     public ItemsPage clickOnsearch_button() throws InterruptedException {
+        int maxAttempts = 3;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
                 Actions actions = new Actions(driver);
                 actions.scrollToElement(driver.findElement(Search_button));
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
                 Thread.sleep(2500);
-            } catch (Exception e) {
-               driver.navigate().refresh();
-               Thread.sleep(2500);
-               clickOnSearchTab();
-                Actions actions = new Actions(driver);
-                actions.moveToElement(driver.findElement(Search_button)).click().build().perform();                Thread.sleep(2500);
+                return this; // Return if successful
+            } catch (NoSuchElementException | StaleElementReferenceException e) {
+                // Handle element not found or stale element exception
+                System.out.println("Element not found or stale. Retrying...");
+                retryClickOnSearchButton();
+            } catch (WebDriverException e) {
+                // Handle other WebDriver exceptions
+                System.out.println("WebDriver exception occurred: " + e.getMessage() + ". Retrying...");
+                retryClickOnSearchButton();
+            } catch (InterruptedException e) {
+                // Handle thread interruption
+                Thread.currentThread().interrupt();
+                System.out.println("Thread interrupted while sleeping.");
+            }
         }
-        return this;
+        throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts.");
+    }
 
+    private void retryClickOnSearchButton() {
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(2500);
+            clickOnSearchTab();
+            Actions actions = new Actions(driver);
+            actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            // Handle thread interruption
+            Thread.currentThread().interrupt();
+            System.out.println("Thread interrupted while sleeping during retry.");
+        }
     }
     public ItemsPage scrollDownc(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
