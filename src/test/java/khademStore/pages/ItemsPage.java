@@ -108,8 +108,7 @@ public class ItemsPage {
   public ItemsPage enterItemName(String randomItemName) throws InterruptedException{
    wait = new WebDriverWait(driver,Duration.ofSeconds(20));
       int maxAttempt = 3;
-      int attempt = 0;
-      while (attempt < maxAttempt) {
+      for(int attempt = 0; attempt<maxAttempt; attempt++ ){
           try {
               Actions actions = new Actions(driver);
               actions.moveToElement(driver.findElement(itemName)).perform();
