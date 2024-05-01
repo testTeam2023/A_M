@@ -412,14 +412,25 @@ public class ItemsPage {
     //Edit Section
 
     public ItemsPage clickOnEditButton()throws InterruptedException{
-        JavascriptExecutor js = (JavascriptExecutor) driver ;
-        js.executeScript("window.scrollBy(0, 600);") ;
-        wait=new WebDriverWait(driver,Duration.ofSeconds(20));
-        WebElement parentEditButton = wait.until(ExpectedConditions.presenceOfElementLocated(parentButtons));
-        List<WebElement> childEditButton = parentEditButton.findElements(childButtons);
-        childEditButton.get(0).click();
-        Thread.sleep(2500);
-        return this;
+        int maxRetry = 5;
+        for (int retry = 0; retry < maxRetry; retry++){
+            try {
+                wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+                WebElement parentEditButton = wait.until(ExpectedConditions.presenceOfElementLocated(parentButtons));
+                List<WebElement> childEditButton = parentEditButton.findElements(childButtons);
+                childEditButton.get(0).click();
+                Thread.sleep(2500);
+                return this;
+            }
+            catch (Exception e){
+                System.out.println("Re trying to click on edit btn ");
+                driver.navigate().refresh();
+                Thread.sleep(2500);
+                clickOnSearchTab();
+                clickOnsearch_button();
+            }}
+        throw new RuntimeException("Failed to click on edit btn after all attempt");
+
     }
     public ItemsPage scrollDown() throws InterruptedException{
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
@@ -534,27 +545,40 @@ public class ItemsPage {
     }
     // Delete Section
     public ItemsPage clickOnDeleteButton()throws InterruptedException{
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(clickOnDeleteButton)).click();
-        Thread.sleep(1500);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        int maxRetry = 5;
+        for (int retry = 0; retry < maxRetry; retry++){
+            try {
+                wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                wait.until(ExpectedConditions.elementToBeClickable(clickOnDeleteButton)).click();
+                Thread.sleep(1500);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        try {
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
-            Thread.sleep(1000);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                try {
+                    Alert alert = driver.switchTo().alert();
+                    alert.accept();
+                    Thread.sleep(1000);
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-            // Try to handle a potential second alert
-            Alert alert1 = driver.switchTo().alert();
-            alert1.accept();
-            Thread.sleep(1000);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        } catch (NoAlertPresentException e) {
-            // No second alert present, do nothing or log a message
-        }
+                    // Try to handle a potential second alert
+                    Alert alert1 = driver.switchTo().alert();
+                    alert1.accept();
+                    Thread.sleep(1000);
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                } catch (NoAlertPresentException e) {
+                    // No second alert present, do nothing or log a message
+                }
 
-        return this;
+                return this;
+            }
+            catch (Exception e){
+                System.out.println("Re trying to click on delete btn ");
+                driver.navigate().refresh();
+                Thread.sleep(2500);
+                clickOnSearchTab();
+               clickOnsearch_button();
+            }}
+        throw new RuntimeException("Failed to click on delete btn after all attempt");
+
     }
     public boolean deleteMessageSuccess(){
 

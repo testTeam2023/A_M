@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -337,39 +338,59 @@ public class ItemReceivedRecordPage {
                 return this;
             } catch (Exception e) {
                 System.out.println("Exception occured " + e.getMessage());
-                driver.navigate().refresh();
                 System.out.println("Page refreshed. Retrying click...");
+                driver.navigate().refresh();
+                Thread.sleep(2000);
+
 
             }
         }
         throw new RuntimeException("Failed to click on search tab after " + maxAttempt + " attempts");
     }
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
-    wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-    try {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        Actions actions = new Actions(driver);
-        actions.scrollToElement(driver.findElement(Search_button));
-        actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
-        Thread.sleep(1000);
+        int maxAttempts = 3;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                wait = new WebDriverWait(driver,Duration.ofSeconds(20));
+                Actions actions = new Actions(driver);
+                WebElement search = wait.until(ExpectedConditions.elementToBeClickable(Search_button));
+                actions.moveToElement(search).click().build().perform();
+                Thread.sleep(2500);
+                return this; // Return if successful
+            } catch (NoSuchElementException | StaleElementReferenceException e) {
+                // Handle element not found or stale element exception
+                System.out.println("Element not found or stale. Retrying...");
+                retryClickOnSearchButton();
+            } catch (WebDriverException e) {
+                // Handle other WebDriver exceptions
+                System.out.println("WebDriver exception occurred: " + e.getMessage() + ". Retrying...");
+                retryClickOnSearchButton();
+            } catch (InterruptedException e) {
+                // Handle thread interruption
+                Thread.currentThread().interrupt();
+                System.out.println("Thread interrupted while sleeping.");
+            }
+        }
+        throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts.");
     }
-    catch (Exception e){
-        driver.navigate().refresh();
-        clickOnSearchTab();
-        clickOnSearchTab();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
-        Thread.sleep(1000);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+    private void retryClickOnSearchButton() {
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(2500);
+            clickOnSearchTab();
+            Actions actions = new Actions(driver);
+            actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            // Handle thread interruption
+            Thread.currentThread().interrupt();
+            System.out.println("Thread interrupted while sleeping during retry.");
+        }
     }
-    return this ;
-
-
-}
     public ItemReceivedRecordPage scrollDownc(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,250);");
+        js.executeScript("window.scrollBy(0,300);");
         return this ;
     }
     public ItemReceivedRecordPage searchWithInvoiceNumber(String invoiceNo){
