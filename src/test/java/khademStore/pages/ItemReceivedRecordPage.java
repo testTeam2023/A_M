@@ -348,8 +348,8 @@ public class ItemReceivedRecordPage {
         throw new RuntimeException("Failed to click on search tab after " + maxAttempt + " attempts");
     }
     public ItemReceivedRecordPage clickOnSearchButton()throws InterruptedException{
-        int maxAttempts = 3;
-        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+        int maxAttempts = 5;
+        for (int attempt = 0; attempt <= maxAttempts; attempt++) {
             try {
                 wait = new WebDriverWait(driver,Duration.ofSeconds(20));
                 Actions actions = new Actions(driver);
@@ -379,9 +379,6 @@ public class ItemReceivedRecordPage {
             driver.navigate().refresh();
             Thread.sleep(2500);
             clickOnSearchTab();
-            Actions actions = new Actions(driver);
-            actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
-            Thread.sleep(2500);
         } catch (InterruptedException e) {
             // Handle thread interruption
             Thread.currentThread().interrupt();

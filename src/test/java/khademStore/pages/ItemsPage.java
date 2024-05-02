@@ -304,7 +304,7 @@ public class ItemsPage {
 
     }
     public ItemsPage clickOnsearch_button() throws InterruptedException {
-        int maxAttempts = 3;
+        int maxAttempts = 5;
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 Actions actions = new Actions(driver);
@@ -320,10 +320,11 @@ public class ItemsPage {
                 // Handle other WebDriver exceptions
                 System.out.println("WebDriver exception occurred: " + e.getMessage() + ". Retrying...");
                 retryClickOnSearchButton();
-            } catch (InterruptedException e) {
-                // Handle thread interruption
-                Thread.currentThread().interrupt();
+            } catch (Exception e) {
                 System.out.println("Thread interrupted while sleeping.");
+                // Handle thread interruption
+                retryClickOnSearchButton();
+
             }
         }
         throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts.");
@@ -334,9 +335,6 @@ public class ItemsPage {
             driver.navigate().refresh();
             Thread.sleep(2500);
             clickOnSearchTab();
-            Actions actions = new Actions(driver);
-            actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
-            Thread.sleep(2500);
         } catch (InterruptedException e) {
             // Handle thread interruption
             Thread.currentThread().interrupt();
@@ -345,7 +343,7 @@ public class ItemsPage {
     }
     public ItemsPage scrollDownc(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,150);");
+        js.executeScript("window.scrollBy(0,250);");
         return this ;
     }
 
