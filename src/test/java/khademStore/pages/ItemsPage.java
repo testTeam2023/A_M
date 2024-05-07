@@ -312,38 +312,23 @@ public class ItemsPage {
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
                 Thread.sleep(2500);
                 return this; // Return if successful
-            } catch (NoSuchElementException | StaleElementReferenceException e) {
+            } catch (Exception e ) {
                 // Handle element not found or stale element exception
                 System.out.println("Element not found or stale. Retrying...");
                 retryClickOnSearchButton();
-            } catch (WebDriverException e) {
-                // Handle other WebDriver exceptions
-                System.out.println("WebDriver exception occurred: " + e.getMessage() + ". Retrying...");
-                retryClickOnSearchButton();
-            } catch (Exception e) {
-                System.out.println("Thread interrupted while sleeping.");
-                // Handle thread interruption
-                retryClickOnSearchButton();
-
-            }
+        }
         }
         throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts.");
     }
 
-    private void retryClickOnSearchButton() {
-        try {
+    private void retryClickOnSearchButton() throws InterruptedException{
             driver.navigate().refresh();
             Thread.sleep(2500);
             clickOnSearchTab();
-        } catch (InterruptedException e) {
-            // Handle thread interruption
-            Thread.currentThread().interrupt();
-            System.out.println("Thread interrupted while sleeping during retry.");
-        }
     }
     public ItemsPage scrollDownc(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,250);");
+        js.executeScript("window.scrollBy(0,280);");
         return this ;
     }
 
