@@ -310,12 +310,14 @@ public class ItemsPage {
                 Actions actions = new Actions(driver);
                 actions.scrollToElement(driver.findElement(Search_button));
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
-                Thread.sleep(2500);
+                Thread.sleep(3500);
                 return this; // Return if successful
             } catch (Exception e ) {
                 // Handle element not found or stale element exception
-                System.out.println("Element not found or stale. Retrying...");
-                retryClickOnSearchButton();
+                System.out.println("Retrying...");
+                navigateToItemsPage();
+                clickOnSearchTab();
+                scrollDownc();
         }
         }
         throw new RuntimeException("Failed to click on search button after " + maxAttempts + " attempts.");
