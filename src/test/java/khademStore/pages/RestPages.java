@@ -64,7 +64,33 @@ public class RestPages {
     private By financeYearAssertion = By.xpath("//*[@id=\"secondTab\"]");
     private By itemsReceivedRecordAssertion = By.xpath("//*[@id=\"secondTab\"]");
     private By modalSuccess = By.cssSelector("#div-success-modal > div > div");
+    //*[@id="content"]/form/div[2]/div[1]/div[1]/div[1]/div/label[3]
+    private By storeRadioBtn = By.xpath("//*[@id=\"content\"]/form/div[2]/div[1]/div[1]/div[1]/div/label[3]");
+    private By selectStore = By.xpath("//*[@id=\"select2-StoreId-container\"]");
+    private By serachStore = By.xpath("//*[@class=\"select2-search select2-search--dropdown\"]//input");
 
+    public RestPages selectStore(String storeName) throws InterruptedException {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        int maxAttempt = 5;
+        for (int attempt = 0; attempt < maxAttempt; attempt++) {
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(storeRadioBtn)).click();
+                Thread.sleep(1500);
+
+                wait.until(ExpectedConditions.elementToBeClickable(selectStore)).click();
+                Thread.sleep(1500);
+
+
+                wait.until(ExpectedConditions.elementToBeClickable(serachStore)).sendKeys(storeName, Keys.ENTER);
+                Thread.sleep(1500);
+                return this;
+            } catch (Exception e) {
+                System.out.println("Retrying  selecting Store" + e.getMessage());
+            }
+        }
+        throw new RuntimeException("failed selecting Store after " +maxAttempt);
+
+    }
 
     public RestPages mainPageLoad()throws InterruptedException{
         int maxAttempt = 2;

@@ -179,40 +179,16 @@ public class RestPagesTest extends TestBase {
          @Test(priority = 14)
          public void receivedRecordReportTest ()throws InterruptedException {
              restPages = new RestPages(driver);
-             ItemReceivedRecordPage itemReceivedRecordPage = new ItemReceivedRecordPage(driver);
-             itemReceivedRecordPage.navigateToTheItemReceivedRecordPage()
-                     .enterInvoiceNumber("102123")
-                     .selectSupplierName()
-                     .enterAttachment("1250MNB")
-                     .selectAnItemFromItemList()
-                     .enterQuantity()
-                     .enterPrice()
-                     .clickOnAddItemButton()
-                     .TotalValueInText("10000")
-                     .clickOnSaveButton()
-                     .clickOnMessageSuccessButton();
-
              restPages.mainPageLoad()
                      .clickOnReporsButton()
                      .navigateToMainOperationReportPage()
                      .clickOnReceivedRecordReport()
+                     .selectStore("مستودع 1 ")
                      .openReceivedRecordReport();
          }
          @Test(priority = 15)
     public void StatisticalReceivedRecordReportTest ()throws InterruptedException{
              restPages = new RestPages(driver);
-             ItemReceivedRecordPage itemReceivedRecordPage = new ItemReceivedRecordPage(driver);
-             itemReceivedRecordPage.navigateToTheItemReceivedRecordPage()
-                     .enterInvoiceNumber("102123")
-                     .selectSupplierName()
-                     .enterAttachment("1250MNB")
-                     .selectAnItemFromItemList()
-                     .enterQuantity()
-                     .enterPrice()
-                     .clickOnAddItemButton()
-                     .TotalValueInText("10000")
-                     .clickOnSaveButton()
-                     .clickOnMessageSuccessButton();
              restPages.mainPageLoad()
              .clickOnReporsButton()
                 .navigateToMainOperationReportPage().clickOnStatisticalReceivedReport()
