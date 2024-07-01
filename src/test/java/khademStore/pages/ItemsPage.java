@@ -118,6 +118,7 @@ public class ItemsPage {
               return this;
           } catch (Exception e) {
               System.out.println("Retrying enter itemName ");
+              navigateToItemsPage();
           }
       }
           throw new RuntimeException("failed to enter item name check the page navigation") ;
