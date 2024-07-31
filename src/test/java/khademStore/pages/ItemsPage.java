@@ -304,16 +304,30 @@ public class ItemsPage {
         throw new RuntimeException("Failed to click on search tab after " + maxAttempt + " attempts");
 
     }
+
+    public boolean isDisplayed(By locator){
+        try {
+
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+    }
+        catch (Exception e){
+            return false ;
+        }
+    }
+    private By searchData = By.xpath("//*[@id=\"tblDataTableClient\"]");
+
     public ItemsPage clickOnsearch_button() throws InterruptedException {
-        int maxAttempts = 5;
+        int maxAttempts = 7;
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 Actions actions = new Actions(driver);
                 actions.scrollToElement(driver.findElement(Search_button));
                 actions.moveToElement(driver.findElement(Search_button)).click().build().perform();
                 Thread.sleep(3500);
+               if (isDisplayed(searchData)){
                 return this; // Return if successful
-            } catch (Exception e ) {
+            }
+            }catch (Exception e ) {
                 // Handle element not found or stale element exception
                 System.out.println("Retrying...");
                 navigateToItemsPage();
