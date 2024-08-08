@@ -48,7 +48,7 @@ public class ReportsPage {
                 attempt++;
             }
         }
-        throw new RuntimeException("Page load timed out. or publish issues");    }
+        throw new RuntimeException("page load Times Out (Server Stopped ) or Publish Issues");    }
     @Step
     public ReportsPage clickOnReceivedRecordReport()throws InterruptedException{
     wait=new WebDriverWait(driver, Duration.ofSeconds(20));

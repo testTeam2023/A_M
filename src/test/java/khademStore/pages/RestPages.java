@@ -107,7 +107,7 @@ public class RestPages {
             attempt++;
         }
         }
-            throw new RuntimeException("Page load timed out.");
+            throw new RuntimeException("page load Times Out (Server Stopped ) or Publish Issues");
 
     }
     public RestPages clickOnSystemSettingsButton() throws InterruptedException{

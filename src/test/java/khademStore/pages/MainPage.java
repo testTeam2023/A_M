@@ -22,8 +22,7 @@ public class MainPage {
      }
       catch (Exception e) {
          // Handle the case where the element is not found within the specified timeout
-         System.out.println("No internet connection or the page took too long to load.");
-         throw new RuntimeException("Page load timed out.");
+         throw new RuntimeException("page load Times Out (Server Stopped ) or Publish Issues");
      }
    return new RestPages(driver);
 

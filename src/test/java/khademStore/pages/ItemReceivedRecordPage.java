@@ -71,7 +71,7 @@ public class ItemReceivedRecordPage {
                 attempt++;
             }
         }
-        throw new RuntimeException("Page load timed out. or publish issues");
+        throw new RuntimeException("page load Times Out (Server Stopped ) or Publish Issues ");
     }
 
     public ItemReceivedRecordPage enterInvoiceNumber(String invoice_Number) throws InterruptedException {
