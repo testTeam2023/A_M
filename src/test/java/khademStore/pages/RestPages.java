@@ -547,7 +547,7 @@ public class RestPages {
                     if (!s.equals(main)) {
                         driver.switchTo().window(s);
                         driver.navigate().refresh();
-                        Thread.sleep(13000);
+                        Thread.sleep(15000);
                         WebElement parent = wait.until(ExpectedConditions.visibilityOfElementLocated(parentReportContent));
                         List<WebElement> child = parent.findElements(childReportContent);
                         boolean result = child.get(2).isDisplayed();

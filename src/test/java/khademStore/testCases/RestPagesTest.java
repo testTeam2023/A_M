@@ -183,7 +183,7 @@ public class RestPagesTest extends TestBase {
                      .clickOnReporsButton()
                      .navigateToMainOperationReportPage()
                      .clickOnReceivedRecordReport()
-                     .selectStore("مستودع 1 ")
+                     .selectStore("مستودع جديد")
                      .openReceivedRecordReport();
          }
          @Test(priority = 15)
